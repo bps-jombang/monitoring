@@ -376,7 +376,7 @@
                         </tbody>
                     </table>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTablesku" width="auto" cellspacing="0">
                                 <thead>
