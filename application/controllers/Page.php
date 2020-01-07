@@ -8,20 +8,14 @@ class Page extends CI_Controller {
         parent::__construct(); 
     }
     
-    public function index() 
-    {
-        $this->db->select([
-            'customerNumber','customerName',
-            'contactLastName','city','country',
-            'addressLine1','addressLine2','postalCode'
-            ,'creditLimit'
-        ]);
-        $data['list'] = $this->db->get('customers')->result_array();
-        // var_dump($data);die;
-        $this->load->view('admin/index',$data); 
+    public function login()
+	{	
+		$this->load->view('admin/page/login');
     }
     
-    
-
+    public function profile()
+    {
+        $this->load->view('admin/page/profile');
+    }
 }
 
