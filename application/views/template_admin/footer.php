@@ -4,6 +4,8 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
+  
+
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -40,6 +42,19 @@
   <!-- Page level custom scripts -->
   <script src="<?= base_url('assets/admin/') ?>js/demo/datatables-demo.js"></script>
 
+
+     <!-- Footer -->
+     <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Badan Pusat Statistik Jombang 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
 </body>
+
+
 
 </html>
