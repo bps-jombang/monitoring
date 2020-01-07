@@ -21,7 +21,7 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-      
+
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
@@ -41,7 +41,7 @@
 
       <li class="nav-item active">
         <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
+          <i class="fas fa-sign-out-alt"></i>
           <span>Logout</span></a>
       </li>
 
