@@ -12,18 +12,6 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -198,63 +186,44 @@
             <div class="card-body">
                 <div class="row">
                 
-                    <div class="col-4 col-lg-4 tabel-kiri">
+                <div class="col-12 col-lg-12">
                         <div class="table-responsive">
-                        <table class="table table-condensed tabelku" id="dataTablemu" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Role</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            
-                                <?php foreach($list as $d) : ?>
-                            <tr>
-                                <th scope="row"><?= $d['city']; ?></th>
-                                <td><?= $d['country']; ?></td>
-                            </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                    <div class="col-8 col-lg-8">
-                        <div class="table-responsive">
-                            <table class="table table-condensed display nowrap tabelku" id="dataTableku" width="100%" cellspacing="0">
-                                <thead>
+                            <table class="table table-bordered display nowrap tabelku" id="dataTableku" width="100%" cellspacing="0">
+                                <thead class="mytable">
+                                  <tr>
+                                  <th rowspan="2" class="text-left">nomor</th>
+                                      <th rowspan="2" class="text-center">uraian</th>
+                                      <th rowspan="2" class="text-center">seksi</th>
+                                      <th rowspan="2" class="text-center">vol</th>
+                                      <th rowspan="2" class="text-center">target penyelesaian</th>
+                  <?php foreach($list as $d) :?>
+                    <th colspan="2" class="text-center"><?= $d['no'] ?> <?= $d['kec'] ?> | <?= $d['nama'] ?></th>
+                  <?php endforeach; ?>
+                    <th rowspan="2" class="align-middle text-center">jml</th>
+                                  </tr>
                                     <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                    </tr>
+                                    <?php foreach($list as $d) :?>
+  <th class="target">T</th>
+                                      <th class="realisasi">R</th>
+                                    <?php endforeach; ?></tr>
                                 </thead>
-                        
                                 <tbody>
-                                <?php foreach($list as $d) : ?>
                                 <tr>
-                                    <td><?= $d['customerNumber']; ?></td>
-                                    <td><?= $d['customerName']; ?></td>
-                                    <td><?= $d['contactLastName']; ?></td>
-                                    <td><?= $d['city']; ?></td>
-                                    <td><?= $d['country']; ?></td>
-                                    <td><?= $d['addressLine1']; ?></td>
-                                    <td><?= $d['addressLine2']; ?></td>
-                                    <td><?= $d['postalCode']; ?></td>
-                                    <td><?= $d['creditLimit']; ?></td>
+                                    <td>1</td>
+                                    <td>Sampel</td>
+                                    <td>02 sosial</td>
+                                    <td>210</td>
+                                    <td>dokumen</td>
+                                    <?php foreach($list as $d) :?>
+                                    <td class="kuning">2</td>
+                                    <td>0</td>
+                                    <?php endforeach;?>
+                                    <td>40</td>
                                 </tr>
-                                <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                
                 </div>
             </div>
 
