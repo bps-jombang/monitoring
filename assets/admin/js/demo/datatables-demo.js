@@ -16,8 +16,22 @@ $(document).ready(function () {
   //     // "info": true,
   //     searching: true
   // });
-    // $('.table.tabelku').DataTable();
-    $('#dataTableku').DataTable();
+    // $('#dataTableku').DataTable({
+    //   "paging": true,
+    // });
+    $('#dataTableKiri').DataTable({
+      "lengthMenu": [
+        [5, 10, 25, 50, -1],
+        [5, 10, 25, 50, "All"]
+      ]
+    });
+    $('#dataTableku').DataTable({
+
+      "lengthMenu": [
+      	[5,10, 25, 50, -1],
+      	[5,10, 25, 50, "All"]
+      ]
+    });
     $('#dataTablemu').DataTable({
       "paging": true,
       searching: false,

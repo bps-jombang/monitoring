@@ -191,35 +191,46 @@
                             <table class="table table-bordered display nowrap tabelku" id="dataTableku" width="100%" cellspacing="0">
                                 <thead class="mytable">
                                   <tr>
-                                  <th rowspan="2" class="text-left">nomor</th>
-                                      <th rowspan="2" class="text-center">uraian</th>
-                                      <th rowspan="2" class="text-center">seksi</th>
-                                      <th rowspan="2" class="text-center">vol</th>
-                                      <th rowspan="2" class="text-center">target penyelesaian</th>
-                  <?php foreach($list as $d) :?>
-                    <th colspan="2" class="text-center"><?= $d['no'] ?> <?= $d['kec'] ?> | <?= $d['nama'] ?></th>
-                  <?php endforeach; ?>
-                    <th rowspan="2" class="align-middle text-center">jml</th>
+                                  <th rowspan="2" class="align-middle text-left">nomor</th>
+                                  <th rowspan="2" class="align-middle text-center">uraian</th>
+                                  <th rowspan="2" class="align-middle text-center">seksi</th>
+                                  <th rowspan="2" class="align-middle text-center">vol</th>
+                                  <th rowspan="2" class="align-middle text-center">satuan</th>
+                                  <th rowspan="2" class="align-middle text-center">target penyelesaian</th>
+
+                                  <?php foreach($user as $d) :?>
+                                    <th colspan="2" class="text-center"><?= $d['nomor_kecamatan'] ?> | <?= $d['nama_kecamatan'] ?><br>
+                                    <p class="text-primary"><?= $d['nama_user'] ?></p></th>
+                                  <?php endforeach; ?>
+                                    <th rowspan="2" class="align-middle text-center">jml</th>
                                   </tr>
                                     <tr>
-                                    <?php foreach($list as $d) :?>
-  <th class="target">T</th>
+                                    <?php foreach($user as $d) :?>
+                                      <th class="target">T</th>
                                       <th class="realisasi">R</th>
                                     <?php endforeach; ?></tr>
                                 </thead>
                                 <tbody>
+                                
+                                <?php foreach($kegiatan as $d) : ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>Sampel</td>
-                                    <td>02 sosial</td>
-                                    <td>210</td>
-                                    <td>dokumen</td>
-                                    <?php foreach($list as $d) :?>
+                                    <td>no</td>
+                                    <td>uraian</td>
+                                    <td>nama seksi</td>
+                                    <td>vol</td>
+                                    <td>satuan</td>
+                                    <td>target</td>
+                                
+                                      
+                                    <?php foreach($user as $d) :?>
                                     <td class="kuning">2</td>
                                     <td>0</td>
+                                    
                                     <?php endforeach;?>
                                     <td>40</td>
+                                    
                                 </tr>
+                                <?php endforeach;?>
                                 </tbody>
                             </table>
                         </div>
