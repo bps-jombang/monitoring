@@ -54,16 +54,16 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
+      <a class="nav-link" href="<?= base_url('Page/tambahData') ?>">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Tambah Data Kegiatan</span></a>
+    </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="<?= base_url('Page/dataKegiatan') ?>">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Data Kegiatan</span></a>
             </li>
 
             <hr class="sidebar-divider">
