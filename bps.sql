@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2020 at 07:21 AM
+-- Generation Time: Jan 08, 2020 at 09:59 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -101,9 +101,18 @@ CREATE TABLE `kegiatan_detail` (
   `id_kegiatan_detail` int(11) NOT NULL,
   `id_kegiatan` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `target` int(11) NOT NULL,
-  `realisasi` int(11) NOT NULL
+  `target` int(11) DEFAULT NULL,
+  `realisasi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kegiatan_detail`
+--
+
+INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `target`, `realisasi`) VALUES
+(1, 1, 4, 7, NULL),
+(2, 2, 4, 70, NULL),
+(3, 3, 4, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -219,7 +228,9 @@ ALTER TABLE `kegiatan`
 -- Indexes for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-  ADD PRIMARY KEY (`id_kegiatan_detail`);
+  ADD PRIMARY KEY (`id_kegiatan_detail`),
+  ADD KEY `FK_KEGDET_KEG` (`id_kegiatan`),
+  ADD KEY `FK_KEGDET_USER` (`id_user`);
 
 --
 -- Indexes for table `mitra`
@@ -266,7 +277,7 @@ ALTER TABLE `kegiatan`
 -- AUTO_INCREMENT for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `mitra`
@@ -301,6 +312,13 @@ ALTER TABLE `user`
 --
 ALTER TABLE `kegiatan`
   ADD CONSTRAINT `FK_KEGIATAN_SEKSI` FOREIGN KEY (`id_seksi`) REFERENCES `seksi` (`id_seksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `kegiatan_detail`
+--
+ALTER TABLE `kegiatan_detail`
+  ADD CONSTRAINT `FK_KEGDET_KEG` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_KEGDET_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user`
