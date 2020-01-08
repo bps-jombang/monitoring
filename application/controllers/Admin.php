@@ -12,15 +12,13 @@ class Admin extends CI_Controller {
     
     public function index() 
     {
-        // $this->db->select([
-        //     'customerNumber','customerName',
-        //     'contactLastName','city','country',
-        //     'addressLine1','addressLine2','postalCode'
-        //     ,'creditLimit'
-        // ]);
-        // $this->db->select(['id_role','nama_role']);
-        
-        $data['list'] = $this->db->get('pimp')->result_array();
+        $this->db->select('k.nomor_kecamatan,k.nama_kecamatan,user.nama_user');
+        $this->db->join('kecamatan as k','k.id_kecamatan = user.id_kecamatan');
+        $data['user'] = $this->db->get('user')->result_array();
+
+        $this->db->select('kegiatan.id_kegiatan,s.nama_seksi,kegiatan.uraian_kegiatan,kegiatan.vol,kegiatan.satuan,kegiatan.target_penyelesaian');
+        $this->db->join('seksi as s','s.id_seksi = kegiatan.id_seksi');
+        $data['kegiatan'] = $this->db->get('kegiatan')->result_array();
         // var_dump($data);die;
         $this->load->view('template_admin/header');
         $this->load->view('template_admin/sidebar');
