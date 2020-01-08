@@ -198,33 +198,33 @@
                                   <th rowspan="2" class="align-middle text-center">satuan</th>
                                   <th rowspan="2" class="align-middle text-center">target penyelesaian</th>
 
-                                  <?php foreach($user as $d) :?>
-                                    <th colspan="2" class="text-center"><?= $d['nomor_kecamatan'] ?> | <?= $d['nama_kecamatan'] ?><br>
+                                  <?php foreach($list as $d) :?>
+                                    <th colspan="2" class="text-center"><?= "nokec" ?> | <?= $d['nama_kecamatan'] ?><br>
                                     <p class="text-primary"><?= $d['nama_user'] ?></p></th>
                                   <?php endforeach; ?>
                                     <th rowspan="2" class="align-middle text-center">jml</th>
                                   </tr>
                                     <tr>
-                                    <?php foreach($user as $d) :?>
+                                    <?php foreach($list as $d) :?>
                                       <th class="target">T</th>
                                       <th class="realisasi">R</th>
                                     <?php endforeach; ?></tr>
                                 </thead>
                                 <tbody>
                                 
-                                <?php foreach($kegiatan as $d) : ?>
+                                <?php $no=1; foreach($list as $d) : ?>
                                 <tr>
-                                    <td>no</td>
-                                    <td>uraian</td>
-                                    <td>nama seksi</td>
-                                    <td>vol</td>
-                                    <td>satuan</td>
-                                    <td>target</td>
+                                    <td><?= $no++; ?></td>
+                                    <td><?= $d['uraian_kegiatan'] ?></td>
+                                    <td><?= $d['nama_seksi'] ?></td>
+                                    <td><?= $d['vol'] ?></td>
+                                    <td><?= $d['satuan'] ?></td>
+                                    <td><?= $d['target_penyelesaian'] ?></td>
                                 
                                       
-                                    <?php foreach($user as $d) :?>
-                                    <td class="kuning">2</td>
-                                    <td>0</td>
+                                    <?php foreach($list as $d) :?>
+                                    <td class="kuning"><?= $d['target'] ?></td>
+                                    <td><?= $d['realisasi'] ?></td>
                                     
                                     <?php endforeach;?>
                                     <td>40</td>
