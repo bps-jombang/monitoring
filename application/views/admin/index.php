@@ -222,12 +222,12 @@
                                     <td><?= $d['target_penyelesaian'] ?></td>
                                 
                                       
-                                    <?php foreach($list as $d) :?>
+                                    <?php //foreach($list as $d) :?>
                                     <td class="kuning"><?= $d['target'] ?></td>
                                     <td><?= $d['realisasi'] ?></td>
                                     
-                                    <?php endforeach;?>
-                                    <td>40</td>
+                                    <?php //endforeach;?>
+                                    <!-- <td>40</td> -->
                                     
                                 </tr>
                                 <?php endforeach;?>
