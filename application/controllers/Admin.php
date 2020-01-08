@@ -23,9 +23,9 @@ class Admin extends CI_Controller {
         $data['list'] = $this->db->get('pimp')->result_array();
         // var_dump($data);die;
         $this->load->view('template_admin/header');
-        $this->load->view('template_admin/sidebar');
-        $this->load->view('admin/index',$data); 
-        $this->load->view('template_admin/footer');
+        // $this->load->view('template_admin/sidebar');
+        $this->load->view('admin/page/dashboard',$data); 
+        // $this->load->view('template_admin/footer');
     }
     
     public function loginadmin()
