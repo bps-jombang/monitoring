@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2020 at 09:59 AM
+-- Generation Time: Jan 08, 2020 at 01:58 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -112,7 +112,10 @@ CREATE TABLE `kegiatan_detail` (
 INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `target`, `realisasi`) VALUES
 (1, 1, 4, 7, NULL),
 (2, 2, 4, 70, NULL),
-(3, 3, 4, 3, NULL);
+(3, 3, 4, 3, NULL),
+(4, 4, 9, 5, NULL),
+(5, 5, 9, 10, NULL),
+(6, 1, 9, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -277,7 +280,7 @@ ALTER TABLE `kegiatan`
 -- AUTO_INCREMENT for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `mitra`
