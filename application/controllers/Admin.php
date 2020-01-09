@@ -79,7 +79,6 @@ class Admin extends CI_Controller {
         $this->load->view('admin/index',$data); 
         $this->load->view('template_admin/footer');
     }
-    
     public function loginadmin()
     {
         $this->load->view('auth/loginadmin');
