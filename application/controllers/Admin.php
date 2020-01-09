@@ -54,6 +54,16 @@ class Admin extends CI_Controller {
         $this->load->view('admin/index',$data); 
         $this->load->view('template_admin/footer');
     }
+
+    public function test() {
+        $semua_kegiatan = $this->db->get('v_kegiatan')->result_array();
+        $semua_user = $this->db->query("SELECT * FROM v_kegiatan_detail GROUP BY id_user")->result_array();
+
+        $parser['semua_kegiatan'] = $semua_kegiatan;
+        $parser['semua_user'] = $semua_user;
+
+        $this->load->view('test', $parser);
+    }
     
     public function loginadmin()
     {
