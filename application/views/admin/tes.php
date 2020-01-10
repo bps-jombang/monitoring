@@ -8,9 +8,9 @@
                                   <th rowspan="2" class="align-middle text-center">satuan</th>
                                   <th rowspan="2" class="align-middle text-center">target penyelesaian</th>
 
-                                  <?php foreach($list as $d) :?>
-                                    <th colspan="2" class="text-center"><?= "nokec" ?> | <?= $d['nama_kecamatan'] ?><br>
-                                    <p class="text-primary"><?= $d['nama_user'] ?></p></th>
+                                  <?php foreach($distinct as $d) :?>
+                                    <th colspan="2" class="text-center"><?= "nokec" ?> | <?php// $d['id_kecamatan'] ?><br>
+                                    <p class="text-primary"><?= $d['id_user'] ?></p></th>
                                   <?php endforeach; ?>
                                     <th rowspan="2" class="align-middle text-center">jml</th>
                                   </tr>
@@ -32,12 +32,12 @@
                                     <td><?= $d['target_penyelesaian'] ?></td>
                                 
                                       
-                                    <?php foreach($list as $d) :?>
+                                    <?php //foreach($list as $d) :?>
                                     <td class="kuning"><?= $d['target'] ?></td>
                                     <td><?= $d['realisasi'] ?></td>
                                     
-                                    <?php endforeach;?>
-                                    <td>40</td>
+                                    <?php //endforeach;?>
+                                    <!-- <td>40</td> -->
                                     
                                 </tr>
                                 <?php endforeach;?>
