@@ -32,6 +32,7 @@ class Admin extends CI_Controller {
         $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
         $this->load->view('template_admin/header');
         $this->load->view('template_admin/sidebar');
+        $this->load->view('template_admin/navbar');
         
         $this->load->view('admin/index',$data);
         $this->load->view('template_admin/footer');
