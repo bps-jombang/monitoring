@@ -1,37 +1,17 @@
 <?php 
 
-class Model_admin extends CI_Model {  }
+class Model_admin extends CI_Model {  
 
-    private $user           = "user",
+    private  $user           = "user",
             $seksi          = "seksi",
             $kegiatan       = "seksi",
             $kegiatandetail = "seksi",
-            $mitra          = "mitra",
+            $mitra          = "mitra";
 
-    // ONLY CREATES
-    public function createUser()
-    {
-        // id_kecamatan,id_role,id_seksi,id_user,nama_user
-    }
-    public function createKegiatanDanDetail()
-    {
-        // id_seksi,satuan,target_penyelesaian,uraian_kegiatan,vol,id_user,realisasi,target
-        # code...
-    }
-    public function createSeksi()
-    {
-        // nama_seksi
-        # code...
-    }
-    public function createJabatan()
-    {
-        // nama_jabatan
-        # code...
-    }
+    // ONLY CREATES 
     public function createMitra()
     {
         // nama_mitra
-        # code...
     }
     
     // ONLY UPDATE
@@ -57,9 +37,14 @@ class Model_admin extends CI_Model {  }
     }
 
     // ONLY SHOW ALL
-    public function getAllUser()
+    public function getUser($id = null)
     {
-        //
+        // $res = $id ? $this->db->get_where($this->user,["id_user" => $id])->row_array(); : $this->db->get($this->user)->result_array();
+        if ($id) {
+            return $this->db->get_where($this->user,["id_user" => $id])->row_array();
+        }else{
+            return $this->db->get($this->user)->result_array();
+        }
     }
     public function getAllKegiatanDanDetail()
     {
@@ -121,4 +106,6 @@ class Model_admin extends CI_Model {  }
     {
         //
     }
+
+}
 ?>
