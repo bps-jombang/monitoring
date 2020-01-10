@@ -1,13 +1,20 @@
-     <!-- Footer -->
-     <footer class="sticky-footer bg-white">
+<!-- Footer -->
+      <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Badan Pusat Statistik Jombang 2020</span>
+            <span>Copyright &copy; Your Website 2019</span>
           </div>
         </div>
       </footer>
       <!-- End of Footer -->
- <!-- Scroll to Top Button-->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
@@ -48,5 +55,9 @@
   <!-- Page level custom scripts -->
   <script src="<?= base_url('assets/admin/') ?>js/demo/datatables-demo.js"></script>
 
+  <!-- My javascript -->
+  <script src="<?= base_url('assets/admin/') ?>js/my.js"></script>
+
 </body>
+
 </html>
