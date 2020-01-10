@@ -1,31 +1,12 @@
-.tabel-kiri{
-    /* margin-top: 30px; */
-    color:green;
-    /* max-width: 400px; */
-    /* margin-right: -10px !important; */
-}
-.bpsimage{
-    width: 64px;
-    height: 64px;
-    margin-bottom: 0;
-}
-/* thead.mytable{
-    text-align: center;
-} */
 .target,.kuning{
     font-weight: bold;
     color: black;
     text-align: center;
 }
-.target{
-    /* width:20px;
-    height: auto; */
+.target,.kuning{
     background-color: yellow;
 }
-.realisasi{
+/* .realisasi{
     width:auto;
     height: auto;
-}
-.kuning{
-    background-color: yellow;
-}
+} */
