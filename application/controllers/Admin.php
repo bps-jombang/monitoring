@@ -44,21 +44,20 @@ class Admin extends CI_Controller {
         // echo "<br>". $this->data["sidebar2"]["Seksi2"]["TambahSeksi2"];
         // echo json_encode($this->data);
     }
-    public function addsie()
+    public function addseksi()
     {
         // $data["list"] = $this->modeladmin->createSeksi();
         // $data = $this->modeladmin->createSeksi();
         // echo json_encode($data);
+        
+        $data['listmenu']   = getMenuLink(); // array di helper   
+        $data['sidebar']    = $this->info; // array class
+        
         $this->form_validation->set_rules('nokec','Nomor kecamatan','required');
         $this->form_validation->set_rules('nakec','Nama kecamatan','required');
-        // $data = [
-        //     "menuheader" => "Tambah Seksi", 
-        //     "nama_form" => "Form Tambah Data"
-        // ];
-        $data['listmenu'] = getMenuLink(); // array di helper   
-        $data['sidebar'] = $this->info; // array class
+
         if ($this->form_validation->run() == FALSE) {
-            # code...
+            # 
             $this->load->view('template_admin/header');
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
@@ -67,18 +66,28 @@ class Admin extends CI_Controller {
         }else{
             $this->modeladmin->createSeksi('kecamatan');
             $this->session->set_flashdata('pesan','Ditambah');
-            redirect(base_url('Admin/addsie')); 
+            redirect(base_url('seksi')); 
         } 
     }
     public function addmitra()
     {
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
-        $this->load->view('template_admin/header');
-        $this->load->view('template_admin/sidebar',$data);
-        $this->load->view('template_admin/navbar');
-        $this->load->view('admin/tambahdata/tambahmitra', $this->info);
-        $this->load->view('template_admin/footer');
+        
+        $this->form_validation->set_rules('nama_mitra','Mitra','required');
+
+        if ($this->form_validation->run() == FALSE) {
+            # 
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahmitra', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            $this->modeladmin->createSeksi('mitra',1);
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('mitra')); 
+        }
     }
     public function hh(){
         $list = getuser();
