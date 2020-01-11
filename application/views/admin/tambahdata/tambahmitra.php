@@ -17,10 +17,16 @@
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                <?php echo validation_errors(); ?>
+                    <form action="<?= base_url('mitra') ?>" method="post">
+                        <?php if($this->session->flashdata('pesan')) : ?>
                         <div class="form-group">
-                            <label for="namasie">Nama Mitra</label>
-                            <input type="text" class="form-control" name="namasie" id="namasie">
+                          <span class="alert alert-success">Data berhasil <?= $this->session->flashdata('pesan'); ?></span>
+                        </div>
+                        <?php endif; ?>
+                        <div class="form-group">
+                            <label for="nama_mitra">Nama Mitra</label>
+                            <input type="text" class="form-control" name="nama_mitra" id="nama_mitra">
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fas-send"></i>Simpan Data</button>
@@ -33,25 +39,28 @@
             </div>
 
             <!-- table results -->
-            <div class="col-lg-6">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Mitra</th>
-                                <th colspan="2" class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Testing</td>
-                                <td>edit data hapus data</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-lg-5 offset-1">
+                  <div class="table-responsive">
+                      <table class="table table-condensed">
+                          <thead>
+                              <tr>
+                                  <th>No</th>
+                                  <th>Nama Seksi</th>
+                                  <th colspan="2" class="text-center">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>1</td>
+                                  <td>Testing</td>
+                                  <td class="text-center">
+                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
             </div>
 
           </div>
