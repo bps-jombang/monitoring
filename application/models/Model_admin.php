@@ -2,26 +2,24 @@
 
 class Model_admin extends CI_Model {  
 
-    private $_table          = "seksi";
-    private $user = "user";
-
+    private $_table = "seksi", 
+            $user   = "user";
 
     // ONLY CREATES 
     public function createSeksi($tabel,$no)
     {
-        // nama_mitra
-        $dataM = array(
-            'nama_mitra' => $this->input->post('mitra')
+        $dataMitra = array(
+            'nama_mitra' => ($this->input->post('nama_mitra'))
         );
-        $dataKec = array(
-            'nomor_kecamatan' => $this->input->post('nokec'), 
-            'nama_kecamatan' => $this->input->post('nakec')
+        $dataKecamatan = array(
+            'nomor_kecamatan' => stripslashes($this->input->post('nokec')), 
+            'nama_kecamatan' => stripslashes($this->input->post('nakec'))
         );
         // var_dump($data);
         if ($no == 1) {
-            $this->db->insert($tabel,$dataM);
+            $this->db->insert($tabel,$dataMitra);
         }else if($no == 2){
-        $this->db->insert($tabel,$dataKec);
+            $this->db->insert($tabel,$dataKecamatan);
         }
     }
     
