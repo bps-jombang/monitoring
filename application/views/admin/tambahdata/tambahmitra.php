@@ -4,7 +4,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Seksi"] ?>
+            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Mitra"] ?>
           </div>
             
           <div class="row">
@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <form action="" method="post">
                         <div class="form-group">
-                            <label for="namasie">Nama Seksi</label>
+                            <label for="namasie">Nama Mitra</label>
                             <input type="text" class="form-control" name="namasie" id="namasie">
                         </div>
                         <div class="form-group">
@@ -33,28 +33,25 @@
             </div>
 
             <!-- table results -->
-            <div class="col-lg-5 offset-1">
-                  <div class="table-responsive">
-                      <table class="table table-condensed">
-                          <thead>
-                              <tr>
-                                  <th>No</th>
-                                  <th>Nama Seksi</th>
-                                  <th colspan="2" class="text-center">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>1</td>
-                                  <td>Testing</td>
-                                  <td class="text-center">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
+            <div class="col-lg-6">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Mitra</th>
+                                <th colspan="2" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Testing</td>
+                                <td>edit data hapus data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
           </div>
