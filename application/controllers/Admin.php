@@ -2,67 +2,99 @@
 
 class Admin extends CI_Controller { 
 
-
+    public $info = 
+        ["sidebar" => 
+            [
+                "arrTambah" => [
+                    "Tambah Seksi" => "link seksi",
+                    "Tambah Admin" => "link admin",
+                    "Tambah Kecamatan" => "link kecamatan",
+                    "Tambah User" => "link user",
+                    "Tambah Mitra" => "link mitra"
+                ],
+                "User" => "Tambah User",
+                "Seksi" => "Tambah Seksi",
+                "Mitra" => "Tambah Mitra",
+                "Jabatan" => "Tambah Jabatan",
+            ],
+        "nama_form" => "Form tambah data"
+        ];
     public function __construct() 
     { 
         parent::__construct(); 
         $this->load->library('form_validation');
         $this->load->model('Model_admin', 'modeladmin');
         $this->load->helper('admin_helper');
+        $this->load->library('form_validation');
         
     }
-    public function hh(){
-        // $list = getuser();
-        // var_dump($list);
-        // foreach ($list as $key => $value) {
-        //     echo "<br>".$key." - " .$value["nama_user"];
+    public function ass(){
+        // $data = getMenuLink();
+        // print_r($data);
+        // $this->load->view('admin/testing',$data);
+        
+        // var_dump($menu);
+        // foreach ($this->data["sidebar"] as $key1 => $value1) {
+        //     echo "<br>Key [ ".$key1. " ] value => ".$value1;
         // }
-        $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
-        $this->db->join('user as u','u.id_user = kd.id_user');
-        $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
-        $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
-        $this->db->join('seksi as s','s.id_seksi = kd.id_user');
-        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
-
-        $this->db->order_by('id_kegiatan');
-        $data['orderuraian'] = $this->db->get('kegiatan')->result_array();
-
-        // SELECT * FROM `kegiatan_detail` GROUP BY id_user ASC 
-        $this->db->group_by('id_user');
-        $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
-        $this->load->view('template_admin/header');
-        $this->load->view('template_admin/sidebar');
-        $this->load->view('template_admin/navbar');
+        // foreach ($this->data as $key1 => $value1) {
+        //    echo "<br>Key [ ".$key1. " ] value => ".$value1;
+        // }
+       // echo "<br>". count($this->data["sidebar"]["arrTambah"]);
+        // echo "<br>". $this->data["sidebar2"]["Seksi2"]["TambahSeksi2"];
+        // echo json_encode($this->data);
+    }
+    public function addseksi()
+    {
+        // $data["list"] = $this->modeladmin->createSeksi();
+        // $data = $this->modeladmin->createSeksi();
+        // echo json_encode($data);
         
-        $this->load->view('admin/index',$data);
-        $this->load->view('template_admin/footer');
+        $data['listmenu']   = getMenuLink(); // array di helper   
+        $data['sidebar']    = $this->info; // array class
         
+        $this->form_validation->set_rules('nokec','Nomor kecamatan','required');
+        $this->form_validation->set_rules('nakec','Nama kecamatan','required');
+
+        if ($this->form_validation->run() == FALSE) {
+            # 
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahsie', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            $this->modeladmin->createSeksi('kecamatan');
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('seksi')); 
+        } 
+    }
+    public function addmitra()
+    {
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        
+        $this->form_validation->set_rules('nama_mitra','Mitra','required');
+
+        if ($this->form_validation->run() == FALSE) {
+            # 
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahmitra', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            $this->modeladmin->createSeksi('mitra',1);
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('mitra')); 
+        }
+    }
+    public function hh(){
+        $list = getuser();
+        echo json_encode($list);
     }
     public function tes($id = null)
     {
-        // $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
-        // $this->db->join('user as u','u.id_user = kd.id_user');
-        // $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
-        // $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
-        // $this->db->join('seksi as s','s.id_seksi = kd.id_user');
-        // // $this->db->where('u.id_user = kd.id_user');
-        // // $this->db->distinct('id_user');
-        // $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
-        //$this->db->select("id_user");
-        //SELECT COUNT(DISTINCT Country) FROM Customers;
-        // $data['list'] = $this->db->get('kegiatan_detail')->result_array();
-        // var_dump($data['list']);die;
-        // $this->db->join('kegiatan_detail' ,'kegiatan_detail.id_user = user.id_user');
-        // $data['user']= $this->db->get('user')->result_array();
-        // $this->db->where('id_user' );
-        // $data['list'] = $this->db->get('kegiatan_detail')->result_array();
-        // print_r($data['list']);
-        // $this->db->distinct();
-        // $data['distinct'] = $this->db->get('kegiatan_detail')->result_array();
-        
-        // SELECT COUNT(DISTINCT Country) FROM Customers;
-        // $this->db->select(COUNT(DISTINCT id_user));
-        // $this->;
         if ($id) {
             $data['list'] = $this->modeladmin->getUser($id);
             var_dump($data['list']);//die;
@@ -72,7 +104,6 @@ class Admin extends CI_Controller {
         }
         
         echo "<h1>".$this->db->last_query()."</h1>"; 
-        //$this->load->view('admin/tes',$data); 
     }
     public function index() 
     {
@@ -103,20 +134,22 @@ class Admin extends CI_Controller {
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
         $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
         $this->db->join('seksi as s','s.id_seksi = kd.id_user');
-        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
+        $resdb['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
 
         $this->db->order_by('id_kegiatan');
-        $data['orderuraian'] = $this->db->get('kegiatan')->result_array();
+        $resdb['orderuraian'] = $this->db->get('kegiatan')->result_array();
 
         // SELECT * FROM `kegiatan_detail` GROUP BY id_user ASC 
         $this->db->group_by('id_user');
-        $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
+        $resdb['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
         // $this->db->distinct('id_user');
         // $data['user']= $this->db->get('user')->result_array();
          // var_dump($data);die;
         $this->load->view('template_admin/header');
-        $this->load->view('template_admin/sidebar');
-        $this->load->view('admin/index',$data); 
+        $this->load->view('template_admin/sidebar', $this->data);
+        $this->load->view('template_admin/navbar');
+        
+        $this->load->view('admin/index',$resdb);
         $this->load->view('template_admin/footer');
     }
     public function loginadmin()

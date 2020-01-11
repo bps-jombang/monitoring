@@ -2,16 +2,25 @@
 
 class Model_admin extends CI_Model {  
 
-    private  $user           = "user",
-            $seksi          = "seksi",
-            $kegiatan       = "seksi",
-            $kegiatandetail = "seksi",
-            $mitra          = "mitra";
+    private $_table = "seksi", 
+            $user   = "user";
 
     // ONLY CREATES 
-    public function createMitra()
+    public function createSeksi($tabel,$no)
     {
-        // nama_mitra
+        $dataMitra = array(
+            'nama_mitra' => ($this->input->post('nama_mitra'))
+        );
+        $dataKecamatan = array(
+            'nomor_kecamatan' => stripslashes($this->input->post('nokec')), 
+            'nama_kecamatan' => stripslashes($this->input->post('nakec'))
+        );
+        // var_dump($data);
+        if ($no == 1) {
+            $this->db->insert($tabel,$dataMitra);
+        }else if($no == 2){
+            $this->db->insert($tabel,$dataKecamatan);
+        }
     }
     
     // ONLY UPDATE
