@@ -9,7 +9,17 @@ if ( ! function_exists('random')){
     }
 
 }
-
+if ( ! function_exists('getMenuLink')){
+    function getMenuLink(){
+        return  [
+                "Tambah Seksi"      => base_url('seksi'),
+                "Tambah Admin"      => base_url('admin'),
+                "Tambah Kegiatan"   => base_url('kegiatan'),
+                "Tambah User"       => base_url('user'),
+                "Tambah Mitra"      => base_url('mitra')
+        ];
+    }
+}
 if ( ! function_exists('random')){
    function random(){
          $number = rand(1111,9999);
