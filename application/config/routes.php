@@ -55,11 +55,17 @@ $route['admin/tes/(:any)'] = 'admin/tes/$1';
 // ROUTES VIEW LOGIN 
 $route['administrator'] = 'admin/loginadmin';
 
-// $route["add"] = 'admin/addSie';
 
 // ROUTES PROCESS LOGIN
 $route['adminprocess'] = 'admin/prosesloginadmin';
+$route['logout'] = 'admin/logout';
 
+// ROUTES CREATE DATA
+$route['mitra']     = 'admin/addmitra';
+$route['jabatan']   = 'admin/addjabatan';
+$route['seksi']     = 'admin/addsie';
+$route['mitra']     = 'admin/addmitra';
+$route['kegiatan']  = 'admin/addkegiatan';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
