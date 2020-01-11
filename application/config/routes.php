@@ -55,6 +55,8 @@ $route['admin/tes/(:any)'] = 'admin/tes/$1';
 // ROUTES VIEW LOGIN 
 $route['administrator'] = 'admin/loginadmin';
 
+// $route["add"] = 'admin/addSie';
+
 // ROUTES PROCESS LOGIN
 $route['adminprocess'] = 'admin/prosesloginadmin';
 
