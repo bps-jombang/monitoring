@@ -28,83 +28,7 @@ class Admin extends CI_Controller {
         $this->load->library('form_validation');
         
     }
-    public function ass(){
-        // $data = getMenuLink();
-        // print_r($data);
-        // $this->load->view('admin/testing',$data);
-        
-        // var_dump($menu);
-        // foreach ($this->data["sidebar"] as $key1 => $value1) {
-        //     echo "<br>Key [ ".$key1. " ] value => ".$value1;
-        // }
-        // foreach ($this->data as $key1 => $value1) {
-        //    echo "<br>Key [ ".$key1. " ] value => ".$value1;
-        // }
-       // echo "<br>". count($this->data["sidebar"]["arrTambah"]);
-        // echo "<br>". $this->data["sidebar2"]["Seksi2"]["TambahSeksi2"];
-        // echo json_encode($this->data);
-    }
-    public function addseksi()
-    {
-        // $data["list"] = $this->modeladmin->createSeksi();
-        // $data = $this->modeladmin->createSeksi();
-        // echo json_encode($data);
-        
-        $data['listmenu']   = getMenuLink(); // array di helper   
-        $data['sidebar']    = $this->info; // array class
-        
-        $this->form_validation->set_rules('nokec','Nomor kecamatan','required');
-        $this->form_validation->set_rules('nakec','Nama kecamatan','required');
 
-        if ($this->form_validation->run() == FALSE) {
-            # 
-            $this->load->view('template_admin/header');
-            $this->load->view('template_admin/sidebar',$data);
-            $this->load->view('template_admin/navbar');
-            $this->load->view('admin/tambahdata/tambahsie', $this->info);
-            $this->load->view('template_admin/footer');
-        }else{
-            $this->modeladmin->createSeksi('kecamatan');
-            $this->session->set_flashdata('pesan','Ditambah');
-            redirect(base_url('seksi')); 
-        } 
-    }
-    public function addmitra()
-    {
-        $data['listmenu'] = getMenuLink(); // array di helper
-        $data['sidebar'] = $this->info; // array class
-        
-        $this->form_validation->set_rules('nama_mitra','Mitra','required');
-
-        if ($this->form_validation->run() == FALSE) {
-            # 
-            $this->load->view('template_admin/header');
-            $this->load->view('template_admin/sidebar',$data);
-            $this->load->view('template_admin/navbar');
-            $this->load->view('admin/tambahdata/tambahmitra', $this->info);
-            $this->load->view('template_admin/footer');
-        }else{
-            $this->modeladmin->createSeksi('mitra',1);
-            $this->session->set_flashdata('pesan','Ditambah');
-            redirect(base_url('mitra')); 
-        }
-    }
-    public function hh(){
-        $list = getuser();
-        echo json_encode($list);
-    }
-    public function tes($id = null)
-    {
-        if ($id) {
-            $data['list'] = $this->modeladmin->getUser($id);
-            var_dump($data['list']);//die;
-        } else {
-            $data['list'] = $this->modeladmin->getUser();
-            var_dump($data['list']);
-        }
-        
-        echo "<h1>".$this->db->last_query()."</h1>"; 
-    }
     public function index() 
     {
         // $this->db->select('k.nomor_kecamatan,k.nama_kecamatan,user.nama_user');
@@ -134,23 +58,121 @@ class Admin extends CI_Controller {
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
         $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
         $this->db->join('seksi as s','s.id_seksi = kd.id_user');
-        $resdb['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
+        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
 
         $this->db->order_by('id_kegiatan');
-        $resdb['orderuraian'] = $this->db->get('kegiatan')->result_array();
+        $data['orderuraian'] = $this->db->get('kegiatan')->result_array();
 
         // SELECT * FROM `kegiatan_detail` GROUP BY id_user ASC 
         $this->db->group_by('id_user');
-        $resdb['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
+        $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
         // $this->db->distinct('id_user');
         // $data['user']= $this->db->get('user')->result_array();
          // var_dump($data);die;
-        $this->load->view('template_admin/header');
-        $this->load->view('template_admin/sidebar', $this->data);
-        $this->load->view('template_admin/navbar');
+        // $this->load->view('template_admin/header');
+        // $this->load->view('template_admin/sidebar', $this->data);
+        // $this->load->view('template_admin/navbar');
         
-        $this->load->view('admin/index',$resdb);
+        // $this->load->view('admin/index',$resdb);
+        // $this->load->view('template_admin/footer');
+
+        $data['listmenu']   = getMenuLink(); // array di helper   
+        $data['sidebar']    = $this->info; // array class
+        $this->load->view('template_admin/header');
+        $this->load->view('template_admin/sidebar',$data);
+        $this->load->view('template_admin/navbar');
+        $this->load->view('admin/index', $this->info);
         $this->load->view('template_admin/footer');
+    }
+
+    public function addseksi()
+    {   
+        $data['listmenu']   = getMenuLink(); // array di helper   
+        $data['sidebar']    = $this->info; // array class
+        
+        $this->form_validation->set_rules('nokec','Nomor kecamatan','required'); // validation 
+        $this->form_validation->set_rules('nakec','Nama kecamatan','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) { 
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahsie', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->createSeksi('kecamatan');
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('seksi')); 
+        } 
+    }
+
+    public function addmitra()
+    {
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        
+        $this->form_validation->set_rules('nama_mitra','Mitra','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahmitra', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->createSeksi('mitra',1);
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('mitra')); 
+        }
+    }
+    // COPAS DIBAWAH ini untuk add kegiatan,jabatan dsb
+
+
+
+
+
+    
+
+    // INI JANGAN DIUTIK GAYS :D BUAT TESTING 
+    public function ass(){
+        // $data = getMenuLink();
+        // print_r($data);
+        // $this->load->view('admin/testing',$data);
+        
+        // var_dump($menu);
+        // foreach ($this->data["sidebar"] as $key1 => $value1) {
+        //     echo "<br>Key [ ".$key1. " ] value => ".$value1;
+        // }
+        // foreach ($this->data as $key1 => $value1) {
+        //    echo "<br>Key [ ".$key1. " ] value => ".$value1;
+        // }
+       // echo "<br>". count($this->data["sidebar"]["arrTambah"]);
+        // echo "<br>". $this->data["sidebar2"]["Seksi2"]["TambahSeksi2"];
+        // echo json_encode($this->data);
+    }
+    public function hh($id = null){
+        // model
+        // $data['data'] = $this->modeladmin->getUser(1,$id);
+        // echo $data['data'];
+        // helper
+        // $list = getuser();
+        // echo json_encode($list);
+    }
+    public function tes($id = null)
+    {
+        if ($id) {
+            $data['list'] = $this->modeladmin->getUser($id);
+            var_dump($data['list']);//die;
+        } else {
+            $data['list'] = $this->modeladmin->getUser();
+            var_dump($data['list']);
+        }
+        
+        echo "<h1>".$this->db->last_query()."</h1>"; 
     }
     public function loginadmin()
     {
