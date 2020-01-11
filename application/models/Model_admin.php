@@ -43,7 +43,7 @@ class Model_admin extends CI_Model {
     public function getUser($status,$id = null)
     {
         // 1 = seksi, 2 = user,3 = mitra, 4 = kegiatan, 5 = kecamatan
-        if ($status == 1) {
+        if ($status == "seksi") {
             // select tabel seksi
             if ($id) {
                 return json_encode($this->db->get_where($this->_seksi,["id_seksi" => $id])->row_array());
@@ -51,14 +51,14 @@ class Model_admin extends CI_Model {
                 return json_encode($this->db->get($this->_seksi)->result_array());
             }
         }
-        // else if($status == 2) {
-        //     // select tabel user
-        //     if ($id) {
-        //         return json_encode($this->db->get_where($this->_user,["id_user" => $id])->row_array());
-        //     }else{
-        //         return json_encode($this->db->get($this->_user)->result_array());
-        //     }
-        // }
+        else if($status == "user") {
+            // select tabel user
+            if ($id) {
+                return json_encode($this->db->get_where($this->_user,["id_user" => $id])->row_array());
+            }else{
+                return json_encode($this->db->get($this->_user)->result_array());
+            }
+        }
         // else{
         //     return json_encode($this->db->get($this->user)->result_array());
         // }

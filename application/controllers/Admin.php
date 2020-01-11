@@ -154,10 +154,14 @@ class Admin extends CI_Controller {
         // echo "<br>". $this->data["sidebar2"]["Seksi2"]["TambahSeksi2"];
         // echo json_encode($this->data);
     }
-    public function hh($id = null){
+    public function hh($tabel = null,$id = null){
         // model
-        // $data['data'] = $this->modeladmin->getUser(1,$id);
-        // echo $data['data'];
+        if ($tabel == null) {
+            echo json_encode(["status" => false, "messages" => "access denied"]);
+        }else{
+            $data['data'] = $this->modeladmin->getUser($tabel,$id);
+            echo $data['data'];
+        }
         // helper
         // $list = getuser();
         // echo json_encode($list);
