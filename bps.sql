@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2020 at 01:58 PM
+-- Generation Time: Jan 11, 2020 at 03:13 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -21,6 +21,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `bps`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jabatan`
+--
+
+CREATE TABLE `jabatan` (
+  `id_jabatan` int(11) NOT NULL,
+  `nama_jabatan` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jabatan`
+--
+
+INSERT INTO `jabatan` (`id_jabatan`, `nama_jabatan`) VALUES
+(1, 'Kasi'),
+(2, 'Staff');
 
 -- --------------------------------------------------------
 
@@ -59,7 +78,12 @@ INSERT INTO `kecamatan` (`id_kecamatan`, `nomor_kecamatan`, `nama_kecamatan`) VA
 (18, '171', 'Ngusikan'),
 (19, '180', 'Ploso'),
 (20, '190', 'Kabuh'),
-(21, '200', 'Plandaan');
+(21, '200', 'Plandaan'),
+(22, '123', 'sayang'),
+(23, '099', 'hahahahaha'),
+(24, '123', 'sasasa'),
+(25, '194', 'indonesia'),
+(26, '194', 'indonesia');
 
 -- --------------------------------------------------------
 
@@ -73,7 +97,7 @@ CREATE TABLE `kegiatan` (
   `uraian_kegiatan` text NOT NULL,
   `vol` int(11) DEFAULT NULL,
   `satuan` varchar(30) DEFAULT NULL,
-  `target_penyelesaian` enum('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember') NOT NULL
+  `target_penyelesaian` enum('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -85,11 +109,12 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `sa
 (2, 3, 'pengawasan pencacahan SAK sm I', 210, 'Dokumen', 'Februari'),
 (3, 3, 'pelatihan sakernas Sm 1', 3, 'Hari', 'Januari'),
 (4, 5, 'Sampel Ubinan', 0, '', ''),
-(5, 5, 'Survei KSA (Pengawas)', 0, '', ''),
-(6, 5, 'Survei KSA (Pencacahan)', 0, '', ''),
-(7, 5, 'Surv. Perkebunan Triwulanan (PCL)', 0, '', ''),
-(8, 7, 'Survei Harga Perdesaan; HD', 27, 'Dokumen', 'Januari'),
-(9, 7, 'Survei Harga Perdesaan; HKD', 21, 'Dokumen', 'Januari');
+(10, 3, 'Sampel Ubinan (PMS)', 0, '0', ''),
+(11, 3, 'Surve KSA (Pengawas)', NULL, NULL, NULL),
+(12, 3, 'Surve KSA (Pencacahan)', NULL, NULL, NULL),
+(13, 3, 'Srv. Perkebunan Triwulanan (PCL)', NULL, NULL, NULL),
+(14, 4, 'SURVEI HARGA PERDESAAN; HD', NULL, NULL, NULL),
+(15, 4, 'SURVEI HARGA PERDESAAN; HKD', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -114,8 +139,10 @@ INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `
 (2, 2, 4, 70, NULL),
 (3, 3, 4, 3, NULL),
 (4, 4, 9, 5, NULL),
-(5, 5, 9, 10, NULL),
-(6, 1, 9, 2, NULL);
+(6, 1, 9, 2, NULL),
+(7, 1, 1, 5, NULL),
+(8, 1, 2, NULL, NULL),
+(9, 1, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -127,6 +154,13 @@ CREATE TABLE `mitra` (
   `id_mitra` int(11) NOT NULL,
   `nama_mitra` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mitra`
+--
+
+INSERT INTO `mitra` (`id_mitra`, `nama_mitra`) VALUES
+(1, 'Harapan Jaya');
 
 -- --------------------------------------------------------
 
@@ -147,27 +181,20 @@ CREATE TABLE `role` (
 
 CREATE TABLE `seksi` (
   `id_seksi` int(11) NOT NULL,
-  `nama_seksi` varchar(50) NOT NULL,
-  `jabatan` enum('Kasi','Staff','','') DEFAULT NULL
+  `nama_seksi` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `seksi`
 --
 
-INSERT INTO `seksi` (`id_seksi`, `nama_seksi`, `jabatan`) VALUES
-(1, 'Tata usaha', 'Kasi'),
-(2, 'Tata usaha', 'Staff'),
-(3, 'Sosial', 'Kasi'),
-(4, 'Sosial', 'Staff'),
-(5, 'Produksi', 'Kasi'),
-(6, 'Produksi', 'Staff'),
-(7, 'Distribusi', 'Kasi'),
-(8, 'Distribusi', 'Staff'),
-(9, 'Nerwilis', 'Kasi'),
-(10, 'Nerwilis', 'Staff'),
-(11, 'IPDS', 'Kasi'),
-(12, 'IPDS', 'Staff');
+INSERT INTO `seksi` (`id_seksi`, `nama_seksi`) VALUES
+(1, 'Tata usaha'),
+(2, 'Sosial'),
+(3, 'Produksi'),
+(4, 'Distribusi'),
+(5, 'Nerwilis'),
+(6, 'IPDS');
 
 -- --------------------------------------------------------
 
@@ -213,6 +240,12 @@ INSERT INTO `user` (`id_user`, `id_role`, `id_seksi`, `id_kecamatan`, `nama_user
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `jabatan`
+--
+ALTER TABLE `jabatan`
+  ADD PRIMARY KEY (`id_jabatan`);
 
 --
 -- Indexes for table `kecamatan`
@@ -265,28 +298,34 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `jabatan`
+--
+ALTER TABLE `jabatan`
+  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `kecamatan`
 --
 ALTER TABLE `kecamatan`
-  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `mitra`
 --
 ALTER TABLE `mitra`
-  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -298,7 +337,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `seksi`
 --
 ALTER TABLE `seksi`
-  MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
