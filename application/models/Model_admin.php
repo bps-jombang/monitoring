@@ -8,7 +8,7 @@ class Model_admin extends CI_Model {
     // ONLY CREATES 
     public function createData($tabel,$no)
     {
-        // 1 = seksi, 2 = mitra, 3 kecamatan, 4 = user, 5 = kegiatan
+        // 1 = seksi, 2 = mitra, 3 kecamatan, 4 = user, 5 = kegiatan, 6 = jabatan
         
         $dataMitra = array( // TABEL MITRA
             'nama_mitra' => ($this->input->post('nama_mitra')) // NAME LABEL DI VIEWS ex: name="apa"
@@ -16,6 +16,19 @@ class Model_admin extends CI_Model {
         $dataKecamatan = array( // TABEL KECAMATAN
             'nomor_kecamatan' => stripslashes($this->input->post('nokec')), 
             'nama_kecamatan' => stripslashes($this->input->post('nakec'))
+        );
+        $dataUser = array (
+            'nama_user' => (this->input->post('nama_user'))
+        );
+        $dataKegiatan = array (
+            'uraian_kegiatan' => ($this->input->post('uraian_kegiatan')),
+            'vol' => ($this->input->post('vol')),
+            'satuan' => ($this->input->post('satuan')),
+            'target_penyelesaian' => ($this->input->post('target_penyelesaian'))
+        );
+
+        $dataJabatan = array (
+            'nama_jabatan' => ($this->input->post('nama_jabatan'))
         );
         // SESUAIKAN DI DATABASE YAA
 
@@ -27,9 +40,11 @@ class Model_admin extends CI_Model {
         }else if($no == 3){ // insert ke tabel kecamatan
             $this->db->insert($tabel,$dataKecamatan);
         }else if($no == 4){ // insert ke tabel user
-            $this->db->insert($tabel,$x);
+            $this->db->insert($tabel,$dataUser);
         }else if($no == 5){ // insert tabael kegiatan
-            $this->db->insert($tabel,$x);
+            $this->db->insert($tabel,$dataKegiatan);
+        }else if($no == 6){
+            $this->db->insert($tabel,$dataJabatan);
         }
     }
     
