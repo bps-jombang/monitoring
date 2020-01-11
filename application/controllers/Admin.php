@@ -102,7 +102,7 @@ class Admin extends CI_Controller {
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createSeksi('kecamatan');
+            $this->modeladmin->createSeksi('kecamatan',1);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('seksi')); 
         } 
@@ -124,12 +124,77 @@ class Admin extends CI_Controller {
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createSeksi('mitra',1);
+            $this->modeladmin->createSeksi('mitra',2);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('mitra')); 
         }
     }
     // COPAS DIBAWAH ini untuk add kegiatan,jabatan dsb
+    public function addjabatan()
+    {
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        
+        $this->form_validation->set_rules('nama_jabatan','Jabatan','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahjabatan', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->createSeksi('jabatan',6);
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('jabatan')); 
+        }
+    }
+
+    public function addKegiatan()
+    {
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        
+        $this->form_validation->set_rules('uraian_kegiatan','Kegiatan','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahKegiatan', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->createSeksi('kegiatan',5);
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('kegiatan')); 
+        }
+
+        public function addUser()
+    {
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        
+        $this->form_validation->set_rules('nama_user','User','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahUser', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->createSeksi('user',4);
+            $this->session->set_flashdata('pesan','Ditambah');
+            redirect(base_url('user')); 
+        }
+
+
 
 
 
