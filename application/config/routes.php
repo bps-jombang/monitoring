@@ -49,23 +49,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'admin/addsie';
+$route['default_controller'] = 'auth';
 
 // $route['admin/tes/(:any)'] = 'admin/tes/$1';
-// ROUTES VIEW LOGIN 
-$route['administrator'] = 'admin/loginadmin';
 
+// ROUTES AUTHENTIFICATION LOGIN
+$route['loginadmin']      = 'auth/prosesloginadmin';
+$route['logout']          = 'auth/logout';
 
-// ROUTES PROCESS LOGIN
-$route['adminprocess'] = 'admin/prosesloginadmin';
-$route['logout'] = 'admin/logout';
 
 // ROUTES CREATE DATA
-$route['mitra']     = 'admin/addmitra';
-$route['jabatan']   = 'admin/addjabatan';
-$route['seksi']     = 'admin/addseksi';
-$route['mitra']     = 'admin/addmitra';
-$route['kegiatan']  = 'admin/addkegiatan';
+$route['mitra']           = 'admin/addmitra';
+$route['user']            = 'admin/adduser';
+$route['jabatan']         = 'admin/addjabatan';
+$route['seksi']           = 'admin/addseksi';
+$route['mitra']           = 'admin/addmitra';
+$route['kegiatan']        = 'admin/addkegiatan';
+
+// ROUTES UPDATE DATA
+$route['mitraupdate']     = 'admin/updatemitra';
+$route['userupdate']      = 'admin/updateuser';
+$route['jabatanupdate']   = 'admin/updatejabatan';
+$route['seksiupdate']     = 'admin/updateseksi';
+$route['mitraupdate']     = 'admin/updatemitra';
+$route['kegiatanupdate']  = 'admin/updatekegiatan';
+
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
