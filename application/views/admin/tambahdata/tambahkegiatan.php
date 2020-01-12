@@ -33,12 +33,25 @@
                             <input type="text" class="form-control" name="vol" id="vol">
                         </div>
                         <div class="form-group">
-                            <label for="satuan">Satuan</label>
-                            <input type="text" class="form-control" name="satuan" id="satuan">
+                            <label for="target_penyelesaian">Target Penyelesaian</label>
+                            <select name="target_penyelesaian" class="form-control" id="target_penyelesaian">
+                                <option value="Januari">Januari</option>
+                                <option value="Februari">Februari</option>
+                                <option value="Maret">Maret</option>
+                                <option value="April">April</option>
+                                <option value="April">Mei</option>
+                                <option value="Juni">Juni</option>
+                                <option value="Juli">Juli</option>
+                                <option value="Agustus">Agustus</option>
+                                <option value="September">September</option>
+                                <option value="Oktober">Oktober</option>
+                                <option value="November">November</option>
+                                <option value="Desember">Desember</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="target_penyelesaian">Target Penyelesaian</label>
-                            <input type="date" class="form-control" name="target_penyelesaian" id="target_penyelesaian">
+                            <label for="satuan">Satuan</label>
+                            <input type="text" class="form-control" name="satuan" id="satuan">
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fas-send"></i>Simpan Data</button>

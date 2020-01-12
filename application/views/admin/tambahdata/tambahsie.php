@@ -17,10 +17,16 @@
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                  <?php echo validation_errors(); ?>
+                    <form action="<?= base_url('seksi') ?>" method="post">
+                      <?php if($this->session->flashdata('pesan')) : ?>
                         <div class="form-group">
-                            <label for="namasie">Nama Seksi</label>
-                            <input type="text" class="form-control" name="namasie" id="namasie">
+                          <?= $this->session->flashdata('pesan'); ?>
+                        </div>
+                        <?php endif; ?>
+                        <div class="form-group">
+                            <label for="nama_seksi">Nama Seksi</label>
+                            <input type="text" class="form-control" name="nama_seksi" id="nama_seksi">
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fas-send"></i>Simpan Data</button>
@@ -44,14 +50,16 @@
                               </tr>
                           </thead>
                           <tbody>
+                            <?php $no=1; foreach($listseksi as $list) : ?>
                               <tr>
-                                  <td>1</td>
-                                  <td>Testing</td>
+                                  <td><?= $no++; ?></td>
+                                  <td><?= $list['nama_seksi'] ?></td>
                                   <td class="text-center">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                                    <a href="<?= $list['id_seksi'] ?>" data-target="#editdata" data-toggle="modal" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                     <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
                                   </td>
                               </tr>
+                            <?php endforeach;?>
                           </tbody>
                       </table>
                   </div>

@@ -15,6 +15,7 @@ class Admin extends CI_Controller {
                 "User" => "Tambah User",
                 "Seksi" => "Tambah Seksi",
                 "Mitra" => "Tambah Mitra",
+                "Kegiatan" => "Tambah Kegiatan",
                 "Jabatan" => "Tambah Jabatan",
             ],
         "nama_form" => "Form tambah data"
@@ -23,36 +24,16 @@ class Admin extends CI_Controller {
     { 
         parent::__construct(); 
         $this->load->library('form_validation');
-        $this->load->model('Model_admin', 'modeladmin');
+        $this->load->model(['Model_admin' => 'modeladmin','Model_login' => 'modellogin']);
         $this->load->helper('admin_helper');
-        $this->load->library('form_validation');
-        
+
+        if (!$this->session->userdata('username')) {
+            redirect(base_url('loginadmin'));
+        }
     }
 
     public function index() 
     {
-        // $this->db->select('k.nomor_kecamatan,k.nama_kecamatan,user.nama_user');
-        // $this->db->join('kecamatan as k','k.id_kecamatan = user.id_kecamatan');
-        // $data['user'] = $this->db->get('user')->result_array();
-
-        // $this->db->select('kegiatan.id_kegiatan,s.nama_seksi,kegiatan.uraian_kegiatan,kegiatan.vol,kegiatan.satuan,kegiatan.target_penyelesaian');
-        // $this->db->join('seksi as s','s.id_seksi = kegiatan.id_seksi');
-        // $data['kegiatan'] = $this->db->get('kegiatan')->result_array();
-
-        // $data['detail'] = $this->db->get('kegiatan_detail')->result_array();
-
-        // SELECT k.uraian_kegiatan,k.id_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi
-
-        // FROM kegiatan_detail as kd
-        // INNER JOIN user as u 
-        // ON u.id_user = kd.id_user
-        // INNER JOIN kegiatan as k 
-        // ON k.id_kegiatan = kd.id_kegiatan
-        // INNER JOIN kecamatan as kc
-        // ON kc.id_kecamatan = kd.id_user
-        // $data['list'] = $this->modeladmin->getUser(1);
-        // var_dump($data['list']);die;
-
         $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
         $this->db->join('user as u','u.id_user = kd.id_user');
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
@@ -63,18 +44,8 @@ class Admin extends CI_Controller {
         $this->db->order_by('id_kegiatan');
         $data['orderuraian'] = $this->db->get('kegiatan')->result_array();
 
-        // SELECT * FROM `kegiatan_detail` GROUP BY id_user ASC 
         $this->db->group_by('id_user');
         $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
-        // $this->db->distinct('id_user');
-        // $data['user']= $this->db->get('user')->result_array();
-         // var_dump($data);die;
-        // $this->load->view('template_admin/header');
-        // $this->load->view('template_admin/sidebar', $this->data);
-        // $this->load->view('template_admin/navbar');
-        
-        // $this->load->view('admin/index',$resdb);
-        // $this->load->view('template_admin/footer');
 
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
@@ -89,9 +60,9 @@ class Admin extends CI_Controller {
     {   
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
+        $data['listseksi'] = $this->modeladmin->getUser('seksi',0);
         
-        $this->form_validation->set_rules('nokec','Nomor kecamatan','required'); // validation 
-        $this->form_validation->set_rules('nakec','Nama kecamatan','required'); // validation
+        $this->form_validation->set_rules('nama_seksi','Nama Seksi','required'); // validation 
 
         if ($this->form_validation->run() == FALSE) { 
             // jika validation gagal maka dikembalikan ke halaman insert tadi
@@ -99,11 +70,12 @@ class Admin extends CI_Controller {
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahsie', $this->info);
+            $this->load->view('template_admin/modal');
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createSeksi('kecamatan',1);
-            $this->session->set_flashdata('pesan','Ditambah');
+            $this->modeladmin->createData('seksi',1);
+            $this->session->set_flashdata('pesan','<span class="alert alert-success">Data berhasil Ditambah</span>');
             redirect(base_url('seksi')); 
         } 
     }
@@ -124,7 +96,7 @@ class Admin extends CI_Controller {
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createSeksi('mitra',2);
+            $this->modeladmin->createData('mitra',2);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('mitra')); 
         }
@@ -146,38 +118,40 @@ class Admin extends CI_Controller {
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createSeksi('jabatan',6);
+            $this->modeladmin->createData('jabatan',6);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('jabatan')); 
         }
     }
 
-    public function addKegiatan()
+    public function addkegiatan()
     {
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
-        
         $this->form_validation->set_rules('uraian_kegiatan','Kegiatan','required'); // validation
+        $this->form_validation->set_rules('vol','Volume','required');
+        $this->form_validation->set_rules('satuan','Satuan','required');
+        $this->form_validation->set_rules('target_penyelesaian','target_penyelesaian','required');
 
         if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
             $this->load->view('template_admin/header');
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
-            $this->load->view('admin/tambahdata/tambahKegiatan', $this->info);
+            $this->load->view('admin/tambahdata/tambahkegiatan', $this->info);
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createSeksi('kegiatan',5);
+            $this->modeladmin->createData('kegiatan',5);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('kegiatan')); 
         }
+    }
 
-        public function addUser()
+    public function adduser()
     {
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
-        
         $this->form_validation->set_rules('nama_user','User','required'); // validation
 
         if ($this->form_validation->run() == FALSE) {
@@ -189,10 +163,11 @@ class Admin extends CI_Controller {
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createSeksi('user',4);
+            $this->modeladmin->createData('user',4);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('user')); 
         }
+    }
 
 
 
@@ -203,22 +178,6 @@ class Admin extends CI_Controller {
     
 
     // INI JANGAN DIUTIK GAYS :D BUAT TESTING 
-    public function ass(){
-        // $data = getMenuLink();
-        // print_r($data);
-        // $this->load->view('admin/testing',$data);
-        
-        // var_dump($menu);
-        // foreach ($this->data["sidebar"] as $key1 => $value1) {
-        //     echo "<br>Key [ ".$key1. " ] value => ".$value1;
-        // }
-        // foreach ($this->data as $key1 => $value1) {
-        //    echo "<br>Key [ ".$key1. " ] value => ".$value1;
-        // }
-       // echo "<br>". count($this->data["sidebar"]["arrTambah"]);
-        // echo "<br>". $this->data["sidebar2"]["Seksi2"]["TambahSeksi2"];
-        // echo json_encode($this->data);
-    }
     public function hh($tabel = null,$id = null){
         // model
         if ($tabel == null) {
@@ -242,24 +201,6 @@ class Admin extends CI_Controller {
         }
         
         echo "<h1>".$this->db->last_query()."</h1>"; 
-    }
-    public function loginadmin()
-    {
-        $this->load->view('auth/loginadmin');
-    }
-
-    public function prosesloginadmin()
-    {
-        $this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]');
-        $this->form_validation->set_rules('password','Password','required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/loginadmin');
-        }else{
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-            var_dump($this->input->post());
-        }
     }
 }
 
