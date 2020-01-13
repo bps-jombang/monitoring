@@ -39,6 +39,7 @@ class Auth extends CI_Controller {
                 $this->session->set_userdata($data);
                 redirect(base_url('admin'));
             }else{
+                $this->session->set_flashdata('gagal','<div class="alert alert-danger" role="alert">Username atau Password salah!!</div>');
                 redirect(base_url('loginadmin'));
             }
         }

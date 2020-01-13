@@ -24,16 +24,30 @@
                           <span class="alert alert-success">Data berhasil <?= $this->session->flashdata('pesan'); ?></span>
                         </div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="uraian_kegiatan">Uraian Kegiatan</label>
-                            <input type="text" class="form-control" name="uraian_kegiatan" id="uraian_kegiatan">
+                        <div class="form-row">
+                          <div class="form-group col-md-12">
+                            <label for="inputEmail4">Nama Kegiatan (Uraian Kegiatan)</label>
+                            <input type="email" class="form-control" id="inputEmail4">
+                          </div>
+                        </div><div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputState">Seksi</label>
+                            <select id="inputState" class="form-control">
+                              <option selected>Seksi Humas</option>
+                              <option>...</option>
+                            </select>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label for="inputZip">Volume</label>
+                            <input type="text" class="form-control" id="inputZip" placeholder="120">
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label for="inputZip">Satuan</label>
+                            <input type="text" class="form-control" id="inputZip" placeholder="Dokumen">
+                          </div>
                         </div>
                         <div class="form-group">
-                            <label for="vol">Volume</label>
-                            <input type="text" class="form-control" name="vol" id="vol">
-                        </div>
-                        <div class="form-group">
-                            <label for="target_penyelesaian">Target Penyelesaian</label>
+                            <label for="target_penyelesaian">Anggota</label>
                             <select name="target_penyelesaian" class="form-control" id="target_penyelesaian">
                                 <option value="Januari">Januari</option>
                                 <option value="Februari">Februari</option>
