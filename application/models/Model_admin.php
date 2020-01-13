@@ -54,9 +54,14 @@ class Model_admin extends CI_Model {
     }
     
     // ONLY UPDATE
-    public function updateUser()
+    public function updateData($tabel,$no,$id)
     {
-        //
+        // 1 seksi, 2 mitra, 3 kecamatan,4 user,5 kegiatan
+        $dataMitra = array ('nama_mitra' => $this->input->post('nama_mitra'));
+        if ($no == 1 ) {
+            var_dump($dataMitra);die;
+            $this->db->update($tabel,$dataMitra,["id_mitra" => $id]);
+        }
     }
 
     // ONLY SHOW ALL
@@ -70,13 +75,33 @@ class Model_admin extends CI_Model {
             }else{
                 return $this->db->get($this->_seksi)->result_array();
             }
-        }
-        else if($tabel == "user") {
+        }else if($tabel == "user") {
             // select tabel user
             if ($id) {
                 return json_encode($this->db->get_where($this->_user,["id_user" => $id])->row_array());
             }else{
-                return json_encode($this->db->get($this->_user)->result_array());
+                return ($this->db->get($this->_user)->result_array());
+            }
+        }else if($tabel == "mitra") {
+            // select tabel user
+            if ($id) {
+                return json_encode($this->db->get_where($this->_mitra,["id_mitra" => $id])->row_array());
+            }else{
+                return $this->db->get($this->_mitra)->result_array();
+            }
+        }else if($tabel == "kegiatan") {
+            // select tabel kegiatan
+            if ($id) {
+                return json_encode($this->db->get_where($this->_kegiatan,["id_kegiatan" => $id])->row_array());
+            }else{
+                return json_encode($this->db->get($this->_kegiatan)->result_array());
+            }
+        }else if($tabel == "kecamatan") {
+            // select tabel kecamatan
+            if ($id) {
+                return json_encode($this->db->get_where($this->_kecamatan,["id_kecamatan" => $id])->row_array());
+            }else{
+                return json_encode($this->db->get($this->_kecamatan)->result_array());
             }
         }
         // else{
@@ -85,10 +110,33 @@ class Model_admin extends CI_Model {
     }
 
     // ONLY DELETE
-    public function deleteByIdUser()
+    public function deleteData($tabel,$no,$id)
     {
-        //
+        if ($no == 2 ) {
+            // var_dump($tabel);die;
+            // return $this->db->get_where($tabel,["id_mitra" => $id])->row_array();
+            return $this->db->delete($tabel,["id_mitra" => $id]);
+        }
     }
 
+    public function getRealisasi($id_kegiatan, $id_user) {
+        $data = $this->db->get_where('kegiatan_detail', array('id_kegiatan' => $id_kegiatan, 'id_user' => $id_user))->result_array();
+
+        if(count($data) > 0) {
+            return $data[0]['realisasi'];
+        } else {
+            return "-";
+        }
+    }
+
+    public function getTarget($id_kegiatan, $id_user) {
+        $data = $this->db->get_where('kegiatan_detail', array('id_kegiatan' => $id_kegiatan, 'id_user' => $id_user))->result_array();
+
+        if(count($data) > 0) {
+            return $data[0]['target'];
+        } else {
+            return "-";
+        }
+    }
 }
 ?>
