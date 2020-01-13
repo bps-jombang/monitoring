@@ -74,6 +74,9 @@ $route['seksiupdate']     = 'admin/updateseksi';
 $route['mitraupdate']     = 'admin/updatemitra';
 $route['kegiatanupdate']  = 'admin/updatekegiatan';
 
+// ROUTES DELETE DATA 
+$route['hapusdata/(:any)'] = 'admin/deleteUser/$1'; // jika ada id
+$route['hapusdata']        = 'admin/deleteUser'; // jika tidak ada id
 
 
 $route['404_override'] = '';
