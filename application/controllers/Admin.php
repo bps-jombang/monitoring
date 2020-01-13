@@ -84,6 +84,7 @@ class Admin extends CI_Controller {
     {
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
+        $data['listmitra'] = $this->modeladmin->getUser('mitra',0);
         
         $this->form_validation->set_rules('nama_mitra','Mitra','required'); // validation
 
@@ -97,7 +98,7 @@ class Admin extends CI_Controller {
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('mitra',2);
-            $this->session->set_flashdata('pesan','Ditambah');
+            $this->session->set_flashdata('pesan','Berhasil Ditambah');
             redirect(base_url('mitra')); 
         }
     }
@@ -164,7 +165,7 @@ class Admin extends CI_Controller {
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('user',4);
-            $this->session->set_flashdata('pesan','Ditambah');
+            $this->session->set_flashdata('pesan','Berhasil Ditambah');
             redirect(base_url('user')); 
         }
     }
@@ -172,8 +173,21 @@ class Admin extends CI_Controller {
 
 
 
-
-
+    public function deleteUser($id = null)
+    {
+        if (!$id) {
+            $data = array('status' => false , 'messages' => 'no results from database' );
+            echo json_encode($data);
+        }else{
+            $data = $this->modeladmin->deleteData('mitra',2,$id);
+            if ($data == true) {
+                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                redirect(base_url('mitra'));
+            }else{
+                echo "data gagal dihapus";
+            }
+        }
+    }
 
     
 
@@ -190,17 +204,49 @@ class Admin extends CI_Controller {
         // $list = getuser();
         // echo json_encode($list);
     }
-    public function tes($id = null)
-    {
-        if ($id) {
-            $data['list'] = $this->modeladmin->getUser($id);
-            var_dump($data['list']);//die;
-        } else {
-            $data['list'] = $this->modeladmin->getUser();
-            var_dump($data['list']);
-        }
-        
-        echo "<h1>".$this->db->last_query()."</h1>"; 
+    public function show(){
+        $res = $this->db->get('user')->result_array();
+        echo json_encode(array("data" => $res));
     }
+    public function tes()
+    {
+        // $data['list'] = $this->db->get('user')->result_array();
+        // print_r($data['list']);die;
+        // $data = array("list" =>  $this->db->get('user')->result_array());
+        // return json_encode($data);
+        
+        $data['listmenu']   = getMenuLink(); // array di helper   
+        $data['sidebar']    = $this->info; // array class
+        $this->load->view('template_admin/header');
+        $this->load->view('template_admin/sidebar',$data);
+        $this->load->view('template_admin/navbar');
+        $this->load->view('admin/tes', $this->info);
+        $this->load->view('template_admin/footer');
+        
+        // $data = $this->db->get_where('user',["nama_user !=" => NULL])->result_array();
+        // echo json_encode($data);
+        // if ($id) {
+        //     $data['list'] = $this->modeladmin->getUser($id);
+        //     var_dump($data['list']);//die;
+        // } else {
+        //     $data['list'] = $this->modeladmin->getUser();
+        //     var_dump($data['list']);
+        // }
+        
+        // echo "<h1>".$this->db->last_query()."</h1>"; 
+    }
+
+    public function test() {
+        $semua_kegiatan = $this->db->get('v_kegiatan')->result_array();
+        $semua_user = $this->db->query("SELECT * FROM v_kegiatan_detail GROUP BY id_user")->result_array();
+
+        $parser['semua_kegiatan'] = $semua_kegiatan;
+        $parser['semua_user'] = $semua_user;
+
+        $this->load->view('test', $parser);
+    }
+
+
+
 }
 
