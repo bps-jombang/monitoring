@@ -6,7 +6,29 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Seksi"] ?>
           </div>
-            
+            <?php if($this->session->flashdata('hapus')) :?>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-6">
+                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
+                      Data <strong>Berhasil Dihapus!</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+              </div>
+            <?php elseif($this->session->flashdata('pesan')) : ?>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-6">
+                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
+                      Data <strong>Berhasil Ditambahkan!</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+              </div>
+            <?php endif; ?>
           <div class="row">
 
             <!-- form input data -->
@@ -17,14 +39,9 @@
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
                 <div class="card-body">
-                  <?php echo validation_errors(); ?>
                     <form action="<?= base_url('seksi') ?>" method="post">
-                      <?php if($this->session->flashdata('pesan')) : ?>
                         <div class="form-group">
-                          <?= $this->session->flashdata('pesan'); ?>
-                        </div>
-                        <?php endif; ?>
-                        <div class="form-group">
+                          <?= form_error('nama_seksi','<div class="alert alert-warning mt-3">','</div>'); ?>
                             <label for="nama_seksi">Nama Seksi</label>
                             <input type="text" class="form-control" name="nama_seksi" id="nama_seksi">
                         </div>
@@ -42,21 +59,21 @@
             <div class="col-lg-5 offset-1">
                   <div class="table-responsive">
                       <table class="table table-condensed">
-                          <thead>
+                          <thead class="thead-dark testing-tabel">
                               <tr>
-                                  <th>No</th>
-                                  <th>Nama Seksi</th>
+                                  <th class="text-center">No</th>
+                                  <th class="text-center">Nama Seksi</th>
                                   <th colspan="2" class="text-center">Action</th>
                               </tr>
                           </thead>
                           <tbody>
-                            <?php $no=1; foreach($listseksi as $list) : ?>
+                            <?php $no=1; foreach($listseksi as $seksi) : ?>
                               <tr>
-                                  <td><?= $no++; ?></td>
-                                  <td><?= $list['nama_seksi'] ?></td>
+                                  <th scope="row" class="text-center"><?= $no++; ?></td>
+                                  <td class="text-center"><?= $seksi['nama_seksi'] ?></td>
                                   <td class="text-center">
-                                    <a href="<?= $list['id_seksi'] ?>" data-target="#editdata" data-toggle="modal" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
+                                    <a href="<?= $seksi['id_seksi'] ?>" data-target="#editdata" data-toggle="modal" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                                    <a href="<?= base_url('hapusdata/'.$seksi['id_seksi']); ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
                                   </td>
                               </tr>
                             <?php endforeach;?>
