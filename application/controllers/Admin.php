@@ -35,6 +35,7 @@ class Admin extends CI_Controller
 
     public function index() 
     {
+        $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
         $this->load->view('template_admin/header');
         $this->load->view('template_admin/sidebar',$data);
