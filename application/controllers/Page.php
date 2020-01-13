@@ -30,13 +30,13 @@ class Page extends CI_Controller {
         $this->load->view('template_admin/footer');
     }
 
-    public function datakegiatan()
+    public function dataKegiatan()
 	{	
         $data['list'] = $this->db->get('pimp')->result_array();
         // var_dump($data);die;
         $this->load->view('template_admin/header');
         $this->load->view('template_admin/sidebar');
-        $this->load->view('admin/datakegiatan',$data); 
+        $this->load->view('admin/dataKegiatan',$data); 
         $this->load->view('template_admin/footer');
     }
     
