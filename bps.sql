@@ -3,15 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
--- Generation Time: Jan 09, 2020 at 04:34 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.11
-=======
 -- Generation Time: Jan 12, 2020 at 11:43 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -166,15 +160,11 @@ INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `
 (1, 1, 4, 7, NULL),
 (2, 2, 4, 70, NULL),
 (3, 3, 4, 3, NULL),
-<<<<<<< HEAD
-(4, 1, 1, 6, 3);
-=======
 (4, 4, 9, 5, NULL),
 (6, 1, 9, 2, NULL),
 (7, 1, 1, 5, NULL),
 (8, 1, 2, NULL, NULL),
 (9, 1, 3, NULL, NULL);
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
 
 -- --------------------------------------------------------
 
@@ -420,11 +410,7 @@ ALTER TABLE `kegiatan`
 -- AUTO_INCREMENT for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-<<<<<<< HEAD
-  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-=======
   MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
 
 --
 -- AUTO_INCREMENT for table `mitra`

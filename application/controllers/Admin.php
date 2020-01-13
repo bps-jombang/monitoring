@@ -3,13 +3,6 @@
 class Admin extends CI_Controller
 {
 
-<<<<<<< HEAD
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->library('form_validation');
-=======
     public $info = 
         ["sidebar" => 
             [
@@ -38,34 +31,16 @@ class Admin extends CI_Controller
         if (!$this->session->userdata('username')) {
             redirect(base_url('loginadmin'));
         }
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
     }
 
     public function index() 
     {
         $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
-<<<<<<< HEAD
-        $this->db->join('user as u', 'u.id_user = kd.id_user');
-        $this->db->join('kegiatan as k', 'k.id_kegiatan = kd.id_kegiatan');
-        $this->db->join('kecamatan as kc', 'kc.id_kecamatan = kd.id_user');
-        $this->db->join('seksi as s', 's.id_seksi = kd.id_user');
-        // $this->db->where('u.id_user = kd.id_user');
-        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
-
-        $this->load->view('admin/tes', $data);
-    }
-    public function index()
-    {
-        // $this->db->select('k.nomor_kecamatan,k.nama_kecamatan,user.nama_user');
-        // $this->db->join('kecamatan as k','k.id_kecamatan = user.id_kecamatan');
-        // $data['user'] = $this->db->get('user')->result_array();
-=======
         $this->db->join('user as u','u.id_user = kd.id_user');
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
         $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
         $this->db->join('seksi as s','s.id_seksi = kd.id_user');
         $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
 
         $this->db->order_by('id_kegiatan');
         $data['orderuraian'] = $this->db->get('kegiatan')->result_array();
@@ -73,25 +48,12 @@ class Admin extends CI_Controller
         $this->db->group_by('id_user');
         $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
 
-<<<<<<< HEAD
-        // SELECT k.uraian_kegiatan,k.id_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi
-        $semua_kegiatan = $this->db->get('v_kegiatan')->result_array();
-        $semua_user = $this->db->query("SELECT * FROM v_kegiatan_detail GROUP BY id_user")->result_array();
-
-        $parser['semua_kegiatan'] = $semua_kegiatan;
-        $parser['semua_user'] = $semua_user;
-
-        $this->load->view('template_admin/header');
-        $this->load->view('template_admin/sidebar');
-        $this->load->view('admin/index', $parser);
-=======
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
         $this->load->view('template_admin/header');
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
         $this->load->view('admin/index', $this->info);
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
         $this->load->view('template_admin/footer');
         // $this->load->view('admin/index',$parser); 
 
@@ -115,20 +77,6 @@ class Admin extends CI_Controller
         // $this->load->view('template_admin/footer');
     }
 
-<<<<<<< HEAD
-    public function test()
-    {
-        $semua_kegiatan = $this->db->get('v_kegiatan')->result_array();
-        $semua_user = $this->db->query("SELECT * FROM v_kegiatan_detail GROUP BY id_user")->result_array();
-
-        $parser['semua_kegiatan'] = $semua_kegiatan;
-        $parser['semua_user'] = $semua_user;
-
-        $this->load->view('test', $parser);
-    }
-
-    public function loginadmin()
-=======
     public function addseksi()
     {   
         $data['listmenu']   = getMenuLink(); // array di helper   
@@ -154,7 +102,6 @@ class Admin extends CI_Controller
     }
 
     public function addmitra()
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
     {
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
@@ -200,17 +147,6 @@ class Admin extends CI_Controller
 
     public function addkegiatan()
     {
-<<<<<<< HEAD
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/loginadmin');
-        } else {
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-            var_dump($this->input->post());
-=======
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
         $this->form_validation->set_rules('uraian_kegiatan','Kegiatan','required'); // validation
@@ -230,7 +166,6 @@ class Admin extends CI_Controller
             $this->modeladmin->createData('kegiatan',5);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('kegiatan')); 
->>>>>>> d733cb0689ed492d33a0b7b4cbbc095c56bdd61b
         }
     }
 
