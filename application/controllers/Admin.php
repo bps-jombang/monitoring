@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-class Admin extends CI_Controller { 
+class Admin extends CI_Controller
+{
 
     public $info = 
         ["sidebar" => 
@@ -54,6 +55,26 @@ class Admin extends CI_Controller {
         $this->load->view('template_admin/navbar');
         $this->load->view('admin/index', $this->info);
         $this->load->view('template_admin/footer');
+        // $this->load->view('admin/index',$parser); 
+
+        // FROM kegiatan_detail as kd
+        // INNER JOIN user as u 
+        // ON u.id_user = kd.id_user
+        // INNER JOIN kegiatan as k 
+        // ON k.id_kegiatan = kd.id_kegiatan
+        // INNER JOIN kecamatan as kc
+        // ON kc.id_kecamatan = kd.id_user
+        $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
+        $this->db->join('user as u', 'u.id_user = kd.id_user');
+        $this->db->join('kegiatan as k', 'k.id_kegiatan = kd.id_kegiatan');
+        $this->db->join('kecamatan as kc', 'kc.id_kecamatan = kd.id_user');
+        $this->db->join('seksi as s', 's.id_seksi = kd.id_user');
+        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
+        // var_dump($data);die;
+        // $this->load->view('template_admin/header');
+        // $this->load->view('template_admin/sidebar');
+        // // $this->load->view('admin/index',$data); 
+        // $this->load->view('template_admin/footer');
     }
 
     public function addseksi()
@@ -203,4 +224,3 @@ class Admin extends CI_Controller {
         echo "<h1>".$this->db->last_query()."</h1>"; 
     }
 }
-

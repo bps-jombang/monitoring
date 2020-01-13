@@ -1,5 +1,5 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
@@ -258,6 +258,63 @@ INSERT INTO `user` (`id_user`, `id_role`, `id_seksi`, `id_kecamatan`, `nama_user
 (19, 0, NULL, 19, 'M Hanafi'),
 (20, 0, NULL, 20, 'Nanang Hp'),
 (21, 0, NULL, 21, '');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `v_kegiatan`
+-- (See below for the actual view)
+--
+CREATE TABLE `v_kegiatan` (
+`id_kegiatan` int(11)
+,`id_seksi` int(11)
+,`nama_seksi` varchar(50)
+,`jabatan` enum('Kasi','Staff','','')
+,`uraian_kegiatan` text
+,`vol` int(11)
+,`satuan` varchar(30)
+,`target_penyelesaian` enum('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember')
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `v_kegiatan_detail`
+-- (See below for the actual view)
+--
+CREATE TABLE `v_kegiatan_detail` (
+`id_kegiatan_detail` int(11)
+,`id_kegiatan` int(11)
+,`uraian_kegiatan` text
+,`vol` int(11)
+,`satuan` varchar(30)
+,`target_penyelesaian` enum('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember')
+,`id_user` int(11)
+,`id_role` int(11)
+,`id_seksi` int(11)
+,`id_kecamatan` int(11)
+,`nama_user` varchar(40)
+,`target` int(11)
+,`realisasi` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `v_kegiatan`
+--
+DROP TABLE IF EXISTS `v_kegiatan`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kegiatan`  AS  select `k`.`id_kegiatan` AS `id_kegiatan`,`s`.`id_seksi` AS `id_seksi`,`s`.`nama_seksi` AS `nama_seksi`,`s`.`jabatan` AS `jabatan`,`k`.`uraian_kegiatan` AS `uraian_kegiatan`,`k`.`vol` AS `vol`,`k`.`satuan` AS `satuan`,`k`.`target_penyelesaian` AS `target_penyelesaian` from (`kegiatan` `k` join `seksi` `s`) where (`k`.`id_seksi` = `s`.`id_seksi`) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `v_kegiatan_detail`
+--
+DROP TABLE IF EXISTS `v_kegiatan_detail`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kegiatan_detail`  AS  select `kd`.`id_kegiatan_detail` AS `id_kegiatan_detail`,`k`.`id_kegiatan` AS `id_kegiatan`,`k`.`uraian_kegiatan` AS `uraian_kegiatan`,`k`.`vol` AS `vol`,`k`.`satuan` AS `satuan`,`k`.`target_penyelesaian` AS `target_penyelesaian`,`u`.`id_user` AS `id_user`,`u`.`id_role` AS `id_role`,`u`.`id_seksi` AS `id_seksi`,`u`.`id_kecamatan` AS `id_kecamatan`,`u`.`nama_user` AS `nama_user`,`kd`.`target` AS `target`,`kd`.`realisasi` AS `realisasi` from ((`kegiatan_detail` `kd` join `kegiatan` `k`) join `user` `u`) where ((`kd`.`id_kegiatan` = `k`.`id_kegiatan`) and (`kd`.`id_user` = `u`.`id_user`)) ;
 
 --
 -- Indexes for dumped tables
