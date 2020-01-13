@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2020 at 11:43 AM
+-- Generation Time: Jan 11, 2020 at 03:13 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -21,28 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `bps`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `id_admin` int(11) NOT NULL,
-  `username` varchar(10) NOT NULL,
-  `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
-(1, 'bps', '$2y$10$QACnVGt1PBlWlEHqM1w8WeTTZDb5WnuASWQyxmiuFSxlWBbH.zHci'),
-(2, 'nania', '$2y$10$EHEao/B62NdUSYRDFe11wuAKnyrOjjYwyEIaUGu2c4yP4LZAfOxcm'),
-(3, 'alfaza', '$2y$10$/TotjWlJGd4DbH9n1bViuOlWI8JtzfxmiF7XrxkaZuAdX4Bs.f.aa'),
-(4, 'dzikri', '$2y$10$MX1CdhGvLxKQvezXh7BDFOWXKTna4XjeMF8D/QPsOF1zVXh/aMRfe');
 
 -- --------------------------------------------------------
 
@@ -259,72 +237,9 @@ INSERT INTO `user` (`id_user`, `id_role`, `id_seksi`, `id_kecamatan`, `nama_user
 (20, 0, NULL, 20, 'Nanang Hp'),
 (21, 0, NULL, 21, '');
 
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `v_kegiatan`
--- (See below for the actual view)
---
-CREATE TABLE `v_kegiatan` (
-`id_kegiatan` int(11)
-,`id_seksi` int(11)
-,`nama_seksi` varchar(50)
-,`jabatan` enum('Kasi','Staff','','')
-,`uraian_kegiatan` text
-,`vol` int(11)
-,`satuan` varchar(30)
-,`target_penyelesaian` enum('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember')
-);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `v_kegiatan_detail`
--- (See below for the actual view)
---
-CREATE TABLE `v_kegiatan_detail` (
-`id_kegiatan_detail` int(11)
-,`id_kegiatan` int(11)
-,`uraian_kegiatan` text
-,`vol` int(11)
-,`satuan` varchar(30)
-,`target_penyelesaian` enum('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember')
-,`id_user` int(11)
-,`id_role` int(11)
-,`id_seksi` int(11)
-,`id_kecamatan` int(11)
-,`nama_user` varchar(40)
-,`target` int(11)
-,`realisasi` int(11)
-);
-
--- --------------------------------------------------------
-
---
--- Structure for view `v_kegiatan`
---
-DROP TABLE IF EXISTS `v_kegiatan`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kegiatan`  AS  select `k`.`id_kegiatan` AS `id_kegiatan`,`s`.`id_seksi` AS `id_seksi`,`s`.`nama_seksi` AS `nama_seksi`,`s`.`jabatan` AS `jabatan`,`k`.`uraian_kegiatan` AS `uraian_kegiatan`,`k`.`vol` AS `vol`,`k`.`satuan` AS `satuan`,`k`.`target_penyelesaian` AS `target_penyelesaian` from (`kegiatan` `k` join `seksi` `s`) where (`k`.`id_seksi` = `s`.`id_seksi`) ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `v_kegiatan_detail`
---
-DROP TABLE IF EXISTS `v_kegiatan_detail`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kegiatan_detail`  AS  select `kd`.`id_kegiatan_detail` AS `id_kegiatan_detail`,`k`.`id_kegiatan` AS `id_kegiatan`,`k`.`uraian_kegiatan` AS `uraian_kegiatan`,`k`.`vol` AS `vol`,`k`.`satuan` AS `satuan`,`k`.`target_penyelesaian` AS `target_penyelesaian`,`u`.`id_user` AS `id_user`,`u`.`id_role` AS `id_role`,`u`.`id_seksi` AS `id_seksi`,`u`.`id_kecamatan` AS `id_kecamatan`,`u`.`nama_user` AS `nama_user`,`kd`.`target` AS `target`,`kd`.`realisasi` AS `realisasi` from ((`kegiatan_detail` `kd` join `kegiatan` `k`) join `user` `u`) where ((`kd`.`id_kegiatan` = `k`.`id_kegiatan`) and (`kd`.`id_user` = `u`.`id_user`)) ;
-
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indexes for table `jabatan`
@@ -383,12 +298,6 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
@@ -428,7 +337,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `seksi`
 --
 ALTER TABLE `seksi`
-  MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`

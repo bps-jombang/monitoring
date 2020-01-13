@@ -35,6 +35,16 @@ class Admin extends CI_Controller
 
     public function index() 
     {
+        $data['sidebar']    = $this->info; // array class
+        $this->load->view('template_admin/header');
+        $this->load->view('template_admin/sidebar',$data);
+        $this->load->view('template_admin/navbar');
+        $this->load->view('admin/index', $this->info);
+        $this->load->view('template_admin/footer');
+    }
+
+    public function dataKegiatan()
+    {
         $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
         $this->db->join('user as u','u.id_user = kd.id_user');
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
@@ -53,7 +63,7 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/header');
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
-        $this->load->view('admin/index', $this->info);
+        $this->load->view('admin/dataKegiatan', $this->info);
         $this->load->view('template_admin/footer');
         // $this->load->view('admin/index',$parser); 
 
