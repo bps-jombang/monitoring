@@ -39,4 +39,13 @@ $(document).ready(function () {
       "scrollY": "400px"
       
     });
+    const url = "http://localhost/monitoring/admin/show";
+    	$('#testingtabel').DataTable({
+        "ajax": url,
+    		"columns": [
+          {"data" : "id_role"},
+          {"data" : "id_seksi"},
+          {"data" : "id_kecamatan"},
+          {"data" : "nama_user"},]
+    	});
 });
