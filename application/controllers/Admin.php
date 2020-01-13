@@ -1,27 +1,27 @@
-<?php 
+<?php
 
-class Admin extends CI_Controller { 
+class Admin extends CI_Controller
+{
 
 
-    public function __construct() 
-    { 
-        parent::__construct(); 
+    public function __construct()
+    {
+        parent::__construct();
         $this->load->library('form_validation');
-        
     }
     public function tes()
     {
         $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
-        $this->db->join('user as u','u.id_user = kd.id_user');
-        $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
-        $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
-        $this->db->join('seksi as s','s.id_seksi = kd.id_user');
+        $this->db->join('user as u', 'u.id_user = kd.id_user');
+        $this->db->join('kegiatan as k', 'k.id_kegiatan = kd.id_kegiatan');
+        $this->db->join('kecamatan as kc', 'kc.id_kecamatan = kd.id_user');
+        $this->db->join('seksi as s', 's.id_seksi = kd.id_user');
         // $this->db->where('u.id_user = kd.id_user');
         $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
-        
-        $this->load->view('admin/tes',$data); 
+
+        $this->load->view('admin/tes', $data);
     }
-    public function index() 
+    public function index()
     {
         // $this->db->select('k.nomor_kecamatan,k.nama_kecamatan,user.nama_user');
         // $this->db->join('kecamatan as k','k.id_kecamatan = user.id_kecamatan');
@@ -33,29 +33,41 @@ class Admin extends CI_Controller {
 
         // $data['detail'] = $this->db->get('kegiatan_detail')->result_array();
 
-// SELECT k.uraian_kegiatan,k.id_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi
+        // SELECT k.uraian_kegiatan,k.id_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi
+        $semua_kegiatan = $this->db->get('v_kegiatan')->result_array();
+        $semua_user = $this->db->query("SELECT * FROM v_kegiatan_detail GROUP BY id_user")->result_array();
 
-// FROM kegiatan_detail as kd
-// INNER JOIN user as u 
-// ON u.id_user = kd.id_user
-// INNER JOIN kegiatan as k 
-// ON k.id_kegiatan = kd.id_kegiatan
-// INNER JOIN kecamatan as kc
-// ON kc.id_kecamatan = kd.id_user
-        $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
-        $this->db->join('user as u','u.id_user = kd.id_user');
-        $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
-        $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
-        $this->db->join('seksi as s','s.id_seksi = kd.id_user');
-        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
-         // var_dump($data);die;
+        $parser['semua_kegiatan'] = $semua_kegiatan;
+        $parser['semua_user'] = $semua_user;
+
         $this->load->view('template_admin/header');
         $this->load->view('template_admin/sidebar');
-        $this->load->view('admin/index',$data); 
+        $this->load->view('admin/index', $parser);
         $this->load->view('template_admin/footer');
+        // $this->load->view('admin/index',$parser); 
+
+        // FROM kegiatan_detail as kd
+        // INNER JOIN user as u 
+        // ON u.id_user = kd.id_user
+        // INNER JOIN kegiatan as k 
+        // ON k.id_kegiatan = kd.id_kegiatan
+        // INNER JOIN kecamatan as kc
+        // ON kc.id_kecamatan = kd.id_user
+        $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
+        $this->db->join('user as u', 'u.id_user = kd.id_user');
+        $this->db->join('kegiatan as k', 'k.id_kegiatan = kd.id_kegiatan');
+        $this->db->join('kecamatan as kc', 'kc.id_kecamatan = kd.id_user');
+        $this->db->join('seksi as s', 's.id_seksi = kd.id_user');
+        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
+        // var_dump($data);die;
+        // $this->load->view('template_admin/header');
+        // $this->load->view('template_admin/sidebar');
+        // // $this->load->view('admin/index',$data); 
+        // $this->load->view('template_admin/footer');
     }
 
-    public function test() {
+    public function test()
+    {
         $semua_kegiatan = $this->db->get('v_kegiatan')->result_array();
         $semua_user = $this->db->query("SELECT * FROM v_kegiatan_detail GROUP BY id_user")->result_array();
 
@@ -64,7 +76,7 @@ class Admin extends CI_Controller {
 
         $this->load->view('test', $parser);
     }
-    
+
     public function loginadmin()
     {
         $this->load->view('auth/loginadmin');
@@ -72,16 +84,15 @@ class Admin extends CI_Controller {
 
     public function prosesloginadmin()
     {
-        $this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[12]');
-        $this->form_validation->set_rules('password','Password','required');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]');
+        $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/loginadmin');
-        }else{
+        } else {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
             var_dump($this->input->post());
         }
     }
 }
-

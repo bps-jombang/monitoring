@@ -188,52 +188,46 @@
 
                 <div class="col-12 col-lg-12">
                   <div class="table-responsive">
-                    <table class="table table-bordered display nowrap tabelku" id="dataTableku" width="100%" cellspacing="0">
-                      <thead class="mytable">
+                    <table class="table table-bordered display nowrap tabelku"  width="100%" cellspacing="0">
+                      <thead>
                         <tr>
-                          <th rowspan="2" class="align-middle text-left">nomor</th>
-                          <th rowspan="2" class="align-middle text-center">uraian</th>
-                          <th rowspan="2" class="align-middle text-center">seksi</th>
-                          <th rowspan="2" class="align-middle text-center">vol</th>
-                          <th rowspan="2" class="align-middle text-center">satuan</th>
-                          <th rowspan="2" class="align-middle text-center">target penyelesaian</th>
+                          <th rowspan="2">Uraian</th>
+                          <th rowspan="2">Seksi</th>
+                          <th rowspan="2">Vol.</th>
+                          <th rowspan="2">Satuan</th>
 
-                          <?php foreach ($list as $d) : ?>
-                            <th colspan="2" class="text-center"><?= "nokec" ?> | <?= $d['nama_kecamatan'] ?><br>
-                              <p class="text-primary"><?= $d['nama_user'] ?></p>
-                            </th>
-                          <?php endforeach; ?>
-                          <th rowspan="2" class="align-middle text-center">jml</th>
-                        </tr>
+                          <?php foreach ($semua_user as $user) { ?>
+                            <th colspan="2"><?php echo $user['nama_user']; ?></th>
+                            <!-- <tr>
+                    <th>T</th>
+                    <th>R</th>
+                </tr> -->
                         <tr>
-                          <?php foreach ($list as $d) : ?>
-                            <th class="target">T</th>
-                            <th class="realisasi">R</th>
-                          <?php endforeach; ?>
+
+                          <th class="target">T</th>
+                          <th class="realisasi">R</th>
+
                         </tr>
+                      <?php } ?>
+
+                      </tr>
                       </thead>
                       <tbody>
-
-                        <?php $no = 1;
-                        foreach ($list as $d) : ?>
+                        <?php foreach ($semua_kegiatan as $kegiatan) { ?>
                           <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= $d['uraian_kegiatan'] ?></td>
-                            <td><?= $d['nama_seksi'] ?></td>
-                            <td><?= $d['vol'] ?></td>
-                            <td><?= $d['satuan'] ?></td>
-                            <td><?= $d['target_penyelesaian'] ?></td>
+                            <td><?php echo $kegiatan['uraian_kegiatan']; ?></td>
+                            <td><?php echo $kegiatan['nama_seksi']; ?></td>
+                            <td><?php echo $kegiatan['vol']; ?></td>
+                            <td><?php echo $kegiatan['satuan']; ?></td>
 
 
-                            <?php foreach ($list as $d) : ?>
-                              <td class="kuning"><?= $d['target'] ?></td>
-                              <td><?= $d['realisasi'] ?></td>
+                            <?php foreach ($semua_user as $user) { ?>
 
-                            <?php endforeach; ?>
-                            <td>40</td>
-
+                              <td><?php echo  $this->model_admin->getTarget($kegiatan['id_kegiatan'], $user['id_user']); ?></td>
+                              <td><?php echo  $this->model_admin->getRealisasi($kegiatan['id_kegiatan'], $user['id_user']); ?></td>
+                            <?php } ?>
                           </tr>
-                        <?php endforeach; ?>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>
@@ -244,10 +238,10 @@
           </div>
           </li>
 
-          
+
 
           <!-- Begin Page Content -->
-          
+
 
 
         </div>
