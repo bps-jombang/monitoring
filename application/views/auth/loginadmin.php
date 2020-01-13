@@ -42,6 +42,9 @@
                     <?php if($this->session->flashdata('pesan')) :?>
                       <?= $this->session->flashdata('pesan'); ?>
                     <?php endif; ?>
+                    <?php if($this->session->flashdata('gagal')) :?>
+                      <?= $this->session->flashdata('gagal'); ?>
+                    <?php endif; ?>
                     <h1 class="h4 text-gray-900 mb-4">Admin BPS Monitoring</h1>
                   </div>
                   <form class="user" method="post" action="<?= base_url('loginadmin'); ?>">
