@@ -120,7 +120,7 @@ class Admin extends CI_Controller {
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('jabatan',6);
-            $this->session->set_flashdata('pesan','Ditambah');
+            $this->session->set_flashdata('pesan','Berhasil Ditambah');
             redirect(base_url('jabatan')); 
         }
     }
@@ -144,7 +144,7 @@ class Admin extends CI_Controller {
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('kegiatan',5);
-            $this->session->set_flashdata('pesan','Ditambah');
+            $this->session->set_flashdata('pesan','Berhasil Ditambah');
             redirect(base_url('kegiatan')); 
         }
     }
