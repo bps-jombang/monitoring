@@ -215,8 +215,26 @@ class Admin extends CI_Controller
 
 
 
-
-    public function deleteUser($id = null)
+    // --------------------------- \\
+    //        DELETE FUNCTIONS      \\
+    // ----------------------------- \\
+    // 1 = seksi, 2 = mitra, 3 kecamatan, 4 = user, 5 = kegiatan, 6 = jabatan
+    public function deleteSeksi($id = null)
+    {
+        if (!$id) {
+            $data = array('status' => false , 'messages' => 'no results from database' );
+            echo json_encode($data);
+        }else{
+            $data = $this->modeladmin->deleteData('seksi',1,$id);
+            if ($data == true) {
+                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                redirect(base_url('seksi'));
+            }else{
+                echo "data gagal dihapus";
+            }
+        }
+    }
+    public function deleteMitra($id = null)
     {
         if (!$id) {
             $data = array('status' => false , 'messages' => 'no results from database' );
@@ -231,11 +249,59 @@ class Admin extends CI_Controller
             }
         }
     }
+    // kecamatan tidak dihapus karena tetap
+    public function deleteUser()
+    {
+        if (!$id) {
+            $data = array('status' => false , 'messages' => 'no results from database' );
+            echo json_encode($data);
+        }else{
+            $data = $this->modeladmin->deleteData('user',4,$id);
+            if ($data == true) {
+                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                redirect(base_url('user'));
+            }else{
+                echo "data gagal dihapus";
+            }
+        }
+    }
+    public function deleteKegiatan($id = null)
+    {
+        if (!$id) {
+            $data = array('status' => false , 'messages' => 'no results from database' );
+            echo json_encode($data);
+        }else{
+            $data = $this->modeladmin->deleteData('kegiatan',5,$id);
+            if ($data == true) {
+                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                redirect(base_url('kegiatan'));
+            }else{
+                echo "data gagal dihapus";
+            }
+        }
+    }
+    public function deleteJabatan($id = null)
+    {
+        if (!$id) {
+            $data = array('status' => false , 'messages' => 'no results from database' );
+            echo json_encode($data);
+        }else{
+            $data = $this->modeladmin->deleteData('jabatan',6,$id);
+            if ($data == true) {
+                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                redirect(base_url('jabatan'));
+            }else{
+                echo "data gagal dihapus";
+            }
+        }
+    }
 
     
 
     // INI JANGAN DIUTIK GAYS :D BUAT TESTING 
     public function hh($tabel = null,$id = null){
+        // $data = $this->modeladmin->getTarget(1,4);
+        // echo json_encode($data);die;
         // model
         if ($tabel == null) {
             echo json_encode(["status" => false, "messages" => "access denied"]);
@@ -248,7 +314,7 @@ class Admin extends CI_Controller
         // echo json_encode($list);
     }
     public function show(){
-        $res = $this->db->get('user')->result_array();
+        $res = $this->db->get('user')->result_object();
         echo json_encode(array("data" => $res));
     }
     public function tes()

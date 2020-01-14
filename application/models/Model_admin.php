@@ -3,7 +3,7 @@
 class Model_admin extends CI_Model {  
 
     private $_seksi = "seksi", $_mitra = "mitra", $_kecamatan = "kecamatan",
-            $_user   = "user", $_kegiatan = "kegiatan";
+            $_user   = "user", $_kegiatan = "kegiatan", $_jabatan = "jabatan";
 
     // ONLY CREATES 
     public function createData($tabel,$no)
@@ -80,7 +80,7 @@ class Model_admin extends CI_Model {
             if ($id) {
                 return json_encode($this->db->get_where($this->_user,["id_user" => $id])->row_array());
             }else{
-                return ($this->db->get($this->_user)->result_array());
+                return $this->db->get($this->_user)->result_array();
             }
         }else if($tabel == "mitra") {
             // select tabel user
@@ -112,16 +112,30 @@ class Model_admin extends CI_Model {
     // ONLY DELETE
     public function deleteData($tabel,$no,$id)
     {
-        if ($no == 2 ) {
+        // 1 = seksi, 2 = mitra, 3 kecamatan, 4 = user, 5 = kegiatan, 6 = jabatan
+        if ($no == 1 ) {
             // var_dump($tabel);die;
             // return $this->db->get_where($tabel,["id_mitra" => $id])->row_array();
+            return $this->db->delete($tabel,["id_seksi" => $id]);
+        }else if($no == 2){
             return $this->db->delete($tabel,["id_mitra" => $id]);
+        }
+        else if($no == 3){
+            return $this->db->delete($tabel,["id_kecamatan" => $id]);
+        }
+        else if($no == 4){
+            return $this->db->delete($tabel,["id_user" => $id]);
+        }
+        else if($no == 5){
+            return $this->db->delete($tabel,["id_kegiatan" => $id]);
+        }
+        else if($no == 6){
+            return $this->db->delete($tabel,["id_jabatan" => $id]);
         }
     }
 
     public function getRealisasi($id_kegiatan, $id_user) {
         $data = $this->db->get_where('kegiatan_detail', array('id_kegiatan' => $id_kegiatan, 'id_user' => $id_user))->result_array();
-
         if(count($data) > 0) {
             return $data[0]['realisasi'];
         } else {
