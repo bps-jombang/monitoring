@@ -35,9 +35,9 @@ class Admin extends CI_Controller
 
     public function index() 
     {
-        $data['listmenu']   = getMenuLink(); // array di helper   
-        $data['sidebar']    = $this->info; // array class
-        $this->load->view('template_admin/header');
+        $data['listmenu']   = getMenuLink(); // array di helper    // array class
+        $title['judul']      = "BPS";
+        $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
         $this->load->view('admin/index', $this->info);
@@ -57,6 +57,7 @@ class Admin extends CI_Controller
 
     public function dataKegiatan()
     {
+        $title['judul'] = "List Kegiatan | BPS";
         $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
         $this->db->join('user as u','u.id_user = kd.id_user');
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
@@ -67,40 +68,45 @@ class Admin extends CI_Controller
         $this->db->order_by('id_kegiatan');
         $data['orderuraian'] = $this->db->get('kegiatan')->result_array();
 
-        $this->db->group_by('id_user');
-        $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
+        //SELECT k.nama_kecamatan,u.nama_user FROM user as u INNER JOIN kecamatan as k ON k.id_kecamatan = u.id_kecamatan
+        $this->db->select('u.id_user,k.nomor_kecamatan,k.nama_kecamatan,u.nama_user');
+        $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
+        $data['user'] = $this->db->get('user as u')->result_array();
 
+        // $data['mitra']= $this->db->get('mitra')->result_array();
+        // $this->db->group_by('id_user');
+        // $data['sortuser'] = $this->db->get('kegiatan_detail')->result_array();
+
+        // $data['mitra'] = $this->db->get('mitra')->result_array();
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
-        $this->load->view('template_admin/header');
+        $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
         $this->load->view('admin/dataKegiatan', $this->info);
         $this->load->view('template_admin/footer');
-        // $this->load->view('admin/index',$parser); 
-
-        // FROM kegiatan_detail as kd
-        // INNER JOIN user as u 
-        // ON u.id_user = kd.id_user
-        // INNER JOIN kegiatan as k 
-        // ON k.id_kegiatan = kd.id_kegiatan
-        // INNER JOIN kecamatan as kc
-        // ON kc.id_kecamatan = kd.id_user
-        $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
-        $this->db->join('user as u', 'u.id_user = kd.id_user');
-        $this->db->join('kegiatan as k', 'k.id_kegiatan = kd.id_kegiatan');
-        $this->db->join('kecamatan as kc', 'kc.id_kecamatan = kd.id_user');
-        $this->db->join('seksi as s', 's.id_seksi = kd.id_user');
-        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
-        // var_dump($data);die;
-        // $this->load->view('template_admin/header');
-        // $this->load->view('template_admin/sidebar');
-        // // $this->load->view('admin/index',$data); 
-        // $this->load->view('template_admin/footer');
     }
 
+    public function detailKegiatanUser($id)
+    {
+        $title['judul'] = "Kegiatan Detail User | BPS";
+        //SELECT u.nama_user,kd.target,kd.realisasi FROM kegiatan_detail as kd INNER JOIN user as u on u.id_user = kd.id_user
+        $this->db->select('u.nama_user,kd.target,kd.realisasi');
+        $this->db->join('user as u','u.id_user = kd.id_user');
+        $this->db->group_by('kd.id_user');
+        $data['userdetail'] = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
+        // print_r($data['userdetail']);die;
+        $data['listmenu']   = getMenuLink(); // array di helper   
+        $data['sidebar']    = $this->info; // array class
+        $this->load->view('template_admin/header',$title);
+        $this->load->view('template_admin/sidebar',$data);
+        $this->load->view('template_admin/navbar');
+        $this->load->view('admin/detailUser', $this->info);
+        $this->load->view('template_admin/footer');
+    }
     public function addseksi()
     {   
+        $data['judul']      = "Tambah Seksi | BPS";
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
         $data['listseksi'] = $this->modeladmin->getUser('seksi',0);
@@ -109,7 +115,7 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) { 
             // jika validation gagal maka dikembalikan ke halaman insert tadi
-            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/header',$data);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahsie', $this->info);
@@ -145,7 +151,6 @@ class Admin extends CI_Controller
             redirect(base_url('mitra')); 
         }
     }
-    // COPAS DIBAWAH ini untuk add kegiatan,jabatan dsb
     public function addjabatan()
     {
         $data['listmenu'] = getMenuLink(); // array di helper
