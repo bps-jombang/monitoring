@@ -57,7 +57,8 @@ $route['default_controller'] = 'auth';
 $route['loginadmin']      = 'auth/prosesloginadmin';
 $route['logout']          = 'auth/logout';
 
-
+// ROUTES DETAIL DATA
+$route['detailkegiatan/(:any)'] = 'admin/detailKegiatanUser/$1';
 // ROUTES CREATE DATA
 $route['mitra']           = 'admin/addmitra';
 $route['user']            = 'admin/adduser';
