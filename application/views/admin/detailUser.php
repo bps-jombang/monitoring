@@ -28,7 +28,9 @@
                         <img src="<?= base_url('assets/') ?>img/man.png" class="card-img-top">
                         <hr>
                         <div class="card-body">
-                            <h5 class="card-title text-dark font-weight-bold text-center">Tria M</h5>
+                        <?php foreach($userdetail as $user) : ?>
+                            <h5 class="card-title text-dark font-weight-bold text-center"><?= $user['nama_user']; ?></h5>
+                        <?php endforeach; ?>
                             <p class="card-text text-dark font-weight-bold text-center">Kasie IPDS</p>
 
                         </div>
@@ -49,8 +51,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>56</td>
-                            <td>54</td>
+                        <?php foreach($userdetail as $user) : ?>
+                            <td><?= $user['target']; ?></td>
+                            <td><?= $user['realisasi']; ?></td>
+                            <?php endforeach; ?>
                         </tr>
                     </tbody>
                 </table>
