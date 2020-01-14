@@ -54,6 +54,38 @@
                         </tr>
                     </tbody>
                 </table>
+                <br>
+
+            </div>
+
+            <div class="col-md-12">
+                <table class="table table-bordered text-center bg-success text-light font-weight-bold">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nama Kegiatan</th>
+                            <th scope="col">Realisasi</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>pengawasan update SAK sm I</td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>pengawasan pencacahan SAK sm I</td>
+                            <td><i class="fas fa-times"></i></td>
+                        </tr>
+                        <tr>
+                            <td>pelatihan sakernas Sm 1</td>
+                            <td><i class="fas fa-times"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Sampel Ubinan</td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
