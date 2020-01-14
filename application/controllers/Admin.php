@@ -44,6 +44,17 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
+    public function detailUser() 
+    {
+        $data['listmenu']   = getMenuLink(); // array di helper   
+        $data['sidebar']    = $this->info; // array class
+        $this->load->view('template_admin/header');
+        $this->load->view('template_admin/sidebar',$data);
+        $this->load->view('template_admin/navbar');
+        $this->load->view('admin/detailUser', $this->info);
+        $this->load->view('template_admin/footer');
+    }
+
     public function dataKegiatan()
     {
         $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
