@@ -66,7 +66,7 @@
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('Admin/dataKegiatan') ?>">
           <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
+          <span>Tabel Kegiatan</span></a>
       </li>
 
       <li class="nav-item">

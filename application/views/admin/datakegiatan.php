@@ -19,14 +19,21 @@
                         <th rowspan="2" class="text-center">satuan</th>
                         <th rowspan="2" class="text-center">target penyelesaian</th>
 
-                        <?php foreach($sortuser as $d) :?>
-                          <th colspan="2" class="text-center"><?= "nokec" ?> | <?= "nakec"//$d['nama_kecamatan'] ?><br>
-                          <p class="text-primary"><?= $d['id_user'] ?></p></th>
+                        <?php foreach($user as $d) :?>
+                        
+                          <th colspan="2" class="text-center"><?= $d['nomor_kecamatan']; ?> | <?= $d['nama_kecamatan'] ?><br>
+                          <?php if($d['nama_user'] != NULL) : ?>
+                          <p class="text-primary"><a href="<?= base_url('detailkegiatan/') ?><?= $d['id_user']; ?>" class="text-decoration-none"><?= $d['nama_user']; ?></a></p></th>
+                          <?php elseif($d['nama_user'] == NULL) : ?>
+                          <p class="text-danger"><?= "KOSONG"; ?></p></th>
+                          <?php endif;?>
                         <?php endforeach; ?>
-                          <th rowspan="2" class="text-center">jml</th>
+                          <th rowspan="2" class="text-center">Mitra</th>
+                          <th rowspan="2" class="text-center">Jumlah</th>
+                          <th rowspan="2" class="text-center">Total</th>
                         </tr>
                           <tr>
-                          <?php foreach($sortuser as $d) :?>
+                          <?php foreach($user as $d) :?>
                             <th class="target">T</th>
                             <th class="realisasi">R</th>
                           <?php endforeach; ?></tr>
@@ -43,11 +50,14 @@
                           <td><?= $d['target_penyelesaian'] ?></td>
                       
                             
-                          <?php foreach($sortuser as $d) :?>
-                          <td class="kuning"><?= " "//$d['target'] ?></td>
+                          <?php foreach($user as $ds) :?>
+                          <td class="kuning">target</td>
                           <td><?= " - " //$d['realisasi'] ?></td>
                           <?php endforeach;?>
-                          <td>40</td>
+                          <td>mitra</td>
+                          
+                          <td>jmlh</td>
+                          <td>totally</td>
                           
                       </tr>
                       <?php endforeach;?>
