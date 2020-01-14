@@ -19,48 +19,38 @@
 <body>
 
     <div class="container">
-        <div class="center">
-            <div class="card border border-primary" style="width: 18rem;">
-                <br>
-                <img src="<?= base_url('assets/') ?>img/man.png" class="card-img-top" alt="...">
-                <hr>
-                <div class="card-body">
-                    <h5 class="card-title text-dark font-weight-bold">Tria M</h5>
-                    <p class="card-text text-dark font-weight-bold">Kasie IPDS</p>
-
-                </div>
-            </div>
-        </div>
         <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <h3 class="text-primary font-weight-bold">Detail Karyawan</h1>
+                    <div class="card border border-primary" style="width: 18rem;">
+                        <br>
+                        <img src="<?= base_url('assets/') ?>img/man.png" class="card-img-top">
+                        <hr>
+                        <div class="card-body">
+                            <h5 class="card-title text-dark font-weight-bold text-center">Tria M</h5>
+                            <p class="card-text text-dark font-weight-bold text-center">Kasie IPDS</p>
 
-
-            <div class="col-md-10">
-                <table class="table table-bordered">
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered text-center bg-primary text-light font-weight-bold">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Target</th>
+                            <th scope="col">Realisasi</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
+                            <td>56</td>
+                            <td>54</td>
                         </tr>
                     </tbody>
                 </table>
