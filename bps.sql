@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2020 at 03:13 PM
+-- Generation Time: Jan 12, 2020 at 11:43 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -21,6 +21,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `bps`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
+  `username` varchar(10) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
+(1, 'bps', '$2y$10$QACnVGt1PBlWlEHqM1w8WeTTZDb5WnuASWQyxmiuFSxlWBbH.zHci'),
+(2, 'nania', '$2y$10$EHEao/B62NdUSYRDFe11wuAKnyrOjjYwyEIaUGu2c4yP4LZAfOxcm'),
+(3, 'alfaza', '$2y$10$/TotjWlJGd4DbH9n1bViuOlWI8JtzfxmiF7XrxkaZuAdX4Bs.f.aa'),
+(4, 'dzikri', '$2y$10$MX1CdhGvLxKQvezXh7BDFOWXKTna4XjeMF8D/QPsOF1zVXh/aMRfe');
 
 -- --------------------------------------------------------
 
@@ -242,6 +264,12 @@ INSERT INTO `user` (`id_user`, `id_role`, `id_seksi`, `id_kecamatan`, `nama_user
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
+
+--
 -- Indexes for table `jabatan`
 --
 ALTER TABLE `jabatan`
@@ -298,6 +326,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
@@ -337,7 +371,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `seksi`
 --
 ALTER TABLE `seksi`
-  MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user`
