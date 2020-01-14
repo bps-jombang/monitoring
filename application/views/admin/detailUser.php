@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-md-12">
-                <table class="table table-bordered text-center bg-success text-light font-weight-bold">
+                <table class="table table-bordered text-center bg-info text-light font-weight-bold">
                     <thead>
                         <tr>
                             <th scope="col">Nama Kegiatan</th>
