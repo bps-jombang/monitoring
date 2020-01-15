@@ -24,10 +24,16 @@ class Model_admin extends CI_Model {
             'nama_user' => stripslashes($this->input->post('nama_user'))
         );
         $dataKegiatan = array ( // KEGIATAN
-            'uraian_kegiatan' => stripslashes($this->input->post('uraian_kegiatan')),
-            'vol' => stripslashes($this->input->post('vol')),
-            'satuan' => stripslashes($this->input->post('satuan')),
+            'id_seksi' => stripslashes($this->input->post('input_seksi')),
+            'uraian_kegiatan' => stripslashes($this->input->post('nama_kegiatan')),
+            'vol' => stripslashes($this->input->post('input_vol')),
+            'satuan' => stripslashes($this->input->post('input_satuan')),
             'target_penyelesaian' => $this->input->post('target_penyelesaian')
+        );
+        $dataKegiatandetail = array(
+            'id_user' => htmlspecialchars($this->input->post('input_user')), 
+            'id_kegiatan' => htmlspecialchars($this->input->post('input_kegiatan')), 
+            'target' => htmlspecialchars($this->input->post('input_target'))
         );
 
         $dataJabatan = array ( // JABATAN
@@ -46,10 +52,13 @@ class Model_admin extends CI_Model {
         }else if($no == 4){ // insert ke tabel user
             $this->db->insert($tabel,$dataUser);
         }else if($no == 5){ // insert tabael kegiatan
-            // var_dump($dataKegiatan);die;
+            // echo json_encode($dataKegiatan);die;
             $this->db->insert($tabel,$dataKegiatan);
         }else if($no == 6){
             $this->db->insert($tabel,$dataJabatan);
+        }else if($no == 7){
+            echo json_encode($dataKegiatandetail);die;
+            $this->db->insert($tabel,$dataKegiatandetail);
         }
     }
     
