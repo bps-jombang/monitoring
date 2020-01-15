@@ -4,51 +4,52 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Kegiatan"] ?>
+            <h1 class="h3 mb-0 text-gray"><?= $sidebar["Kegiatan"] ?>
           </div>
             
           <div class="row">
 
             <!-- form input data -->
-            <div class="col-lg-6">
+            <div class="col-lg-8">
 
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
                 <div class="card-body">
-                <?php echo validation_errors(); ?>
                     <form action="<?= base_url('kegiatan') ?>" method="post">
-                        <?php if($this->session->flashdata('pesan')) : ?>
-                        <div class="form-group">
-                          <span class="alert alert-success">Data berhasil <?= $this->session->flashdata('pesan'); ?></span>
-                        </div>
-                        <?php endif; ?>
                         <div class="form-row">
                           <div class="form-group col-md-12">
-                            <label for="inputEmail4">Nama Kegiatan (Uraian Kegiatan)</label>
-                            <input type="email" class="form-control" id="inputEmail4">
+                            <label for="nama_kegiatan">Nama Kegiatan (Uraian Kegiatan)</label>
+                            <input type="text" class="form-control" name="nama_kegiatan" id="nama_kegiatan">
+                            <?= form_error('nama_kegiatan','<div class="alert alert-warning mt-3">','</div>'); ?>
                           </div>
-                        </div><div class="form-row">
+                        </div>
+                        <div class="form-row">
                           <div class="form-group col-md-6">
-                            <label for="inputState">Seksi</label>
-                            <select id="inputState" class="form-control">
-                              <option selected>Seksi Humas</option>
-                              <option>...</option>
+                            <label for="input_seksi">Seksi</label>
+                            <select name="input_seksi" id="input_seksi" class="form-control">
+                              <option selected>Pilih Seksi</option>
+                              <?php foreach($listseksi as $seksi):?>
+                              <option value="<?= $seksi['id_seksi']; ?>"><?= $seksi['nama_seksi']; ?></option>
+                              <?php endforeach; ?>
                             </select>
                           </div>
                           <div class="form-group col-md-3">
-                            <label for="inputZip">Volume</label>
-                            <input type="text" class="form-control" id="inputZip" placeholder="120">
+                            <label for="input_vol">Volume</label>
+                            <input type="text" class="form-control" name="input_vol" id="input_vol">
+                            <?= form_error('input_vol','<div class="alert alert-warning mt-3">','</div>'); ?>
                           </div>
                           <div class="form-group col-md-3">
-                            <label for="inputZip">Satuan</label>
-                            <input type="text" class="form-control" id="inputZip" placeholder="Dokumen">
+                            <label for="input_satuan">Satuan</label>
+                            <input type="text" class="form-control" name="input_satuan" id="input_satuan">
+                            <?= form_error('input_satuan','<div class="alert alert-warning mt-3">','</div>'); ?>
                           </div>
                         </div>
                         <div class="form-group">
-                            <label for="target_penyelesaian">Anggota</label>
+                            <label for="target_penyelesaian">Target Penyelesaian</label>
                             <select name="target_penyelesaian" class="form-control" id="target_penyelesaian">
+                              <option selected>Pilih Bulan</option>
                                 <option value="Januari">Januari</option>
                                 <option value="Februari">Februari</option>
                                 <option value="Maret">Maret</option>
@@ -64,12 +65,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="satuan">Satuan</label>
-                            <input type="text" class="form-control" name="satuan" id="satuan">
-                        </div>
-                        <div class="form-group">
-                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fas-send"></i>Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fas-send"></i>Reset</button>
+                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
+                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
                         </div>
                     </form>
                 </div>
@@ -77,31 +74,11 @@
 
             </div>
 
-            <!-- table results -->
-            <div class="col-lg-5 offset-1">
-                  <div class="table-responsive">
-                      <table class="table table-condensed">
-                          <thead>
-                              <tr>
-                                  <th>No</th>
-                                  <th>Nama Seksi</th>
-                                  <th colspan="2" class="text-center">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>1</td>
-                                  <td>Testing</td>
-                                  <td class="text-center">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
+            <div class="col-lg-4">
+              <?php if($this->session->flashdata('pesan')) : ?>
+                <?= $this->session->flashdata('pesan');?>
+              <?php endif; ?>
             </div>
-
           </div>
 
         </div>
