@@ -30,7 +30,7 @@
                         <?php endforeach; ?>
                           <th rowspan="2" class="text-center">Mitra</th>
                           <th rowspan="2" class="text-center">Jumlah</th>
-                          <th rowspan="2" class="text-center">Total</th>
+                          <th rowspan="2" class="text-center">Keterangan</th>
                         </tr>
                           <tr>
                           <?php foreach($user as $d) :?>
@@ -57,7 +57,7 @@
                           <td>mitra</td>
                           
                           <td>jmlh</td>
-                          <td>totally</td>
+                          <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, voluptatum.</td>
                           
                       </tr>
                       <?php endforeach;?>

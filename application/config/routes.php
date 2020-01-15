@@ -66,6 +66,7 @@ $route['jabatan']         = 'admin/addjabatan';
 $route['seksi']           = 'admin/addseksi';
 $route['mitra']           = 'admin/addmitra';
 $route['kegiatan']        = 'admin/addkegiatan';
+$route['targetuser']      = 'admin/addtargetuser';
 
 // ROUTES UPDATE DATA
 $route['mitraupdate']     = 'admin/updatemitra';
@@ -74,6 +75,7 @@ $route['jabatanupdate']   = 'admin/updatejabatan';
 $route['seksiupdate']     = 'admin/updateseksi';
 $route['mitraupdate']     = 'admin/updatemitra';
 $route['kegiatanupdate']  = 'admin/updatekegiatan';
+$route['targetuserupdate']= 'admin/updatetargetuser';
 
 // ROUTES DELETE DATA JIKA ADA ID
 $route['hapusdata/(:any)'] = 'admin/deleteMitra/$1'; // jika ada id

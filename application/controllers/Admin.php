@@ -36,7 +36,7 @@ class Admin extends CI_Controller
     public function index() 
     {
         $data['listmenu']   = getMenuLink(); // array di helper    // array class
-        $title['judul']      = "BPS";
+        $title['judul']     = "BPS";
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
@@ -46,9 +46,10 @@ class Admin extends CI_Controller
 
     public function detailUser() 
     {
+        $title['judul']     = "Detail Pencapaian User | BPS";
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
-        $this->load->view('template_admin/header');
+        $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
         $this->load->view('admin/detailUser', $this->info);
@@ -91,19 +92,36 @@ class Admin extends CI_Controller
     {
         $title['judul'] = "Kegiatan Detail User | BPS";
         //SELECT u.nama_user,kd.target,kd.realisasi FROM kegiatan_detail as kd INNER JOIN user as u on u.id_user = kd.id_user
-        $this->db->select('u.nama_user,kd.target,kd.realisasi');
-        $this->db->join('user as u','u.id_user = kd.id_user');
-        $this->db->group_by('kd.id_user');
-        $data['userdetail'] = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
+        // $this->db->select('u.nama_user,kd.target,kd.realisasi');
+        // $this->db->join('user as u','u.id_user = kd.id_user');
+        // $this->db->group_by('kd.id_user');
+        // $data['userdetail'] = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
         // print_r($data['userdetail']);die;
+        // SELECT k.uraian_kegiatan,u.nama_user,kd.target,kd.realisasi FROM kegiatan_detail as kd
+        // INNER JOIN user as u 
+        // on u.id_user = kd.id_user
+        // INNER JOIN kegiatan as k
+        // on k.id_kegiatan = kd.id_kegiatan
+        // WHERE kd.id_user = 4
+        $this->db->select('k.uraian_kegiatan,u.nama_user,kd.target,kd.realisasi,kd.target');
+        $this->db->join('user as u','u.id_user = kd.id_user');
+        $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
+        // $this->db->group_by('kd.id_user');
+        $data['kegiatandetail'] = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
+        $data['userdetail'] = $this->db->get_where('user',["id_user" => $id])->result_array();
+        ///select kd.id_kegiatan,kd.id_user from kegiatan_detail as kd where kd.id_user = 4
+        // $data['kegiatandetail'] = $this->db->get_where('kegiatan_detail',["id_user" => $id])->result_array();
+        //var_dump($data['kegiatandetail']);die;
+
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['sidebar']    = $this->info; // array class
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
-        $this->load->view('admin/detailUser', $this->info);
+        $this->load->view('admin/detailuser', $this->info);
         $this->load->view('template_admin/footer');
     }
+
     public function addseksi()
     {   
         $data['judul']      = "Tambah Seksi | BPS";
@@ -120,17 +138,27 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahsie', $this->info);
             $this->load->view('template_admin/modal');
-            $this->load->view('template_admin/footer');
+            $this->load->view('template_admin/footer',$data);
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('seksi',1);
-            $this->session->set_flashdata('pesan','<span class="alert alert-success">Data berhasil Ditambah</span>');
+            $this->session->set_flashdata('pesan','<div class="row">
+            <div class="col-lg-6">
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check"></i> Data <strong>Berhasil ditambah !!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+          </div>');
             redirect(base_url('seksi')); 
         } 
     }
 
     public function addmitra()
     {
+        $title['judul']     = "Tambah Mitra  | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
         $data['listmitra'] = $this->modeladmin->getUser('mitra',0);
@@ -139,7 +167,7 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
-            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/header',$title);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahmitra', $this->info);
@@ -153,6 +181,7 @@ class Admin extends CI_Controller
     }
     public function addjabatan()
     {
+        $title['judul']     = "Tambah Jabatan | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
         
@@ -160,7 +189,7 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
-            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/header',$title);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahjabatan', $this->info);
@@ -175,16 +204,21 @@ class Admin extends CI_Controller
 
     public function addkegiatan()
     {
+        $title['judul']     = "Tambah Kegiatan | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
-        $this->form_validation->set_rules('uraian_kegiatan','Kegiatan','required'); // validation
-        $this->form_validation->set_rules('vol','Volume','required');
-        $this->form_validation->set_rules('satuan','Satuan','required');
-        $this->form_validation->set_rules('target_penyelesaian','target_penyelesaian','required');
+        $data['listseksi'] = $this->modeladmin->getUser('seksi',0);
+        $data['listuser'] = $this->db->get_where('user',["nama_user !=" => NULL])->result_array();
+
+        // $this->form_validation->set_rules('input_seksi','Seksi','required');
+        $this->form_validation->set_rules('nama_kegiatan','Kegiatan','required'); // validation
+        // $this->form_validation->set_rules('input_vol','Volume','required');
+        // $this->form_validation->set_rules('input_satuan','Satuan','required');
+        // $this->form_validation->set_rules('target_penyelesaian','target_penyelesaian','required');
 
         if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
-            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/header',$title);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahkegiatan', $this->info);
@@ -192,23 +226,58 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('kegiatan',5);
-            $this->session->set_flashdata('pesan','Berhasil Ditambah');
+            $this->session->set_flashdata('pesan','<div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="fas fa-check"></i> Data <strong>Berhasil ditambah !!</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>');
             redirect(base_url('kegiatan')); 
         }
     }
 
+    public function addtargetuser()
+    {
+        $title['judul']     = "Tambah Targget User | BPS";
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        $data['listuser'] = $this->db->get_where('user',["nama_user !=" => NULL])->result_array();
+        $data['listkegiatan'] = $this->db->get('kegiatan')->result_array();
+
+        $this->form_validation->set_rules('input_target','Target','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header',$title);
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahtarget', $this->info);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->createData('kegiatan_detail',7);
+            $this->session->set_flashdata('pesan','<div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="fas fa-check"></i> Data <strong>Berhasil ditambah !!</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>');
+            redirect(base_url('targetuser')); 
+        }
+    }
     public function adduser()
     {
+        $title['judul']     = "Tambah User | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
         $this->form_validation->set_rules('nama_user','User','required'); // validation
 
         if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
-            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/header',$title);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
-            $this->load->view('admin/tambahdata/tambahUser', $this->info);
+            $this->load->view('admin/tambahdata/tambahuser', $this->info);
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
@@ -248,7 +317,16 @@ class Admin extends CI_Controller
         }else{
             $data = $this->modeladmin->deleteData('seksi',1,$id);
             if ($data == true) {
-                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                $this->session->set_flashdata('hapus','<div class="row">
+                <div class="col-lg-6 col-md-6 col-6">
+                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
+                      Data <strong>Berhasil Dihapus!</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+              </div>');
                 redirect(base_url('seksi'));
             }else{
                 echo "data gagal dihapus";
@@ -263,7 +341,16 @@ class Admin extends CI_Controller
         }else{
             $data = $this->modeladmin->deleteData('mitra',2,$id);
             if ($data == true) {
-                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                $this->session->set_flashdata('hapus','<div class="row">
+                <div class="col-lg-6 col-md-6 col-6">
+                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
+                      Data <strong>Berhasil Dihapus!</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+              </div>');
                 redirect(base_url('mitra'));
             }else{
                 echo "data gagal dihapus";
@@ -279,7 +366,16 @@ class Admin extends CI_Controller
         }else{
             $data = $this->modeladmin->deleteData('user',4,$id);
             if ($data == true) {
-                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                $this->session->set_flashdata('hapus','<div class="row">
+                <div class="col-lg-6 col-md-6 col-6">
+                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
+                      Data <strong>Berhasil Dihapus!</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+              </div>');
                 redirect(base_url('user'));
             }else{
                 echo "data gagal dihapus";
@@ -309,7 +405,16 @@ class Admin extends CI_Controller
         }else{
             $data = $this->modeladmin->deleteData('jabatan',6,$id);
             if ($data == true) {
-                $this->session->set_flashdata('hapus','Berhasil dihapus');
+                $this->session->set_flashdata('hapus','<div class="row">
+                <div class="col-lg-6 col-md-6 col-6">
+                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
+                      Data <strong>Berhasil Dihapus!</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+              </div>');
                 redirect(base_url('jabatan'));
             }else{
                 echo "data gagal dihapus";
