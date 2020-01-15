@@ -57,7 +57,8 @@ $route['default_controller'] = 'auth';
 $route['loginadmin']      = 'auth/prosesloginadmin';
 $route['logout']          = 'auth/logout';
 
-
+// ROUTES DETAIL DATA
+$route['detailkegiatan/(:any)'] = 'admin/detailKegiatanUser/$1';
 // ROUTES CREATE DATA
 $route['mitra']           = 'admin/addmitra';
 $route['user']            = 'admin/adduser';
@@ -74,8 +75,14 @@ $route['seksiupdate']     = 'admin/updateseksi';
 $route['mitraupdate']     = 'admin/updatemitra';
 $route['kegiatanupdate']  = 'admin/updatekegiatan';
 
-// ROUTES DELETE DATA 
-$route['hapusdata/(:any)'] = 'admin/deleteUser/$1'; // jika ada id
+// ROUTES DELETE DATA JIKA ADA ID
+$route['hapusdata/(:any)'] = 'admin/deleteMitra/$1'; // jika ada id
+$route['hapusdata/(:any)'] = 'admin/deleteUser/$1'; 
+$route['hapusdata/(:any)'] = 'admin/deleteJabatan/$1'; 
+$route['hapusdata/(:any)'] = 'admin/deleteKegiatan/$1'; 
+$route['hapusdata/(:any)'] = 'admin/deleteSeksi/$1'; 
+
+
 $route['hapusdata']        = 'admin/deleteUser'; // jika tidak ada id
 
 
