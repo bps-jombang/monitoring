@@ -290,6 +290,22 @@ class Admin extends CI_Controller
         }
     }
 
+    public function addAdmin()
+    {
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        
+
+        
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/tambahdata/tambahAdmin', $this->info);
+            $this->load->view('template_admin/footer');
+        
+    }
+
 
 
     // --------------------------- \\
@@ -345,7 +361,7 @@ class Admin extends CI_Controller
         }
     }
     // kecamatan tidak dihapus karena tetap
-    public function deleteUser()
+    public function deleteUser($id = null)
     {
         if (!$id) {
             $data = array('status' => false , 'messages' => 'no results from database' );
