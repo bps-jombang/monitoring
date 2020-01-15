@@ -24,6 +24,9 @@
   <!-- Custom styles for this page -->
   <link href="<?= base_url('assets/admin/') ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="<?= base_url('assets/admin/vendor/bootstrap-select') ?>/dist/css/bootstrap-select.min.css">
+
 </head>
 
 <body id="page-top">
