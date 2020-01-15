@@ -54,10 +54,11 @@
                           <td class="kuning">target</td>
                           <td><?= " - " //$d['realisasi'] ?></td>
                           <?php endforeach;?>
-                          <td>mitra</td>
+                          <?php $no=1;?>
+                          <td><?= $no++; ?></td>
                           
                           <td>jmlh</td>
-                          <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, voluptatum.</td>
+                          <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, qui.</td>
                           
                       </tr>
                       <?php endforeach;?>
