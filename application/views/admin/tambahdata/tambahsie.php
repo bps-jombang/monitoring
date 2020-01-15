@@ -59,7 +59,7 @@
             <div class="col-lg-5 offset-1">
                   <div class="table-responsive">
                       <table class="table table-condensed">
-                          <thead class="thead-dark testing-tabel">
+                          <thead class=" testing-tabel">
                               <tr>
                                   <th class="text-center">No</th>
                                   <th class="text-center">Nama Seksi</th>
