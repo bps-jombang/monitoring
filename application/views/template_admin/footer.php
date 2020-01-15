@@ -43,7 +43,7 @@
   </div>
 
   <!-- edit modal -->
-  <!-- <div class="modal fade" id="editdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -52,15 +52,23 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">
+            <form action="">
+            <div class="form-group">
+            <input type="hidden" name="id_seksi">
+              <label for="nama_seksi">Nama Seksi</label>
+              <input type="text" class="form-control" name="nama_seksi" id="nama_seksi" value="">
+            </div>
+            </form>
+          </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <a class="btn btn-primary" href="login.html">Logout</a>
           </div>
         </div>
       </div>
-    </div> -->
-
+    </div>
+  
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -86,6 +94,12 @@
 
   <!-- My javascript -->
   <script src="<?= base_url('assets/admin/') ?>js/my.js"></script>
+
+<!-- Sweetalert2 -->
+<script src="<?= base_url('assets/admin/vendor/sweetalert2/dist/') ?>sweetalert2.all.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript | Bootstrap Select -->
+<script src="<?= base_url('assets/admin/vendor/bootstrap-select') ?>/dist/js/bootstrap-select.min.js"></script>
 
 </body>
 

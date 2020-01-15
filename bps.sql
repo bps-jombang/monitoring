@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2020 at 11:43 AM
+-- Generation Time: Jan 15, 2020 at 08:36 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -80,7 +80,7 @@ CREATE TABLE `kecamatan` (
 --
 
 INSERT INTO `kecamatan` (`id_kecamatan`, `nomor_kecamatan`, `nama_kecamatan`) VALUES
-(1, '010', 'Bandar Kedung'),
+(1, '010', 'Bandar Kedung M'),
 (2, '020', 'Perak'),
 (3, '030', 'Gudo'),
 (4, '040', 'Diwek'),
@@ -136,7 +136,64 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `sa
 (12, 3, 'Surve KSA (Pencacahan)', NULL, NULL, NULL),
 (13, 3, 'Srv. Perkebunan Triwulanan (PCL)', NULL, NULL, NULL),
 (14, 4, 'SURVEI HARGA PERDESAAN; HD', NULL, NULL, NULL),
-(15, 4, 'SURVEI HARGA PERDESAAN; HKD', NULL, NULL, NULL);
+(15, 4, 'SURVEI HARGA PERDESAAN; HKD', NULL, NULL, NULL),
+(16, 4, 'SURVEI BIDANG JASA PARIWISATA ; VHT-S (5 HOTEL)', NULL, NULL, NULL),
+(17, 4, 'INDEKS KEMAHALAN KONSTRUKSI (IKK) bulan Jan, ApriL, Juli dan Okt', NULL, NULL, NULL),
+(18, 4, 'SURVEI HARGA PRODUSEN ; HP-G (Gabah) \"Bulanan\"', NULL, NULL, NULL),
+(19, 4, 'SURVEI HARGA PRODUSEN ; HP-BG (Beras di Penggilingan)', NULL, NULL, NULL),
+(20, 4, 'SURVEI HARGA PRODUSEN ; HP (HPS dan HPK), HP-JP (JASA PENDIDIKAN) ', NULL, NULL, NULL),
+(21, 4, 'SURVEI HARGA PERDAGANGAN BESAR (HPB-S) ; 18 RESPONDEN', NULL, NULL, NULL),
+(22, 4, 'Survei SAPB', NULL, NULL, NULL),
+(23, 5, 'STK triw I', NULL, NULL, NULL),
+(24, 5, 'STK triw II', NULL, NULL, NULL),
+(25, 5, 'STK triw III', NULL, NULL, NULL),
+(26, 5, 'STK triw IV', NULL, NULL, NULL),
+(27, 5, 'SKKRT triw I', NULL, NULL, NULL),
+(28, 5, 'SKKRT triw II', NULL, NULL, NULL),
+(29, 5, 'SKKRT triw III', NULL, NULL, NULL),
+(30, 5, 'SKKRT triw IV', NULL, NULL, NULL),
+(31, 5, 'SKLNP triw I', NULL, NULL, NULL),
+(32, 5, 'SKLNP triw II', NULL, NULL, NULL),
+(33, 5, 'SKLNP triw III', NULL, NULL, NULL),
+(34, 5, 'SKLNP triw IV', NULL, NULL, NULL),
+(35, 5, 'Disagregasi  PMTB', NULL, NULL, NULL),
+(36, 5, 'SMAK-D', NULL, NULL, NULL),
+(37, 5, 'SKSPPI', NULL, NULL, NULL),
+(38, 5, 'Updating LNPRT', NULL, NULL, NULL),
+(39, 5, 'SKPS', NULL, NULL, NULL),
+(40, 5, 'SKSJ', NULL, NULL, NULL),
+(41, 5, 'SKNP', NULL, NULL, NULL),
+(42, 5, 'SKLNP Tahunan', NULL, NULL, NULL),
+(43, 5, 'SKTIR', NULL, NULL, NULL),
+(44, 5, 'Pengawasan PMTB', NULL, NULL, NULL),
+(45, 5, 'Publikasi PDRB Lapus', NULL, NULL, NULL),
+(46, 5, 'Publikasi PDRB Pengeluaran', NULL, NULL, NULL),
+(47, 5, 'Publikasi Inkesra', NULL, NULL, NULL),
+(48, 5, 'Publikasi Statda', NULL, NULL, NULL),
+(49, 6, 'Pemutakhiran Sistem Dan Program MFD Dan MBS Berbasis Web sm1', NULL, NULL, NULL),
+(50, 6, 'Pemutakhiran Sistem Dan Program MFD Dan MBS Berbasis Web sm1', NULL, NULL, NULL),
+(51, 6, 'Peningkatan Kualitas Dan Layanan Publikasi (DDA)', NULL, NULL, NULL),
+(52, 6, 'Peningkatan Kualitas Dan Layanan Publikasi (KCA)', NULL, NULL, NULL),
+(53, 6, 'Peningkatan Pelayanan Metadata Kegiatan Statistik Dasar, Sektoral Dan Khusus', NULL, NULL, NULL),
+(54, 6, 'Survei Kebutuhan Data', NULL, NULL, NULL),
+(55, 6, 'Pemutakhiran Peta Clustering SLS', NULL, NULL, NULL),
+(56, 4, 'STKU TW I', NULL, NULL, NULL),
+(57, 4, 'K3 (Statistik Keuangan Desa)', NULL, NULL, NULL),
+(58, 4, 'BUMD', NULL, NULL, NULL),
+(59, 4, 'K2 (Statistik Keuangan PEMKAB)', NULL, NULL, NULL),
+(60, 4, 'APBD 2', NULL, NULL, NULL),
+(61, 4, 'SLK(Survei Lembaga Keuangan)', NULL, NULL, NULL),
+(62, 2, 'Pelatihan SUSENAS Maret', NULL, NULL, NULL),
+(63, 2, 'Pengawasan Updating Susenas', NULL, NULL, NULL),
+(64, 2, 'Pencacahan RH', NULL, NULL, NULL),
+(65, 2, 'Pengawasan dan Pemeriksaan SUSENAS Maret', NULL, NULL, NULL),
+(66, 2, 'Pelatihan SPAK', NULL, NULL, NULL),
+(67, 2, 'Pencacahan SPAK', NULL, NULL, NULL),
+(68, 2, 'Pengawasan SPAK', NULL, NULL, NULL),
+(69, 2, 'Pengawasan Updating Podes', NULL, NULL, NULL),
+(70, 2, 'Pelatihan Sakernas Agustus', NULL, NULL, NULL),
+(71, 2, 'Pengawasan Updating Sakernas', NULL, NULL, NULL),
+(72, 2, 'Pengawasan dan Pemeriksaan SAKERNAS Agustus', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -157,7 +214,7 @@ CREATE TABLE `kegiatan_detail` (
 --
 
 INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `target`, `realisasi`) VALUES
-(1, 1, 4, 7, NULL),
+(1, 1, 4, 7, 1),
 (2, 2, 4, 70, NULL),
 (3, 3, 4, 3, NULL),
 (4, 4, 9, 5, NULL),
@@ -182,7 +239,8 @@ CREATE TABLE `mitra` (
 --
 
 INSERT INTO `mitra` (`id_mitra`, `nama_mitra`) VALUES
-(1, 'Harapan Jaya');
+(1, 'Harapan Jaya'),
+(8, 'Bunda Minang');
 
 -- --------------------------------------------------------
 
@@ -244,20 +302,20 @@ INSERT INTO `user` (`id_user`, `id_role`, `id_seksi`, `id_kecamatan`, `nama_user
 (5, 0, NULL, 5, 'Yoyok'),
 (6, 0, NULL, 6, 'Nursidi'),
 (7, 0, NULL, 7, 'Mustakim'),
-(8, 0, NULL, 8, ''),
+(8, 0, NULL, 8, NULL),
 (9, 0, NULL, 9, 'Abdul Sigit WH'),
 (10, 0, NULL, 10, 'Nanang Khisbullah'),
-(11, 0, NULL, 11, ''),
+(11, 0, NULL, 11, NULL),
 (12, 0, NULL, 12, 'Ari S'),
-(13, 0, NULL, 13, ''),
+(13, 0, NULL, 13, NULL),
 (14, 0, NULL, 14, 'M Mujib'),
 (15, 0, NULL, 15, 'Adi C'),
 (16, 0, NULL, 16, 'Bambang S'),
-(17, 0, NULL, 17, ''),
+(17, 0, NULL, 17, NULL),
 (18, 0, NULL, 18, 'Abdurahman'),
 (19, 0, NULL, 19, 'M Hanafi'),
 (20, 0, NULL, 20, 'Nanang Hp'),
-(21, 0, NULL, 21, '');
+(21, 0, NULL, 21, NULL);
 
 --
 -- Indexes for dumped tables
@@ -347,7 +405,7 @@ ALTER TABLE `kecamatan`
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `kegiatan_detail`
@@ -359,7 +417,7 @@ ALTER TABLE `kegiatan_detail`
 -- AUTO_INCREMENT for table `mitra`
 --
 ALTER TABLE `mitra`
-  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `role`
