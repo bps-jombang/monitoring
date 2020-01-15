@@ -35,8 +35,11 @@ class Admin extends CI_Controller
 
     public function index() 
     {
-        $data['listmenu']   = getMenuLink(); // array di helper    // array class
         $title['judul']     = "BPS";
+        $data['sumtarget']  = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
+        $data['sumseksi']   = $this->db->select('COUNT(nama_seksi)')->get('seksi')->row_array();
+        $data['listmenu']   = getMenuLink(); // array di helper   
+
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
