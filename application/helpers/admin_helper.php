@@ -12,9 +12,10 @@ if ( ! function_exists('random')){
 if ( ! function_exists('getMenuLink')){
     function getMenuLink(){
         return  [
-                "Tambah Seksi"      => base_url('seksi'),
                 "Tambah Admin"      => base_url('admin'),
+                "Tambah Seksi"      => base_url('seksi'),
                 "Tambah Kegiatan"   => base_url('kegiatan'),
+                "Tambah Target User"=> base_url('targetuser'),
                 "Tambah User"       => base_url('user'),
                 "Tambah Mitra"      => base_url('mitra')
         ];
