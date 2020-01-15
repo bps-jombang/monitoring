@@ -45,14 +45,16 @@
                           <thead>
                               <tr>
                                   <th>No</th>
-                                  <th>Nama Seksi</th>
+                                  <th>Username</th>
+                                  <th>Jabatan</th>
                                   <th colspan="2" class="text-center">Action</th>
                               </tr>
                           </thead>
                           <tbody>
                               <tr>
                                   <td>1</td>
-                                  <td>Testing</td>
+                                  <td>TriaM</td>
+                                  <td>Kasie IPDS</td>
                                   <td class="text-center">
                                     <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                     <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
