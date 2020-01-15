@@ -51,10 +51,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                        <?php foreach($userdetail as $user) : ?>
-                            <td><?= $user['target']; ?></td>
-                            <td><?= $user['realisasi']; ?></td>
-                            <?php endforeach; ?>
+                        <?php //foreach($userdetail as $user) : ?>
+                            <td><?= "t"//$user['target']; ?></td>
+                            <td><?= "r"//$user['realisasi']; ?></td>
+                            <?php //endforeach; ?>
                         </tr>
                     </tbody>
                 </table>
@@ -67,12 +67,19 @@
                     <thead>
                         <tr>
                             <th scope="col">Nama Kegiatan</th>
+                            <th scope="col">Target</th>
                             <th scope="col">Realisasi</th>
-
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                    <?php foreach($kegiatandetail as $kd) :?>
+                    <tr>
+                        <td><?= $kd['uraian_kegiatan'] ?></td>
+                        <td><?= $kd['target'] ?></td>
+                        <td><i class="fas fa-check"></i></td>
+                    </tr>
+                    <?php endforeach;?>
+                        <!-- <tr>
                             <td>pengawasan update SAK sm I</td>
                             <td><i class="fas fa-check"></i></td>
                         </tr>
@@ -87,7 +94,7 @@
                         <tr>
                             <td>Sampel Ubinan</td>
                             <td><i class="fas fa-check"></i></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
