@@ -14,7 +14,7 @@ class Model_admin extends CI_Model {
         );
 
         $dataMitra = array( // TABEL MITRA
-            'nama_mitra' => ($this->input->post('nama_mitra')) // NAME LABEL DI VIEWS ex: name="apa"
+            'nama_mitra' => htmlspecialchars(ucwords($this->input->post('nama_mitra',TRUE))) // NAME LABEL DI VIEWS ex: name="apa"
         );
         $dataKecamatan = array( // TABEL KECAMATAN
             'nomor_kecamatan' => stripslashes($this->input->post('nokec')), 
@@ -24,11 +24,11 @@ class Model_admin extends CI_Model {
             'nama_user' => stripslashes($this->input->post('nama_user'))
         );
         $dataKegiatan = array ( // KEGIATAN
-            'id_seksi' => stripslashes($this->input->post('input_seksi')),
-            'uraian_kegiatan' => stripslashes($this->input->post('nama_kegiatan')),
-            'vol' => stripslashes($this->input->post('input_vol')),
-            'satuan' => stripslashes($this->input->post('input_satuan')),
-            'target_penyelesaian' => $this->input->post('target_penyelesaian')
+            'id_seksi' => htmlspecialchars($this->input->post('input_seksi')),
+            'uraian_kegiatan' => htmlspecialchars($this->input->post('nama_kegiatan')),
+            'vol' => htmlspecialchars($this->input->post('input_vol')),
+            'satuan' => htmlspecialchars($this->input->post('input_satuan')),
+            'target_penyelesaian' => htmlspecialchars($this->input->post('target_penyelesaian'))
         );
         $dataKegiatandetail = array(
             'id_user' => htmlspecialchars($this->input->post('input_user')), 
@@ -37,24 +37,29 @@ class Model_admin extends CI_Model {
         );
 
         $dataJabatan = array ( // JABATAN
-            'nama_jabatan' => stripslashes($this->input->post('nama_jabatan'))
+            'nama_jabatan' => htmlspecialchars($this->input->post('nama_jabatan'))
         );
         // SESUAIKAN DI DATABASE YAA
 
 
         if ($no == 1) { // insert ke tabel seksi
-            // var_dump($dataSeksi);die;
+            var_dump($dataSeksi);die;
             $this->db->insert($tabel,$dataSeksi);
         }else if($no == 2){ // insert ke tabel mitra
+            // var_dump($dataMitra);die;    
             $this->db->insert($tabel,$dataMitra);
         }else if($no == 3){ // insert ke tabel kecamatan
+            var_dump($dataKecamatan);die;
             $this->db->insert($tabel,$dataKecamatan);
         }else if($no == 4){ // insert ke tabel user
+            var_dump($dataUser);die;
             $this->db->insert($tabel,$dataUser);
         }else if($no == 5){ // insert tabael kegiatan
-            // echo json_encode($dataKegiatan);die;
+            echo json_encode($dataKegiatan);die;
+            var_dump($dataKegiatan);die;
             $this->db->insert($tabel,$dataKegiatan);
         }else if($no == 6){
+            var_dump($dataJabatan);die;
             $this->db->insert($tabel,$dataJabatan);
         }else if($no == 7){
             echo json_encode($dataKegiatandetail);die;
@@ -68,12 +73,12 @@ class Model_admin extends CI_Model {
         // 1 seksi, 2 mitra, 3 kecamatan,4 user,5 kegiatan
         $dataMitra = array ('nama_mitra' => $this->input->post('nama_mitra'));
         if ($no == 1 ) {
-            var_dump($dataMitra);die;
-            $this->db->update($tabel,$dataMitra,["id_mitra" => $id]);
+            // var_dump($dataMitra);die;
+            return $this->db->update($tabel,$dataMitra,["id_mitra" => $id]);
         }
     }
 
-    // ONLY SHOW ALL
+    // ONLY SHOW ALL & SHOW BY ID
     public function getUser($tabel,$id = null)
     {
         // 1 = seksi, 2 = user,3 = mitra, 4 = kegiatan, 5 = kecamatan
@@ -94,7 +99,7 @@ class Model_admin extends CI_Model {
         }else if($tabel == "mitra") {
             // select tabel user
             if ($id) {
-                return json_encode($this->db->get_where($this->_mitra,["id_mitra" => $id])->row_array());
+                return $this->db->get_where($this->_mitra,["id_mitra" => $id])->row_array();
             }else{
                 return $this->db->get($this->_mitra)->result_array();
             }

@@ -14,6 +14,7 @@ class Admin extends CI_Controller
                     "Tambah Mitra" => "link mitra"
                 ],
                 "User" => "Tambah User",
+                "Admin" => "Tambah Admin",
                 "Seksi" => "Tambah Seksi",
                 "Mitra" => "Tambah Mitra",
                 "Kegiatan" => "Tambah Kegiatan",
@@ -35,8 +36,11 @@ class Admin extends CI_Controller
 
     public function index() 
     {
-        $data['listmenu']   = getMenuLink(); // array di helper    // array class
         $title['judul']     = "BPS";
+        $data['sumtarget']  = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
+        $data['sumseksi']   = $this->db->select('COUNT(nama_seksi)')->get('seksi')->row_array();
+        $data['listmenu']   = getMenuLink(); // array di helper   
+
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
@@ -137,7 +141,6 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahsie', $this->info);
-            $this->load->view('template_admin/modal');
             $this->load->view('template_admin/footer',$data);
         }else{
             // jika validation sukses maka insert data
@@ -287,23 +290,62 @@ class Admin extends CI_Controller
         }
     }
 
-    public function addAdmin()
+    public function addadmin()
     {
+        $title['judul']     = "Tambah Admin | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
-        
 
-        
+        $this->form_validation->set_rules('nama_user','User','required');
+
+        if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
-            $this->load->view('template_admin/header');
+            $this->load->view('template_admin/header',$title);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
             $this->load->view('admin/tambahdata/tambahAdmin', $this->info);
             $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->createData('admin',4);
+            $this->session->set_flashdata('pesan','Berhasil Ditambah');
+            redirect(base_url('admin')); 
+        }
+        // jika validation gagal maka dikembalikan ke halaman insert tadi
         
     }
 
 
+
+    public function editmitra($id)
+    {
+       
+        // $model = $this->db->get_where('mitra',["id_mitra" => $id])->row_array();
+        $title['judul']     = "Edit Mitra  | BPS";
+        $data['listmenu'] = getMenuLink(); // array di helper
+        $data['sidebar'] = $this->info; // array class
+        $data['listmitra'] = $this->modeladmin->getUser('mitra',$id);
+// foreach ($data['listmitra'] as $key => $value) {
+//     echo $key;
+// }
+// die;
+        $this->form_validation->set_rules('nama_mitra','Mitra','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header',$title);
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/editdata/editmitra', $data);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->updateData('mitra',1,$id);
+            $this->session->set_flashdata('diubah','Berhasil Diubah');
+            redirect(base_url('mitra')); 
+        }
+        
+   }
 
     // --------------------------- \\
     //        DELETE FUNCTIONS      \\

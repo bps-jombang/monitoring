@@ -42,7 +42,8 @@
     </div>
   </div>
 
-  <!-- edit modal -->
+  <!-- edit modal Mitra -->
+
   <div class="modal fade" id="editdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -55,9 +56,9 @@
           <div class="modal-body">
             <form action="">
             <div class="form-group">
-            <input type="hidden" name="id_seksi">
-              <label for="nama_seksi">Nama Seksi</label>
-              <input type="text" class="form-control" name="nama_seksi" id="nama_seksi" value="">
+            <input type="hidden">
+              <label for="edit_mitra">Nama Mitra</label>
+              <input type="text" class="form-control" name="edit_mitra" id="edit_mitra" value="">
             </div>
             </form>
           </div>

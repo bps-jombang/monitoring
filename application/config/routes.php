@@ -60,6 +60,8 @@ $route['logout']          = 'auth/logout';
 // ROUTES DETAIL DATA
 $route['detailkegiatan/(:any)'] = 'admin/detailKegiatanUser/$1';
 // ROUTES CREATE DATA
+$route['admin']           = 'admin/index';
+$route['addadmin']        = 'admin/addadmin';
 $route['mitra']           = 'admin/addmitra';
 $route['user']            = 'admin/adduser';
 $route['jabatan']         = 'admin/addjabatan';
@@ -69,7 +71,7 @@ $route['kegiatan']        = 'admin/addkegiatan';
 $route['targetuser']      = 'admin/addtargetuser';
 
 // ROUTES UPDATE DATA
-$route['mitraupdate']     = 'admin/updatemitra';
+$route['editmitra/(:any)']     = 'admin/editmitra/$1';
 $route['userupdate']      = 'admin/updateuser';
 $route['jabatanupdate']   = 'admin/updatejabatan';
 $route['seksiupdate']     = 'admin/updateseksi';
@@ -78,11 +80,11 @@ $route['kegiatanupdate']  = 'admin/updatekegiatan';
 $route['targetuserupdate']= 'admin/updatetargetuser';
 
 // ROUTES DELETE DATA JIKA ADA ID
-$route['hapusdata/(:any)'] = 'admin/deleteMitra/$1'; // jika ada id
-$route['hapusdata/(:any)'] = 'admin/deleteUser/$1'; 
-$route['hapusdata/(:any)'] = 'admin/deleteJabatan/$1'; 
-$route['hapusdata/(:any)'] = 'admin/deleteKegiatan/$1'; 
-$route['hapusdata/(:any)'] = 'admin/deleteSeksi/$1'; 
+$route['hapusmitra/(:any)'] = 'admin/deleteMitra/$1'; // jika ada id
+$route['hapususer/(:any)'] = 'admin/deleteUser/$1'; 
+$route['hapusjabatan/(:any)'] = 'admin/deleteJabatan/$1'; 
+$route['hapuskegiatan/(:any)'] = 'admin/deleteKegiatan/$1'; 
+$route['hapususeksi/(:any)'] = 'admin/deleteSeksi/$1'; 
 
 
 $route['hapusdata']        = 'admin/deleteUser'; // jika tidak ada id

@@ -10,7 +10,7 @@
   <meta name="author" content="">
   <link rel="icon" type="image/png" href="<?= base_url('assets/') ?>img/logo.png" />
 
-  <title>BPS Monitoring Jombang</title>
+  <title><?= $judul; ?></title>
 
   <!-- Custom fonts for this template -->
   <link href="<?= base_url('assets/admin/') ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

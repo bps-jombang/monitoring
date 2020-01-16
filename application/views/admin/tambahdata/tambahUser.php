@@ -17,7 +17,6 @@
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
                 <div class="card-body">
-                <?php echo validation_errors(); ?>
                     <form action="<?= base_url('user') ?>" method="post">
                         <?php if($this->session->flashdata('pesan')) : ?>
                         <div class="form-group">
@@ -25,6 +24,7 @@
                         </div>
                         <?php endif; ?>
                         <div class="form-group">
+                        <?= form_error('nama_user','<div class="alert alert-warning mt-3">','</div>'); ?>
                             <label for="nama_user">Nama User</label>
                             <input type="text" class="form-control" name="nama_user" id="nama_user">
                         </div>
