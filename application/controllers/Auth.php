@@ -35,9 +35,15 @@ class Auth extends CI_Controller {
             $password   = htmlspecialchars($this->input->post('password',true));
             $query      = $this->modellogin->login('admin',$username,$password);
             if ($query > 0 ) {
-                $data = ["username" => $username];
-                $this->session->set_userdata($data);
-                redirect(base_url('admin'));
+                if($query["id_role"] == 2){
+                    $data = ["username" => $username, "id_role" => $query['id_role']];
+                    $this->session->set_userdata($data);
+                    redirect(base_url('admin'));
+                }else{
+                    $data = ["username" => $username, "id_role" => $query['id_role']];
+                    $this->session->set_userdata($data);
+                    redirect(base_url('admin'));
+                }
             }else{
                 $this->session->set_flashdata('gagal','<div class="alert alert-danger" role="alert">Username atau Password salah!!</div>');
                 redirect(base_url('loginadmin'));
