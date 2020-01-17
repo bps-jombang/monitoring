@@ -13,7 +13,7 @@ class Admin extends CI_Controller
                     "Tambah User" => "link user",
                     "Tambah Mitra" => "link mitra"
                 ],
-                "User" => "Tambah User",
+                "User" => "Tambah Anggota",
                 "Admin" => "Tambah Admin",
                 "Seksi" => "Tambah Seksi",
                 "Mitra" => "Tambah Mitra",
@@ -34,7 +34,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function index() 
+    public function index() // DONE
     {
         $title['judul']     = "BPS";
         $data['sumtarget']  = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
@@ -126,7 +126,7 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
-    public function addseksi()
+    public function addseksi() // DONE
     {   
         $data['judul']      = "Tambah Seksi | BPS";
         $data['listmenu']   = getMenuLink(); // array di helper   
@@ -150,7 +150,7 @@ class Admin extends CI_Controller
         } 
     }
 
-    public function addmitra()
+    public function addmitra()// DONE
     {
         $title['judul']     = "Tambah Mitra  | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
@@ -173,12 +173,15 @@ class Admin extends CI_Controller
             redirect(base_url('mitra')); 
         }
     }
-    public function addjabatan()
+
+    public function addjabatan() // DONE
     {
         $title['judul']     = "Tambah Jabatan | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
+        $data['listjabatan'] = $this->modeladmin->getUser('jabatan',0);
         
+
         $this->form_validation->set_rules('nama_jabatan','Jabatan','required'); // validation
 
         if ($this->form_validation->run() == FALSE) {
@@ -190,7 +193,7 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createData('jabatan',6);
+            $this->modeladmin->createData('jabatan',3);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('jabatan')); 
         }
@@ -249,11 +252,16 @@ class Admin extends CI_Controller
             redirect(base_url('targetuser')); 
         }
     }
-    public function adduser()
+    public function adduser() // DONE
     {
         $title['judul']     = "Tambah User | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
+        
+        $data['listuser'] = $this->db->get_where('user',["nama_user !=" => NULL])->result_array();
+        $data['listseksi'] = $this->modeladmin->getUser('seksi',0);
+        $data['listjabatan'] = $this->modeladmin->getUser('jabatan',0);
+        $data['listkecamatan'] = $this->modeladmin->getUser('kecamatan',0);
         $this->form_validation->set_rules('nama_user','User','required'); // validation
 
         if ($this->form_validation->run() == FALSE) {
@@ -271,7 +279,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function addadmin()
+    public function addadmin() // DONE
     {
         if ($this->session->userdata('id_role') == 2) {
             redirect(base_url('admin'));
@@ -293,29 +301,33 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createData('admin',8);
-            $this->session->set_flashdata('pesan','Ditambah');
-            redirect(base_url('addadmin')); 
+            $data = $this->modeladmin->createData('admin',8);
+            if ($data == true) {
+                $this->session->set_flashdata('usernamesama','<div class="alert alert-danger" role="alert" dismiss="close">Username <strong>tidak boleh sama</strong></div>');
+                redirect(base_url('addadmin'));
+            }else{
+                # code...
+                $this->session->set_flashdata('pesan','Ditambah');
+                redirect(base_url('addadmin'));
+            }
         }
-        // jika validation gagal maka dikembalikan ke halaman insert tadi
         
     }
 
 
 
-    public function editmitra($id)
+    public function editmitra($id = null) // DONE
     {
-       
-        // $model = $this->db->get_where('mitra',["id_mitra" => $id])->row_array();
+        if ($id == null) {
+            redirect(base_url('mitra'));
+        }
         $title['judul']     = "Edit Mitra  | BPS";
-        $data['listmenu'] = getMenuLink(); // array di helper
-        $data['sidebar'] = $this->info; // array class
-        $data['listmitra'] = $this->modeladmin->getUser('mitra',$id);
-        // foreach ($data['listmitra'] as $key => $value) {
-        //     echo $key;
-        // }
-        // die;
-        $this->form_validation->set_rules('nama_mitra','Mitra','required'); // validation
+        $data['listmenu']   = getMenuLink(); // array di helper
+        $data['sidebar']    = $this->info; // array class
+        $data['listmitra']  = $this->modeladmin->getUser('mitra',$id);
+        $data['allmitra']   = $this->modeladmin->getUser('mitra',0);
+
+        $this->form_validation->set_rules('nama_mitra','Nama Mitra','required'); // validation
 
         if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
@@ -336,82 +348,48 @@ class Admin extends CI_Controller
     // --------------------------- \\
     //        DELETE FUNCTIONS      \\
     // ----------------------------- \\
-    // 1 = seksi, 2 = mitra, 3 kecamatan, 4 = user, 5 = kegiatan, 6 = jabatan
-    public function deleteSeksi($id = null)
+    // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin
+    public function deleteSeksi($id = null) // DONE
     {
-        if (!$id) {
-            $data = array('status' => false , 'messages' => 'no results from database' );
-            echo json_encode($data);
-        }else{
-            $data = $this->modeladmin->deleteData('seksi',1,$id);
-            if ($data == true) {
-                $this->session->set_flashdata('hapus','<div class="row">
-                <div class="col-lg-6 col-md-6 col-6">
-                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
-                      Data <strong>Berhasil Dihapus!</strong>
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                </div>
-              </div>');
-                redirect(base_url('seksi'));
-            }else{
-                echo "data gagal dihapus";
-            }
+        if ($id == null) {
+            redirect(base_url('seksi'));
         }
+        $this->modeladmin->deleteData('seksi',1,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
     }
-    public function deleteMitra($id = null)
+    public function deleteMitra($id = null) // DONE
     {
-        if (!$id) {
-            $data = array('status' => false , 'messages' => 'no results from database' );
-            echo json_encode($data);
-        }else{
-            $data = $this->modeladmin->deleteData('mitra',2,$id);
-            // if ($data == true) {
-                // echo json_encode($data);
-                $this->session->set_flashdata('pesan','Dihapus');
-            //     $this->session->set_flashdata('hapus','<div class="row">
-            //     <div class="col-lg-6 col-md-6 col-6">
-            //       <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
-            //           Data <strong>Berhasil Dihapus!</strong>
-            //           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //           <span aria-hidden="true">&times;</span>
-            //         </button>
-            //         </div>
-            //     </div>
-            //   </div>');
-                // redirect(base_url('mitra'));
-            // }else{
-            //     echo "data gagal dihapus";
-            // }
+        if ($id == null) {
+            redirect(base_url('mitra'));
         }
+        $this->modeladmin->deleteData('mitra',2,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
     }
-    // kecamatan tidak dihapus karena tetap
-    public function deleteUser($id = null)
+    public function deleteUser($id = null) // DONE
     {
-        if (!$id) {
-            $data = array('status' => false , 'messages' => 'no results from database' );
-            echo json_encode($data);
-        }else{
-            $data = $this->modeladmin->deleteData('user',4,$id);
-            if ($data == true) {
-                $this->session->set_flashdata('hapus','<div class="row">
-                <div class="col-lg-6 col-md-6 col-6">
-                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
-                      Data <strong>Berhasil Dihapus!</strong>
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                </div>
-              </div>');
-                redirect(base_url('user'));
-            }else{
-                echo "data gagal dihapus";
-            }
+        if ($id == null) {
+            redirect(base_url('user'));
         }
+        $this->modeladmin->deleteData('user',3,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
     }
+    public function deleteAdmin($id = null) // DONE
+    {
+        if ($id == null) {
+            redirect(base_url('addadmin'));
+        }
+        $this->modeladmin->deleteData('admin',6,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
+    }
+    public function deleteJabatan($id = null) // DONE
+    {
+        if ($id == null) {
+            redirect(base_url('jabatan'));
+        }
+        $this->modeladmin->deleteData('jabatan',5,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
+    }
+
     public function deleteKegiatan($id = null)
     {
         if (!$id) {
@@ -427,32 +405,31 @@ class Admin extends CI_Controller
             }
         }
     }
-    public function deleteJabatan($id = null)
-    {
-        if (!$id) {
-            $data = array('status' => false , 'messages' => 'no results from database' );
-            echo json_encode($data);
-        }else{
-            $data = $this->modeladmin->deleteData('jabatan',6,$id);
-            if ($data == true) {
-                $this->session->set_flashdata('hapus','<div class="row">
-                <div class="col-lg-6 col-md-6 col-6">
-                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
-                      Data <strong>Berhasil Dihapus!</strong>
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                </div>
-              </div>');
-                redirect(base_url('jabatan'));
-            }else{
-                echo "data gagal dihapus";
-            }
-        }
-    }
+    
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // INI JANGAN DIUTIK GAYS :D BUAT TESTING 
     public function hh($tabel = null,$id = null){
