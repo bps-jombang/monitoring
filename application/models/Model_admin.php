@@ -3,7 +3,7 @@
 class Model_admin extends CI_Model {  
 
     private $_seksi = "seksi", $_mitra = "mitra", $_kecamatan = "kecamatan",
-            $_user   = "user", $_kegiatan = "kegiatan", $_jabatan = "jabatan";
+            $_user   = "user", $_admin   = "admin", $_kegiatan = "kegiatan", $_jabatan = "jabatan";
 
     // ONLY CREATES 
     public function createData($tabel,$no)
@@ -12,7 +12,11 @@ class Model_admin extends CI_Model {
         $dataSeksi = array(
             'nama_seksi' => stripslashes($this->input->post('nama_seksi'))
         );
-
+        $dataAdmin = array(
+            'id_role'  => $this->input->post('check'),
+            'username' => strtolower(htmlspecialchars($this->input->post('username',TRUE))),
+            'password' => password_hash($this->input->post('username',TRUE),PASSWORD_DEFAULT)
+        );
         $dataMitra = array( // TABEL MITRA
             'nama_mitra' => htmlspecialchars(ucwords($this->input->post('nama_mitra',TRUE))) // NAME LABEL DI VIEWS ex: name="apa"
         );
@@ -35,7 +39,6 @@ class Model_admin extends CI_Model {
             'id_kegiatan' => htmlspecialchars($this->input->post('input_kegiatan')), 
             'target' => htmlspecialchars($this->input->post('input_target'))
         );
-
         $dataJabatan = array ( // JABATAN
             'nama_jabatan' => htmlspecialchars($this->input->post('nama_jabatan'))
         );
@@ -64,6 +67,23 @@ class Model_admin extends CI_Model {
         }else if($no == 7){
             // echo json_encode($dataKegiatandetail);die;
             $this->db->insert($tabel,$dataKegiatandetail);
+        }else if($no == 8){
+            if ($dataAdmin["id_role"] == "on") {
+                $dataAsli       =   array("on",$dataAdmin["username"],$dataAdmin["password"]);
+                $dataReplace    =   array(1,$dataAdmin["username"],$dataAdmin["password"]);
+                // $dataFinish     =   array();
+                // print_r($dataReplace[0]);die;
+                $dataBaru = array("id_role" => $dataReplace[0],"username" => $dataReplace[1],"password" => $dataReplace[2]);
+                // print_r(array_replace($dataAsli,$dataReplace));die;
+                $this->db->insert($tabel,$dataBaru);
+            }else{
+                $dataAsli       =   array(NULL,$dataAdmin["username"],$dataAdmin["password"]);
+                $dataReplace    =   array(2,$dataAdmin["username"],$dataAdmin["password"]);
+                // $dataFinish     =   array();
+                // print_r($dataReplace[0]);die;
+                $dataBaru = array("id_role" => $dataReplace[0],"username" => $dataReplace[1],"password" => $dataReplace[2]);
+                $this->db->insert($tabel,$dataBaru);
+            }
         }
     }
     
@@ -82,10 +102,10 @@ class Model_admin extends CI_Model {
     public function getUser($tabel,$id = null)
     {
         // 1 = seksi, 2 = user,3 = mitra, 4 = kegiatan, 5 = kecamatan
-        if ($tabel == 'seksi') {
+        if ($tabel == "seksi") {
             // select tabel seksi
             if ($id) {
-                return json_encode($this->db->get_where($this->_seksi,["id_seksi" => $id])->row_array());
+                return $this->db->get_where($this->_seksi,["id_seksi" => $id])->row_array();
             }else{
                 return $this->db->get($this->_seksi)->result_array();
             }
@@ -110,12 +130,12 @@ class Model_admin extends CI_Model {
             }else{
                 return json_encode($this->db->get($this->_kegiatan)->result_array());
             }
-        }else if($tabel == "kecamatan") {
+        }else if($tabel == "admin") {
             // select tabel kecamatan
             if ($id) {
-                return json_encode($this->db->get_where($this->_kecamatan,["id_kecamatan" => $id])->row_array());
+                return $this->db->get_where($this->_admin,["id_admin" => $id_admin])->row_array();
             }else{
-                return json_encode($this->db->get($this->_kecamatan)->result_array());
+                return $this->db->get($this->_admin)->result_array();
             }
         }
         // else{

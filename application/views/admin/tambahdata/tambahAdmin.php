@@ -18,16 +18,17 @@
                 </div>
                 <div class="card-body">
                     <form action="<?= base_url('addadmin') ?>" method="post">
-                        <?php if($this->session->flashdata('pesan')) : ?>
                         <div class="form-group">
-                          <span class="alert alert-success">Data berhasil <?= $this->session->flashdata('pesan'); ?></span>
+                        <?= form_error('username','<div class="alert alert-warning mt-3">','</div>'); ?>
+                            <label for="username">Nama User</label>
+                            <input type="text" class="form-control" name="username" id="username">
+                            <p class="text-danger pt-2" style="opacity: 0.8">* username wajib huruf kecil</p>
                         </div>
-                        <?php endif; ?>
                         <div class="form-group">
-                        <?= form_error('nama_user','<div class="alert alert-warning mt-3">','</div>'); ?>
-                          
-                            <label for="nama_user">Nama User</label>
-                            <input type="text" class="form-control" name="nama_user" id="nama_user">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="check" id="check">
+                          <label class="custom-control-label" for="check">Ceklis jika ingin menambah superadmin</label>
+                        </div>
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
@@ -40,30 +41,35 @@
             </div>
 
             <!-- table results -->
-            <div class="col-lg-5 offset-1">
-                  <div class="table-responsive">
-                      <table class="table table-condensed">
-                          <thead>
-                              <tr>
-                                  <th>No</th>
-                                  <th>Username</th>
-                                  <th>Jabatan</th>
-                                  <th colspan="2" class="text-center">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>1</td>
-                                  <td>TriaM</td>
-                                  <td>Kasie IPDS</td>
-                                  <td class="text-center">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
+            <div class="col-lg-6">
+              <div class="table-responsive">
+                <table id="dtablemitra" class="display table table-bordered"width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Username Admin</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1; foreach($listadmin as $admin) : ?>
+                    <?php if($admin['id_admin'] == $this->session->userdata('id_role')) continue;?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= ucwords(strtolower($admin['username'])) ?>
+                            <?php if($admin['id_role'] == 1) :?>
+                            <span class="badge badge-primary float-right mt-1">Superadmin</span>
+                            <?php endif;?></td>
+                            <td class="text-center">
+                            <a href="<?= base_url('admin/editadmin/'.$admin['id_admin']) ?>"   
+                            class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit</a>
+                            <a href="#" id="<?= $admin['id_admin']; ?>" class="btn btn-danger btn-sm tombol-hapus"><i class="fas fa-trash"></i> Hapus</a></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+              </div>
             </div>
 
           </div>
