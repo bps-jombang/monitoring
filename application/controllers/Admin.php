@@ -40,7 +40,6 @@ class Admin extends CI_Controller
         $data['sumtarget']  = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
         $data['sumseksi']   = $this->db->select('COUNT(nama_seksi)')->get('seksi')->row_array();
         $data['listmenu']   = getMenuLink(); // array di helper   
-
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
@@ -140,21 +139,12 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/header',$data);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
-            $this->load->view('admin/tambahdata/tambahsie', $this->info);
+            $this->load->view('admin/tambahdata/tambahseksi', $this->info);
             $this->load->view('template_admin/footer',$data);
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('seksi',1);
-            $this->session->set_flashdata('pesan','<div class="row">
-            <div class="col-lg-6">
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check"></i> Data <strong>Berhasil ditambah !!</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </div>
-          </div>');
+            $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('seksi')); 
         } 
     }
@@ -178,7 +168,7 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('mitra',2);
-            $this->session->set_flashdata('pesan','Berhasil Ditambah');
+            $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('mitra')); 
         }
     }
@@ -200,7 +190,7 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('jabatan',6);
-            $this->session->set_flashdata('pesan','Berhasil Ditambah');
+            $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('jabatan')); 
         }
     }
@@ -229,12 +219,7 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('kegiatan',5);
-            $this->session->set_flashdata('pesan','<div class="alert alert-success alert-dismissible fade show" role="alert">
-              <i class="fas fa-check"></i> Data <strong>Berhasil ditambah !!</strong>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>');
+            $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('kegiatan')); 
         }
     }
@@ -259,12 +244,7 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('kegiatan_detail',7);
-            $this->session->set_flashdata('pesan','<div class="alert alert-success alert-dismissible fade show" role="alert">
-              <i class="fas fa-check"></i> Data <strong>Berhasil ditambah !!</strong>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>');
+            $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('targetuser')); 
         }
     }
@@ -285,13 +265,16 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('user',4);
-            $this->session->set_flashdata('pesan','Berhasil Ditambah');
+            $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('user')); 
         }
     }
 
     public function addadmin()
     {
+        if ($this->session->userdata('id_role') == 2) {
+            redirect(base_url('admin'));
+        }
         $title['judul']     = "Tambah Admin | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
@@ -308,7 +291,7 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->createData('admin',4);
-            $this->session->set_flashdata('pesan','Berhasil Ditambah');
+            $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('admin')); 
         }
         // jika validation gagal maka dikembalikan ke halaman insert tadi
@@ -325,10 +308,10 @@ class Admin extends CI_Controller
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
         $data['listmitra'] = $this->modeladmin->getUser('mitra',$id);
-// foreach ($data['listmitra'] as $key => $value) {
-//     echo $key;
-// }
-// die;
+        // foreach ($data['listmitra'] as $key => $value) {
+        //     echo $key;
+        // }
+        // die;
         $this->form_validation->set_rules('nama_mitra','Mitra','required'); // validation
 
         if ($this->form_validation->run() == FALSE) {
@@ -341,11 +324,11 @@ class Admin extends CI_Controller
         }else{
             // jika validation sukses maka insert data
             $this->modeladmin->updateData('mitra',1,$id);
-            $this->session->set_flashdata('diubah','Berhasil Diubah');
+            $this->session->set_flashdata('pesan','Diubah');
             redirect(base_url('mitra')); 
         }
         
-   }
+    }
 
     // --------------------------- \\
     //        DELETE FUNCTIONS      \\
@@ -382,21 +365,23 @@ class Admin extends CI_Controller
             echo json_encode($data);
         }else{
             $data = $this->modeladmin->deleteData('mitra',2,$id);
-            if ($data == true) {
-                $this->session->set_flashdata('hapus','<div class="row">
-                <div class="col-lg-6 col-md-6 col-6">
-                  <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
-                      Data <strong>Berhasil Dihapus!</strong>
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                </div>
-              </div>');
-                redirect(base_url('mitra'));
-            }else{
-                echo "data gagal dihapus";
-            }
+            // if ($data == true) {
+                // echo json_encode($data);
+                $this->session->set_flashdata('pesan','Dihapus');
+            //     $this->session->set_flashdata('hapus','<div class="row">
+            //     <div class="col-lg-6 col-md-6 col-6">
+            //       <div class="pesan alert alert-success alert-dismissible fade show" id="pesan" role="alert">
+            //           Data <strong>Berhasil Dihapus!</strong>
+            //           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //           <span aria-hidden="true">&times;</span>
+            //         </button>
+            //         </div>
+            //     </div>
+            //   </div>');
+                // redirect(base_url('mitra'));
+            // }else{
+            //     echo "data gagal dihapus";
+            // }
         }
     }
     // kecamatan tidak dihapus karena tetap
