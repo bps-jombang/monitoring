@@ -39,6 +39,7 @@ class Admin extends CI_Controller
         $title['judul']     = "BPS";
         $data['sumtarget']  = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
         $data['sumseksi']   = $this->db->select('COUNT(nama_seksi)')->get('seksi')->row_array();
+        $data['listseksi']  = $this->db->get('seksi')->result_array();
         $data['listmenu']   = getMenuLink(); // array di helper   
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
@@ -278,21 +279,23 @@ class Admin extends CI_Controller
         $title['judul']     = "Tambah Admin | BPS";
         $data['listmenu'] = getMenuLink(); // array di helper
         $data['sidebar'] = $this->info; // array class
+        
+        $data['listadmin'] = $this->modeladmin->getUser('admin',0);
 
-        $this->form_validation->set_rules('nama_user','User','required');
+        $this->form_validation->set_rules('username','Username','required');
 
         if ($this->form_validation->run() == FALSE) {
             // jika validation gagal maka dikembalikan ke halaman insert tadi
             $this->load->view('template_admin/header',$title);
             $this->load->view('template_admin/sidebar',$data);
             $this->load->view('template_admin/navbar');
-            $this->load->view('admin/tambahdata/tambahAdmin', $this->info);
+            $this->load->view('admin/tambahdata/tambahadmin', $this->info);
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createData('admin',4);
+            $this->modeladmin->createData('admin',8);
             $this->session->set_flashdata('pesan','Ditambah');
-            redirect(base_url('admin')); 
+            redirect(base_url('addadmin')); 
         }
         // jika validation gagal maka dikembalikan ke halaman insert tadi
         
