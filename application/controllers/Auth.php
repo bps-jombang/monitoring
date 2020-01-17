@@ -36,11 +36,13 @@ class Auth extends CI_Controller {
             $query      = $this->modellogin->login('admin',$username,$password);
             if ($query > 0 ) {
                 if($query["id_role"] == 2){
-                    $data = ["username" => $username, "id_role" => $query['id_role']];
+                    $data = ["id_admin" => $query['id_admin'],"username" => $username, "id_role" => $query['id_role']];
+                    // echo json_encode($data);die;
                     $this->session->set_userdata($data);
                     redirect(base_url('admin'));
                 }else{
-                    $data = ["username" => $username, "id_role" => $query['id_role']];
+                    $data = ["id_admin" => $query['id_admin'],"username" => $username, "id_role" => $query['id_role']];
+                    // echo json_encode($data);die;
                     $this->session->set_userdata($data);
                     redirect(base_url('admin'));
                 }
