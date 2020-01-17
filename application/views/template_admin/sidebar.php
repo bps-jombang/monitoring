@@ -1,5 +1,6 @@
 
     <!-- Sidebar -->
+    <?php if($this->session->userdata('id_role') == 1 || $this->session->userdata('id_role') == 2) : ?>
     <ul class="navku navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -16,8 +17,13 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
         <a class="nav-link" href="<?= base_url('admin'); ?>">
+        <?php if($this->session->userdata('id_role') == 1) : ?>
+          <i class="fas fa-fw fa-desktop"></i>
+          <span>Dashboard</span></a>
+        <?php else : ?>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
+        <?php endif;?>
       </li>
 
       <!-- Divider -->
@@ -25,7 +31,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        Navigasi Tambah
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
@@ -36,13 +42,19 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
+          <?php if($this->session->userdata('id_role') == 1) : // master : ?>
+            <?php // $i biasa tanpa => ambil value dari key $i => ambil keynya saja
+              foreach($listmenu as $key => $value) :?>
+                <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+            <?php endforeach; ?>
 
-          <?php 
-          // $i biasa tanpa => ambil value dari key
-          // $i => ambil keynya saja
-          foreach($listmenu as $key => $value) :?>
-              <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
-          <?php endforeach; ?>
+          <?php else :?>
+            <?php  // $i biasa tanpa => ambil value dari key, $i => ambil keynya saja
+              foreach($listmenu as $key => $value) :?>
+              <?php if($key != "Tambah Admin") : ?>
+                  <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+              <?php endif; endforeach; ?>
+          <?php endif;?>
           </div>
         </div>
       </li>
@@ -52,15 +64,8 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Addons
+        List
       </div>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
@@ -83,6 +88,7 @@
       </div>
 
     </ul>
+    <?php endif;?>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->

@@ -6,7 +6,7 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray"><?= $sidebar["Kegiatan"] ?>
           </div>
-            
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           <div class="row">
 
             <!-- form input data -->
@@ -18,11 +18,6 @@
                 </div>
                 <div class="card-body">
                     <form action="<?= base_url('targetuser') ?>" method="post">
-                        <?php if($this->session->flashdata('pesan')) : ?>
-                        <div class="form-group">
-                          <span class="alert alert-success">Data berhasil <?= $this->session->flashdata('pesan'); ?></span>
-                        </div>
-                        <?php endif; ?>
                         <div class="form-row">
                           <div class="form-group col-md-12">
                             <label for="input_kegiatan">Pilih Kegiatan</label>

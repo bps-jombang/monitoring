@@ -4,9 +4,9 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["User"] ?>
+            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Admin"] ?>
           </div>
-            
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           <div class="row">
 
             <!-- form input data -->
@@ -17,20 +17,21 @@
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
                 <div class="card-body">
-                <?php echo validation_errors(); ?>
-                    <form action="<?= base_url('user') ?>" method="post">
+                    <form action="<?= base_url('addadmin') ?>" method="post">
                         <?php if($this->session->flashdata('pesan')) : ?>
                         <div class="form-group">
                           <span class="alert alert-success">Data berhasil <?= $this->session->flashdata('pesan'); ?></span>
                         </div>
                         <?php endif; ?>
                         <div class="form-group">
+                        <?= form_error('nama_user','<div class="alert alert-warning mt-3">','</div>'); ?>
+                          
                             <label for="nama_user">Nama User</label>
                             <input type="text" class="form-control" name="nama_user" id="nama_user">
                         </div>
                         <div class="form-group">
-                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fas-send"></i>Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fas-send"></i>Reset</button>
+                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
+                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
                         </div>
                     </form>
                 </div>

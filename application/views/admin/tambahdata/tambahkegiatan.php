@@ -7,6 +7,7 @@
             <h1 class="h3 mb-0 text-gray"><?= $sidebar["Kegiatan"] ?>
           </div>
             
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           <div class="row">
 
             <!-- form input data -->

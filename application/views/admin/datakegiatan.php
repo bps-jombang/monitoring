@@ -40,9 +40,9 @@
                       </thead>
                       <tbody>
                       
-                      <?php $no=1; foreach($orderuraian as $d) : ?>
+                      <?php $no=1; $nom=1; foreach($orderuraian as $d) : ?>
                       <tr>
-                          <td><?= $no++; ?></td>
+                          <td><?= $nom++; ?></td>
                           <td><?= $d['uraian_kegiatan'] ?></td>
                           <td><?= $d['id_seksi'] ?></td>
                           <td><?= $d['vol'] ?></td>
@@ -54,10 +54,10 @@
                           <td class="kuning">target</td>
                           <td><?= " - " //$d['realisasi'] ?></td>
                           <?php endforeach;?>
-                          <td>mitra</td>
+                          <td><?= $no++; ?></td>
                           
                           <td>jmlh</td>
-                          <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, voluptatum.</td>
+                          <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, qui.</td>
                           
                       </tr>
                       <?php endforeach;?>

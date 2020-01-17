@@ -25,6 +25,12 @@ $(document).ready(function () {
         [5, 10, 25, 50, "All"]
       ]
     });
+    $('#dtablemitra').DataTable({
+    	"lengthMenu": [
+    		[5, 10, 25, 50, -1],
+    		[5, 10, 25, 50, "All"]
+    	]
+    });
     $('#dataTableku').DataTable({
 
       "lengthMenu": [
