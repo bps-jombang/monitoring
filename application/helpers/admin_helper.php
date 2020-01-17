@@ -15,8 +15,9 @@ if ( ! function_exists('getMenuLink')){
                 "Tambah Admin"      => base_url('addadmin'),
                 "Tambah Seksi"      => base_url('seksi'),
                 "Tambah Kegiatan"   => base_url('kegiatan'),
+                "Tambah Jabatan"    => base_url('jabatan'),
                 "Tambah Target User"=> base_url('targetuser'),
-                "Tambah User"       => base_url('user'),
+                "Tambah Anggota"       => base_url('user'),
                 "Tambah Mitra"      => base_url('mitra')
         ];
     }
