@@ -12,9 +12,14 @@
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
             <div class="topbar-divider d-none d-sm-block"></div>
-
+              <div class="badge" style="padding-top:25px;">
+              <?php if($this->session->userdata('id_role') == 1) :?>
+                <span class="badge badge-primary py-2 px-2">Superadmin</span> 
+              <?php else :?>
+                <span class="badge badge-primary py-2 px-2">Admin</span> 
+              <?php endif;?>
+              </div>
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,13 +28,9 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="<?= base_url('Page/profile') ?>">
+                <a class="dropdown-item" href="<?= base_url('Page/profile/'.$this->session->userdata('id_admin')) ?>">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?= base_url('logout'); ?>" data-toggle="modal" data-target="#logoutModal">
