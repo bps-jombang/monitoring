@@ -16,13 +16,17 @@
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
+                
+                
                 <div class="card-body">
                     <form action="<?= base_url('addadmin') ?>" method="post">
+                  <?= $this->session->flashdata('usernamesama'); ?>
+                
                         <div class="form-group">
                         <?= form_error('username','<div class="alert alert-warning mt-3">','</div>'); ?>
-                            <label for="username">Nama User</label>
+                            <label for="username">Username Admin</label>
                             <input type="text" class="form-control" name="username" id="username">
-                            <p class="text-danger pt-2" style="opacity: 0.8">* username wajib huruf kecil</p>
+                            <p class="text-danger pt-2" style="opacity: 0.8">* username wajib huruf kecil (password seperti username)</p>
                         </div>
                         <div class="form-group">
                         <div class="custom-control custom-checkbox">
@@ -53,7 +57,7 @@
                     </thead>
                     <tbody>
                     <?php $no=1; foreach($listadmin as $admin) : ?>
-                    <?php if($admin['id_admin'] == $this->session->userdata('id_role')) continue;?>
+                    <?php if($admin['id_admin'] == $this->session->userdata('id_admin')) continue;?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= ucwords(strtolower($admin['username'])) ?>
@@ -64,7 +68,7 @@
                             <a href="<?= base_url('admin/editadmin/'.$admin['id_admin']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
-                            <a href="#" id="<?= $admin['id_admin']; ?>" class="btn btn-danger btn-sm tombol-hapus"><i class="fas fa-trash"></i> Hapus</a></td>
+                            <a href="#" id="<?= $admin['id_admin']; ?>" class="btn btn-danger btn-sm tombol-hapus-admin"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>

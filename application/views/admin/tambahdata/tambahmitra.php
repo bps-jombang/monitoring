@@ -54,7 +54,7 @@
                             <a href="<?= base_url('admin/editmitra/'.$mitra['id_mitra']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
-                            <a href="#" id="<?= $mitra['id_mitra']; ?>" class="btn btn-danger btn-sm tombol-hapus"><i class="fas fa-trash"></i> Hapus</a></td>
+                            <a href="#" id="<?= $mitra['id_mitra']; ?>" class="btn btn-danger btn-sm tombol-hapus-mitra"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>

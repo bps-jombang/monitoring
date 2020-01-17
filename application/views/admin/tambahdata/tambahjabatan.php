@@ -17,20 +17,15 @@
                   <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
                 </div>
                 <div class="card-body">
-                <?php echo validation_errors(); ?>
                     <form action="<?= base_url('jabatan') ?>" method="post">
-                        <?php if($this->session->flashdata('pesan')) : ?>
                         <div class="form-group">
-                          <span class="alert alert-success">Data berhasil <?= $this->session->flashdata('pesan'); ?></span>
-                        </div>
-                        <?php endif; ?>
-                        <div class="form-group">
+                            <?= form_error('nama_jabatan','<div class="alert alert-warning mt-3">','</div>'); ?>
                             <label for="nama_jabatan">Nama Jabatan</label>
                             <input type="text" class="form-control" name="nama_jabatan" id="nama_jabatan">
                         </div>
                         <div class="form-group">
-                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fas-send"></i>Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fas-send"></i>Reset</button>
+                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
+                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
                         </div>
                     </form>
                 </div>
@@ -39,28 +34,31 @@
             </div>
 
             <!-- table results -->
-            <div class="col-lg-5 offset-1">
-                  <div class="table-responsive">
-                      <table class="table table-condensed">
-                          <thead>
-                              <tr>
-                                  <th>No</th>
-                                  <th>Nama Seksi</th>
-                                  <th colspan="2" class="text-center">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>1</td>
-                                  <td>Testing</td>
-                                  <td class="text-center">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
+            <div class="col-lg-6">
+              <div class="table-responsive">
+                <table id="dtablemitra" class="display table table-bordered"width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Nama Jabatan</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1; foreach($listjabatan as $jabatan) : ?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= ucwords(strtolower($jabatan['nama_jabatan'])) ?>
+                            <td class="text-center">
+                            <a href="<?= base_url('jabatan/editjabatan/'.$jabatan['id_jabatan']) ?>"   
+                            class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit</a>
+                            <a href="#" id="<?= $jabatan['id_jabatan']; ?>" class="btn btn-danger btn-sm tombol-hapus-jabatan"><i class="fas fa-trash"></i> Hapus</a></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+              </div>
             </div>
 
           </div>
