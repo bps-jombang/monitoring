@@ -43,26 +43,26 @@ class Model_admin extends CI_Model {
 
 
         if ($no == 1) { // insert ke tabel seksi
-            var_dump($dataSeksi);die;
+            // var_dump($dataSeksi);die;
             $this->db->insert($tabel,$dataSeksi);
         }else if($no == 2){ // insert ke tabel mitra
             // var_dump($dataMitra);die;    
             $this->db->insert($tabel,$dataMitra);
         }else if($no == 3){ // insert ke tabel kecamatan
-            var_dump($dataKecamatan);die;
+            // var_dump($dataKecamatan);die;
             $this->db->insert($tabel,$dataKecamatan);
         }else if($no == 4){ // insert ke tabel user
-            var_dump($dataUser);die;
+            // var_dump($dataUser);die;
             $this->db->insert($tabel,$dataUser);
         }else if($no == 5){ // insert tabael kegiatan
-            echo json_encode($dataKegiatan);die;
-            var_dump($dataKegiatan);die;
+            // echo json_encode($dataKegiatan);die;
+            // var_dump($dataKegiatan);die;
             $this->db->insert($tabel,$dataKegiatan);
         }else if($no == 6){
-            var_dump($dataJabatan);die;
+            // var_dump($dataJabatan);die;
             $this->db->insert($tabel,$dataJabatan);
         }else if($no == 7){
-            echo json_encode($dataKegiatandetail);die;
+            // echo json_encode($dataKegiatandetail);die;
             $this->db->insert($tabel,$dataKegiatandetail);
         }
     }

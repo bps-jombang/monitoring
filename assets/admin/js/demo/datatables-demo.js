@@ -25,7 +25,7 @@ $(document).ready(function () {
         [5, 10, 25, 50, "All"]
       ]
     });
-    $('#table_id').DataTable({
+    $('#dtablemitra').DataTable({
     	"lengthMenu": [
     		[5, 10, 25, 50, -1],
     		[5, 10, 25, 50, "All"]

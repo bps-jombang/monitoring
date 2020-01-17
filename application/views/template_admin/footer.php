@@ -42,35 +42,6 @@
     </div>
   </div>
 
-  <!-- edit modal Mitra -->
-
-  <div class="modal fade" id="editdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="">
-            <div class="form-group">
-            <input type="hidden">
-              <label for="edit_mitra">Nama Mitra</label>
-              <input type="text" class="form-control" name="edit_mitra" id="edit_mitra" value="">
-            </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-  <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
@@ -80,8 +51,14 @@
 <script src="<?= base_url('assets/admin/') ?>vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url('assets/admin/') ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+
 <!-- Core plugin JavaScript-->
 <script src="<?= base_url('assets/admin/') ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Sweetalert2 -->
+<script src="<?= base_url('assets/admin/vendor/sweetalert2/') ?>sweetalert2.all.min.js"></script>
+<!-- My javascript -->
+<script src="<?= base_url('assets/admin/') ?>js/my.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/admin/') ?>js/sb-admin-2.min.js"></script>
@@ -93,11 +70,8 @@
 <!-- Page level custom scripts -->
 <script src="<?= base_url('assets/admin/') ?>js/demo/datatables-demo.js"></script>
 
-  <!-- My javascript -->
-  <script src="<?= base_url('assets/admin/') ?>js/my.js"></script>
 
-<!-- Sweetalert2 -->
-<script src="<?= base_url('assets/admin/vendor/sweetalert2/dist/') ?>sweetalert2.all.min.js"></script>
+
 
 <!-- Latest compiled and minified JavaScript | Bootstrap Select -->
 <script src="<?= base_url('assets/admin/vendor/bootstrap-select') ?>/dist/js/bootstrap-select.min.js"></script>
