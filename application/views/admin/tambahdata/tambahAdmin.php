@@ -4,7 +4,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Admin"] ?>
+            <h1 class="h3 mb-0 text-gray-800"><?= $menuform[0] ?>
           </div>
             <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           <div class="row">
@@ -14,7 +14,7 @@
 
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
+                  <h6 class="m-0 font-weight-bold text-primary"><?= $menuform[8] ?></h6>
                 </div>
                 
                 
@@ -36,8 +36,7 @@
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
-                        </div>
+                          </div>
                     </form>
                 </div>
               </div>
