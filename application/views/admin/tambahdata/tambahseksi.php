@@ -4,18 +4,18 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Seksi"] ?>
+            <h1 class="h3 mb-0 text-gray-800"><?= $menuform[1] ?>
           </div>
           <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           
           <div class="row">
 
             <!-- form input data -->
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-12">
 
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
+                  <h6 class="m-0 font-weight-bold text-primary"><?= $menuform[8] ?></h6>
                 </div>
                 <div class="card-body">
                     <form action="<?= base_url('seksi') ?>" method="post">
@@ -35,30 +35,31 @@
             </div>
 
             <!-- table results -->
-            <div class="col-lg-5 offset-1">
-                  <div class="table-responsive">
-                      <table class="table table-condensed">
-                          <thead class=" testing-tabel">
-                              <tr>
-                                  <th class="text-center">No</th>
-                                  <th class="text-center">Nama Seksi</th>
-                                  <th colspan="2" class="text-center">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                            <?php $no=1; foreach($listseksi as $seksi) : ?>
-                              <tr>
-                                  <th scope="row" class="text-center"><?= $no++; ?></td>
-                                  <td class="text-center"><?= $seksi['nama_seksi'] ?></td>
-                                  <td class="text-center">
-                                    <a href="" data-target="#editdata" data-toggle="modal" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="<?= base_url('hapusdata/'.$seksi['id_seksi']); ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
-                                  </td>
-                              </tr>
-                            <?php endforeach;?>
-                          </tbody>
-                      </table>
-                  </div>
+            <div class="col-12 col-lg-6">
+              <div class="table-responsive">
+                <table id="dtablemitra" class="display table table-bordered"width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Nama Seksi</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1; foreach($listseksi as $seksi) : ?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= ucwords(strtolower($seksi['nama_seksi'])) ?>
+                            <td class="text-center">
+                            <a href="<?= base_url('seksi/editseksi/'.$seksi['id_seksi']) ?>"   
+                            class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit</a>
+                            <a href="#" id="<?= $seksi['id_seksi']; ?>" class="btn btn-danger btn-sm tombol-hapus-seksi"><i class="fas fa-trash"></i> Hapus</a></td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+              </div>
             </div>
 
           </div>

@@ -4,7 +4,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><?= $menuform[9] ?>
+            <h1 class="h3 mb-0 text-gray-800"><?= $menuform[3] ?>
           </div>
           <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           <div class="row">
@@ -17,7 +17,7 @@
                   <h6 class="m-0 font-weight-bold text-primary"><?= $menuform[8] ?></h6>
                 </div>
                 <div class="card-body">
-                    <form action="<?= base_url('user') ?>" method="post">
+                    <form action="<?= base_url('pejabat') ?>" method="post">
                         <div class="form-group">
                         <?= form_error('nama_user','<div class="alert alert-warning mt-3">','</div>'); ?>
                             <label for="nama_user">Nama Anggota</label>
@@ -27,36 +27,25 @@
                           <div class="form-group col-md-6">
                             <label for="input_seksi">Seksi</label>
                             <select name="input_seksi" id="input_seksi" class="form-control">
-                              <option value="NULL" selected>Pilih Seksi</option>
+                              <option selected>Pilih Seksi</option>
                               <?php foreach($listseksi as $seksi):?>
                               <option value="<?= $seksi['id_seksi']; ?>"><?= $seksi['nama_seksi']; ?></option>
                               <?php endforeach; ?>
                             </select>
-                            <p class="text-danger pt-1" style="opacity: 0.7">* boleh tidak dipilih</p>
                           </div>
                             <div class="form-group col-md-6">
                                 <label for="input_jabatan">Jabatan</label>
                               <select name="input_jabatan" id="input_jabatan" class="form-control">
-                                <option value="NULL" selected>Pilih Jabatan</option>
+                                <option selected>Pilih Jabatan</option>
                                 <?php foreach($listjabatan as $jabatan):?>
                                 <option value="<?= $jabatan['id_jabatan']; ?>"><?= $jabatan['nama_jabatan']; ?></option>
                                 <?php endforeach; ?>
                               </select>
-                              <p class="text-danger pt-1" style="opacity: 0.7">* boleh tidak dipilih</p>
                           </div>
                         </div>
                         <div class="form-group">
-                            <label for="input_kecamatan">Kecamatan</label>
-                            <select name="input_kecamatan" id="input_kecamatan" class="selectpicker form-control" title="Cari Kecamatan" data-live-search="true">
-                              <?php foreach($listkecamatan as $kecamatan):?>
-                              <option value="<?= $kecamatan['id_kecamatan']; ?>"><?= $kecamatan['nama_kecamatan']; ?></option>
-                              <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
-                        </div>
+                          </div>
                     </form>
                 </div>
               </div>
@@ -75,15 +64,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $no=1; foreach($listuser as $user) : ?>
+                    <?php $no=1; foreach($listpejabat as $pejabat) : ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= ucwords(strtolower($user['nama_user'])) ?>
+                            <td><?= ucwords(strtolower($pejabat['nama_user'])) ?>
+                            <?php foreach($listjabatan as $jabatan) :?>
+                            <?php foreach($listseksi as $seksi) :?>
+                        <?php if($seksi["id_seksi"] == $pejabat["id_seksi"] && $jabatan["id_jabatan"] == $pejabat["id_jabatan"]) :?>
+                            <span class="badge badge-primary float-right mt-1"><?= $pejabat["nama_seksi"] ?></span>
+                            <?php if($jabatan["id_jabatan"] == 1) :?>
+                            <span class="badge badge-success float-right mt-1 mr-2"><?= $pejabat["nama_jabatan"] ?></span>
+                            <?php else :?>
+                            <span class="badge badge-default float-right mt-1 mr-2"><?= $pejabat["nama_jabatan"] ?></span>
+                            <?php endif;?>
+                        <?php endif;?>
+                            <?php endforeach;?>
+                                    <?php endforeach;?></td>
+                            
                             <td class="text-center">
-                            <a href="<?= base_url('user/edituser/'.$user['id_user']) ?>"   
+                            <a href="<?= base_url('user/edituser/'.$pejabat['id_pejabat']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
-                            <a href="#" id="<?= $user['id_user']; ?>" class="btn btn-danger btn-sm tombol-hapus-user"><i class="fas fa-trash"></i> Hapus</a></td>
+                            <a href="#" id="<?= $pejabat['id_pejabat']; ?>" class="btn btn-danger btn-sm tombol-hapus-pejabat"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>

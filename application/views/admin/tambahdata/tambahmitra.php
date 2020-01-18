@@ -4,7 +4,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><?= $sidebar["Mitra"] ?>
+            <h1 class="h3 mb-0 text-gray-800"><?= $menuform[7] ?>
           </div>
           <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
     
@@ -14,7 +14,7 @@
             <div class="col-lg-6">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
+                  <h6 class="m-0 font-weight-bold text-primary"><?= $menuform[8] ?></h6>
                   
                 </div>
                 <div class="card-body">
@@ -54,7 +54,7 @@
                             <a href="<?= base_url('admin/editmitra/'.$mitra['id_mitra']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
-                            <a href="#" id="<?= $mitra['id_mitra']; ?>" class="btn btn-danger btn-sm tombol-hapus"><i class="fas fa-trash"></i> Hapus</a></td>
+                            <a href="#" id="<?= $mitra['id_mitra']; ?>" class="btn btn-danger btn-sm tombol-hapus-mitra"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>

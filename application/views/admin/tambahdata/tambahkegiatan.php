@@ -4,7 +4,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray"><?= $sidebar["Kegiatan"] ?>
+            <h1 class="h3 mb-0 text-gray"><?= $menuform[2] ?>
           </div>
             
             <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
@@ -15,7 +15,7 @@
 
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary"><?php echo $nama_form; ?></h6>
+                  <h6 class="m-0 font-weight-bold text-primary"><?= $menuform[8] ?></h6>
                 </div>
                 <div class="card-body">
                     <form action="<?= base_url('kegiatan') ?>" method="post">
