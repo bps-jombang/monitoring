@@ -15,10 +15,20 @@ if ( ! function_exists('getMenuLink')){
                 "Tambah Admin"      => base_url('addadmin'),
                 "Tambah Seksi"      => base_url('seksi'),
                 "Tambah Kegiatan"   => base_url('kegiatan'),
+                "Tambah Pejabat"   => base_url('pejabat'),
                 "Tambah Jabatan"    => base_url('jabatan'),
                 "Tambah Target User"=> base_url('targetuser'),
                 "Tambah Anggota"       => base_url('user'),
                 "Tambah Mitra"      => base_url('mitra')
+        ];
+    }
+}
+if ( ! function_exists('getMenuForm')){
+    function getMenuForm(){
+        return [
+            "Tambah Admin","Tambah Seksi","Tambah Kegiatan","Tambah Pejabat",
+            "Tambah Jabatan","Tambah Target Anggota","Tambah Anggota","Tambah Mitra","Form Tambah Data","Tambah User"
+        
         ];
     }
 }
