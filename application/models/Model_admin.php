@@ -2,7 +2,7 @@
 
 class Model_admin extends CI_Model {  
 
-    private $_seksi = "seksi", $_mitra = "mitra", $_kecamatan = "kecamatan",
+    private $_seksi = "seksi", $_mitra = "mitra", $_kecamatan = "kecamatan", $_pejabat = "pejabat",
             $_user   = "user", $_admin   = "admin", $_kegiatan = "kegiatan", $_jabatan = "jabatan";
 
     // ONLY CREATES 
@@ -44,6 +44,11 @@ class Model_admin extends CI_Model {
         );
         $dataJabatan = array ( // JABATAN
             'nama_jabatan' => htmlspecialchars($this->input->post('nama_jabatan',TRUE))
+        );
+        $dataPejabat = array ( // JABATAN
+            'id_jabatan'    => $this->input->post('input_jabatan'),
+            'id_seksi' => $this->input->post('input_seksi'),
+            'nama_user' => ucwords(htmlspecialchars($this->input->post('nama_user',TRUE)))
         );
         // SESUAIKAN DI DATABASE YAA
 
@@ -92,6 +97,10 @@ class Model_admin extends CI_Model {
                     $this->db->insert($tabel,$dataBaru);
                 }
             }
+        }else if($no == 9){
+            // echo json_encode($dataPejabat);die;
+            // var_dump($dataPejabat);die;
+            $this->db->insert($tabel,$dataPejabat);
         }
     }
     
@@ -159,6 +168,20 @@ class Model_admin extends CI_Model {
             }else{
                 return $this->db->get($this->_kecamatan)->result_array();
             }
+        }else if($tabel == "pejabat") {
+            // select tabel pejabat
+            if ($id) {
+                return $this->db->get_where($this->_pejabat,["id_pejabat" => $id_pejabat])->row_array();
+            }else{
+                return $this->db->get($this->_pejabat)->result_array();
+            }
+        }else if($tabel == "jabatan") {
+            // select tabel jabatan
+            if ($id) {
+                return $this->db->get_where($this->_jabatan,["id_jabatan" => $id_jabatan])->row_array();
+            }else{
+                return $this->db->get($this->_jabatan)->result_array();
+            }
         }
         // else{
         //     return json_encode($this->db->get($this->user)->result_array());
@@ -185,6 +208,9 @@ class Model_admin extends CI_Model {
         }
         else if($no == 6){
             return $this->db->delete($tabel,["id_admin" => $id]);
+        }
+        else if($no == 7){
+            return $this->db->delete($tabel,["id_pejabat" => $id]);
         }
     }
 
