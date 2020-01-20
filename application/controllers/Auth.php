@@ -31,7 +31,7 @@ class Auth extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/loginadmin');
         }else{
-            $username   = htmlspecialchars($this->input->post('username',true));
+            $username   = strtolower(htmlspecialchars($this->input->post('username',true)));
             $password   = htmlspecialchars($this->input->post('password',true));
             $query      = $this->modellogin->login('admin',$username,$password);
             if ($query > 0 ) {
@@ -55,7 +55,6 @@ class Auth extends CI_Controller {
 
     public function logout()
     {
-        // $this->session->userdata('username');
         $this->session->unset_userdata('username');
         $this->session->set_flashdata('pesan','<div class="alert alert-success" role="alert">You have been logged out!</div>');
         redirect(base_url('loginadmin'));

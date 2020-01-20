@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2020 at 09:25 AM
+-- Generation Time: Jan 18, 2020 at 08:13 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -41,9 +41,10 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id_admin`, `id_role`, `username`, `password`) VALUES
 (1, 1, 'bps', '$2y$10$QACnVGt1PBlWlEHqM1w8WeTTZDb5WnuASWQyxmiuFSxlWBbH.zHci'),
-(2, 0, 'nania', '$2y$10$EHEao/B62NdUSYRDFe11wuAKnyrOjjYwyEIaUGu2c4yP4LZAfOxcm'),
-(3, 0, 'alfaza', '$2y$10$/TotjWlJGd4DbH9n1bViuOlWI8JtzfxmiF7XrxkaZuAdX4Bs.f.aa'),
-(4, 2, 'dzikri', '$2y$10$MX1CdhGvLxKQvezXh7BDFOWXKTna4XjeMF8D/QPsOF1zVXh/aMRfe');
+(2, 2, 'nania', '$2y$10$EHEao/B62NdUSYRDFe11wuAKnyrOjjYwyEIaUGu2c4yP4LZAfOxcm'),
+(3, 2, 'alfaza', '$2y$10$/TotjWlJGd4DbH9n1bViuOlWI8JtzfxmiF7XrxkaZuAdX4Bs.f.aa'),
+(4, 2, 'dzikri', '$2y$10$MX1CdhGvLxKQvezXh7BDFOWXKTna4XjeMF8D/QPsOF1zVXh/aMRfe'),
+(12, 1, 'superbps', '$2y$10$mZwq.i0pn/8CLwJVoJBYguJnkjvd1KB7Ui.h34i4sx2anWNpME33G');
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,8 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `sa
 (69, 2, 'Pengawasan Updating Podes', NULL, NULL, NULL),
 (70, 2, 'Pelatihan Sakernas Agustus', NULL, NULL, NULL),
 (71, 2, 'Pengawasan Updating Sakernas', NULL, NULL, NULL),
-(72, 2, 'Pengawasan dan Pemeriksaan SAKERNAS Agustus', NULL, NULL, NULL);
+(72, 2, 'Pengawasan dan Pemeriksaan SAKERNAS Agustus', NULL, NULL, NULL),
+(73, 1, 'Memahamimu', 1945, 'kemerdekaan', 'November');
 
 -- --------------------------------------------------------
 
@@ -221,8 +223,7 @@ INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `
 (4, 4, 9, 5, NULL),
 (6, 1, 9, 2, NULL),
 (7, 1, 1, 5, NULL),
-(8, 1, 2, NULL, NULL),
-(9, 1, 3, NULL, NULL);
+(8, 1, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -240,12 +241,41 @@ CREATE TABLE `mitra` (
 --
 
 INSERT INTO `mitra` (`id_mitra`, `nama_mitra`) VALUES
-(1, 'Sadjo'),
-(8, 'Bunda Minang'),
-(10, 'hey Teyo'),
-(11, 'Sagu sangat gurih'),
-(12, 'Bacod amat'),
-(13, 'Pelancong');
+(54, 'Harapan Bunda'),
+(57, 'Harapan Kamu Aja');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pejabat`
+--
+
+CREATE TABLE `pejabat` (
+  `id_pejabat` int(11) NOT NULL,
+  `id_seksi` int(11) NOT NULL,
+  `id_jabatan` int(11) NOT NULL,
+  `nama_user` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pejabat`
+--
+
+INSERT INTO `pejabat` (`id_pejabat`, `id_seksi`, `id_jabatan`, `nama_user`) VALUES
+(1, 4, 2, 'Devi A'),
+(2, 4, 1, 'Hindar W'),
+(3, 5, 2, 'Reni'),
+(4, 5, 1, 'Agus P'),
+(5, 3, 2, 'Bastari'),
+(6, 3, 1, 'Endang'),
+(7, 2, 2, 'Ika'),
+(8, 2, 2, 'Titis'),
+(9, 2, 1, 'Kunthi'),
+(10, 1, 2, 'Dian'),
+(11, 1, 2, 'Desi'),
+(12, 1, 1, 'Priyo Hs'),
+(13, 6, 2, 'Lely'),
+(15, 6, 1, 'Tria M');
 
 -- --------------------------------------------------------
 
@@ -263,8 +293,8 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id_role`, `nama_role`) VALUES
-(1, 'Admin'),
-(2, 'Superadmin');
+(1, 'Superadmin'),
+(2, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -297,38 +327,39 @@ INSERT INTO `seksi` (`id_seksi`, `nama_seksi`) VALUES
 
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
-  `id_role` int(11) NOT NULL,
+  `id_jabatan` int(11) DEFAULT NULL,
   `id_seksi` int(11) DEFAULT NULL,
-  `id_kecamatan` int(11) NOT NULL,
-  `nama_user` varchar(40) DEFAULT NULL
+  `id_kecamatan` int(11) DEFAULT NULL,
+  `nama_user` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `id_role`, `id_seksi`, `id_kecamatan`, `nama_user`) VALUES
-(1, 0, NULL, 1, 'Elfian Yulianto'),
-(2, 0, NULL, 2, 'Hadi Purwanto'),
-(3, 0, NULL, 3, 'Eko S'),
-(4, 0, NULL, 4, 'M. Syoleh'),
-(5, 0, NULL, 5, 'Yoyok'),
-(6, 0, NULL, 6, 'Nursidi'),
-(7, 0, NULL, 7, 'Mustakim'),
-(8, 0, NULL, 8, NULL),
-(9, 0, NULL, 9, 'Abdul Sigit WH'),
-(10, 0, NULL, 10, 'Nanang Khisbullah'),
-(11, 0, NULL, 11, NULL),
-(12, 0, NULL, 12, 'Ari S'),
-(13, 0, NULL, 13, NULL),
-(14, 0, NULL, 14, 'M Mujib'),
-(15, 0, NULL, 15, 'Adi C'),
-(16, 0, NULL, 16, 'Bambang S'),
-(17, 0, NULL, 17, NULL),
-(18, 0, NULL, 18, 'Abdurahman'),
-(19, 0, NULL, 19, 'M Hanafi'),
-(20, 0, NULL, 20, 'Nanang Hp'),
-(21, 0, NULL, 21, NULL);
+INSERT INTO `user` (`id_user`, `id_jabatan`, `id_seksi`, `id_kecamatan`, `nama_user`) VALUES
+(1, NULL, NULL, 1, 'Elfian Yulianto'),
+(2, NULL, NULL, 2, 'Hadi Purwanto'),
+(3, NULL, NULL, 3, 'Eko S'),
+(4, NULL, NULL, 4, 'M. Syoleh'),
+(5, NULL, NULL, 5, 'Yoyok'),
+(6, NULL, NULL, 6, 'Nursidi'),
+(7, NULL, NULL, 7, 'Mustakim'),
+(8, NULL, NULL, 8, NULL),
+(9, NULL, NULL, 9, 'Abdul Sigit WH'),
+(10, NULL, NULL, 10, 'Nanang Khisbullah'),
+(11, NULL, NULL, 11, NULL),
+(12, NULL, NULL, 12, 'Ari S'),
+(13, NULL, NULL, 13, NULL),
+(14, NULL, NULL, 14, 'M Mujib'),
+(15, NULL, NULL, 15, 'Adi C'),
+(16, NULL, NULL, 16, 'Bambang S'),
+(17, NULL, NULL, 17, NULL),
+(18, NULL, NULL, 18, 'Abdurahman'),
+(19, NULL, NULL, 19, 'M Hanafi'),
+(20, NULL, NULL, 20, 'Nanang Hp'),
+(21, NULL, NULL, 21, NULL),
+(37, 2, 1, 2, 'mistaman');
 
 --
 -- Indexes for dumped tables
@@ -338,7 +369,8 @@ INSERT INTO `user` (`id_user`, `id_role`, `id_seksi`, `id_kecamatan`, `nama_user
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
+  ADD PRIMARY KEY (`id_admin`),
+  ADD KEY `FK_ROLE_ADMIN` (`id_role`);
 
 --
 -- Indexes for table `jabatan`
@@ -374,6 +406,14 @@ ALTER TABLE `mitra`
   ADD PRIMARY KEY (`id_mitra`);
 
 --
+-- Indexes for table `pejabat`
+--
+ALTER TABLE `pejabat`
+  ADD PRIMARY KEY (`id_pejabat`),
+  ADD KEY `FK_PEJABAT_SEKSI` (`id_seksi`),
+  ADD KEY `FK_PEJABAT_JABATAN` (`id_jabatan`);
+
+--
 -- Indexes for table `role`
 --
 ALTER TABLE `role`
@@ -389,8 +429,7 @@ ALTER TABLE `seksi`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`),
-  ADD KEY `FK_USER_KEC` (`id_kecamatan`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -400,13 +439,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
-  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kecamatan`
@@ -418,7 +457,7 @@ ALTER TABLE `kecamatan`
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `kegiatan_detail`
@@ -430,7 +469,13 @@ ALTER TABLE `kegiatan_detail`
 -- AUTO_INCREMENT for table `mitra`
 --
 ALTER TABLE `mitra`
-  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `pejabat`
+--
+ALTER TABLE `pejabat`
+  MODIFY `id_pejabat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -448,11 +493,17 @@ ALTER TABLE `seksi`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `FK_ROLE_ADMIN` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `kegiatan`
@@ -468,10 +519,11 @@ ALTER TABLE `kegiatan_detail`
   ADD CONSTRAINT `FK_KEGDET_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `user`
+-- Constraints for table `pejabat`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `FK_USER_KEC` FOREIGN KEY (`id_kecamatan`) REFERENCES `kecamatan` (`id_kecamatan`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `pejabat`
+  ADD CONSTRAINT `FK_PEJABAT_JABATAN` FOREIGN KEY (`id_jabatan`) REFERENCES `jabatan` (`id_jabatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_PEJABAT_SEKSI` FOREIGN KEY (`id_seksi`) REFERENCES `seksi` (`id_seksi`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
