@@ -67,13 +67,14 @@
         List
       </div>
 
-      <!-- Nav Item - Tables -->
+      <!-- Table Kegiatan -->
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('Admin/dataKegiatan') ?>">
           <i class="fas fa-fw fa-table"></i>
           <span>Tabel Kegiatan</span></a>
       </li>
 
+      <!-- Logout -->
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('logout'); ?>" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt"></i>
