@@ -333,7 +333,18 @@ class Admin extends CI_Controller
     }
 
 
+    public function editseksi($id = null)
+    {
+        if ($id) {
+            $id = $this->input->post('idseksi');
+            $data = $this->modeladmin->updateData('seksi',1,$id);
+            var_dump($data);
+            $this->load->view('admin/editdata/editseksi');
+            
+        }
+        // echo json_encode($data);
 
+    }
     public function editmitra($id = null) // DONE
     {
         if ($id == null) {
@@ -356,12 +367,17 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->updateData('mitra',1,$id);
+            $this->modeladmin->updateData('mitra',2,$id);
             $this->session->set_flashdata('pesan','Diubah');
             redirect(base_url('mitra')); 
         }
         
     }
+
+    
+
+
+
 
     // --------------------------- \\
     //        DELETE FUNCTIONS      \\
