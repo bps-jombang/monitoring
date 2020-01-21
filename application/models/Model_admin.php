@@ -10,7 +10,7 @@ class Model_admin extends CI_Model {
     {
         // 1 = seksi, 2 = mitra, 3 kecamatan, 4 = user, 5 = kegiatan, 6 = jabatan
         $dataSeksi = array(
-            'nama_seksi' => strtolower(htmlspecialchars($this->input->post('nama_seksi',TRUE)))
+            'nama_seksi' => ucwords(htmlspecialchars($this->input->post('nama_seksi',TRUE)))
         );
         $dataAdmin = array(
             'id_role'  => $this->input->post('check'),
@@ -109,8 +109,14 @@ class Model_admin extends CI_Model {
     {
         // 1 seksi, 2 mitra, 3 kecamatan,4 user,5 kegiatan
         $dataMitra = array ('nama_mitra' => $this->input->post('nama_mitra'));
+        $dataSeksi  =   array(
+            'nama_seksi'    =>  $this->input->post('namaseksi')
+        );
         if ($no == 1 ) {
-            // var_dump($dataMitra);die;
+             return $this->db->update($tabel,$dataSeksi,["id_seksi" => $id]);
+            // return $data;
+            // var_dump($data);
+        }elseif($no == 2){
             return $this->db->update($tabel,$dataMitra,["id_mitra" => $id]);
         }
     }
