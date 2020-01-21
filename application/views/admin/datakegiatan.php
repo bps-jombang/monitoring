@@ -68,8 +68,18 @@
                             
                           <?php // panjang target & realisasi = mengikuti banyaknya user
                           foreach($listuser as $user) :?>
-                          <td class="kuning">target</td>
-                          <td><?= " - " //$d['realisasi'] ?></td>
+                            <?php
+                              $kosong = true; 
+                              foreach($kegiatan_detail as $kgd){
+                                if($kgd['id_kegiatan']==$kegiatan['id_kegiatan'] && $kgd['id_user']==$user['id_user']){
+                                  echo '<td class="kuning">'.$kgd['target'].'</td><td>'.$kgd['realisasi'].'</td>';
+                                  $kosong = false;
+                                }
+                              }
+                              if($kosong == true){
+                                echo '<td class="kuning"></td><td></td>';
+                              }
+                            ?>
                           <?php endforeach;?>
 
                           <?php // target pejabat
@@ -79,10 +89,10 @@
                           <?php endforeach;?>
                           
                           <td>
-                          <?php foreach($listmitra as $mitra) : ?>
+                            <?php foreach($listmitra as $mitra) : ?>
                           <?= $mitra['nama_mitra']; ?>
                           <?php endforeach;?>
-                          </td>
+                        </td>
                           
                           <td>jmlh</td>
                           <td>tidak ada</td>
