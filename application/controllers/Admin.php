@@ -60,6 +60,8 @@ class Admin extends CI_Controller
         $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
         $data['listuser'] = $this->db->get('user as u')->result_array();
 
+        $data['kegiatan_detail'] = $this->db->get('kegiatan_detail')->result_array();
+
         $this->db->select('j.id_jabatan,j.nama_jabatan,s.nama_seksi,p.nama_user,p.id_pejabat');
         $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
         $this->db->join('seksi as s','s.id_seksi = p.id_seksi');
