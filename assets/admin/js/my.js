@@ -1,14 +1,17 @@
 // $(document).ready(function() {
-	const hapusadmin 	= "http://localhost/monitoring/hapusadmin";// DONE
-	const hapusmitra 	= "http://localhost/monitoring/hapusmitra"; // DONE
-	const hapusseksi 	= "http://localhost/monitoring/hapusseksi";// DONE
-	const hapususer 	= "http://localhost/monitoring/hapususer";// DONE
-	const hapusjabatan = "http://localhost/monitoring/hapusjabatan"; // DONE
-	const hapuspejabat = "http://localhost/monitoring/hapuspejabat"; // DONE
+	const sites			= "http://localhost/monitoring";
+	const urleditseksi  	= sites+"/Admin/editseksi/";
+
+	const hapusadmin 	= sites+"/hapusadmin";	// DONE
+	const hapusmitra 	= sites+"/hapusmitra"; 	// DONE
+	const hapusseksi 	= sites+"/hapusseksi";	// DONE
+	const hapususer 	= sites+"/hapususer";		// DONE
+	const hapusjabatan 	= sites+"/hapusjabatan"; 	// DONE
+	const hapuspejabat 	= sites+"/hapuspejabat"; 	// DONE
 	
 	// hapus kegiatan 
-	const hapuskegiatan 		= "http://localhost/monitoring/hapuskegiatan";
-	const hapuskegiatandetail 	= "http://localhost/monitoring/hapuskegiatandetail";
+	const hapuskegiatan 		= sites+"/hapuskegiatan";
+	const hapuskegiatandetail 	= sites+"/hapuskegiatandetail";
 
     const tabel = $(".mytable tr th");
     tabel.addClass("align-middle");
@@ -23,6 +26,41 @@
 			icon: 'success'
 		});
 	}
+
+	// GET MODAL EDIT
+	$('.modal-update-seksi').on('click',function(){
+		// e.preventDefault();
+		$('#modal_edit').modal('show');
+
+		const idseksi 	= 	$(this).data('id');
+		const namaseksi 		= 	$(this).data('seksi');
+
+		// GET DATA FROM INPUT NAME
+		$('[name="nama_seksi_edit"]').val(namaseksi);
+		$('[name="id_seksi_edit"]').val(idseksi);
+	});
+	$('#btn_update').on('click', function(e){
+		e.preventDefault();
+		console.log('btn_update');
+		
+		var idseksi = $('#id_seksi_edit').val();
+		var namaseksi = $('#nama_seksi_edit').val();
+		$.ajax({
+			url: "http://localhost/monitoring/Admin/editseksi",
+			method: "POST",
+			dataType: "json",
+			data:{
+				"id_seksi":idseksi,"nama_seksi":namaseksi},
+			success: function (data) {
+				console.log('id seksi = '+idseksi+ ' nama ' +namaseksi);
+				// var datas = JSON.parse(data);
+				console.log(data);
+				
+				// parseJSON(data);
+				// document.location.href = "http://localhost/monitoring/Admin/editseksi/";
+			}
+		})
+	});
 	
 // ALERT HAPUS DATA
 	// Hapus Mitra
@@ -77,7 +115,7 @@
 	$('.tombol-hapus-seksi').on('click', function(e){
 		e.preventDefault();
 		const idseksi = $(this).attr('id');
-
+		
 		swal.fire({
 			title	: 	'Apakah anda yakin',
 			text	: 	'Data ini akan dihapus',
