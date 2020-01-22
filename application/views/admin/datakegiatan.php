@@ -35,8 +35,8 @@
                             <?php if($pejabat["id_jabatan"] == 1) : ?>
                             <span class="badge badge-warning"><?= $pejabat['nama_jabatan']; ?></span><?php else : ?><span class="badge badge-info"><?= $pejabat['nama_jabatan']; ?></span> <?php endif;?> <?= $pejabat['nama_seksi'] ?><br><p class="text-primary"><a href="<?= base_url('detailkegiatan/') ?><?= $pejabat['id_pejabat']; ?>" class="text-decoration-none"><?= $pejabat['nama_user']; ?></a></p></th>
                         <?php endforeach;?>
-                          <th rowspan="2" class="text-center">Mitra</th>
-                          <th rowspan="2" class="text-center">Jumlah</th>
+                          <th colspan="2"class="text-center">Mitra</th>
+                          <th colspan="2"class="text-center">Jumlah</th>
                           <th rowspan="2" class="text-center">Keterangan</th>
                         </tr>
                           <tr>
@@ -49,7 +49,13 @@
                           foreach($listpejabat as $pejabat) :?>
                             <th class="target">T</th>
                             <th class="realisasi">R</th>
-                          <?php endforeach; ?></tr>
+                          <?php endforeach; ?>
+                          <th>T</th>
+                          <th>R</th>
+
+                          <th>T</th>
+                          <th>R</th>
+                          </tr>
                       </thead>
                       
                       <tbody>
@@ -65,38 +71,54 @@
                           <td><?= $kegiatan['satuan'] ?></td>
                           <td><?= $kegiatan['target_penyelesaian'] ?></td>
                       
-                            
                           <?php // panjang target & realisasi = mengikuti banyaknya user
                           foreach($listuser as $user) :?>
-                            <?php
-                              $kosong = true; 
-                              foreach($kegiatan_detail as $kgd){
-                                if($kgd['id_kegiatan']==$kegiatan['id_kegiatan'] && $kgd['id_user']==$user['id_user']){
-                                  echo '<td class="kuning">'.$kgd['target'].'</td><td>'.$kgd['realisasi'].'</td>';
-                                  $kosong = false;
-                                }
-                              }
-                              if($kosong == true){
-                                echo '<td class="kuning"></td><td></td>';
-                              }
-                            ?>
+                            
+                           
+                           <?php 
+                            $data = target_user($kegiatan['id_kegiatan'],$user['id_user'],0);
+                            if($data == FALSE ) :?><td class="kuning">-</td>
+                            <?php else : ?>
+                            <td class="kuning"><?= implode("",target_user($kegiatan['id_kegiatan'],$user['id_user'],0));?></td>
+                            <?php endif;?>
+                           
+                           <?php 
+                           $data = realisasi_user($kegiatan['id_kegiatan'],$user['id_user'],0);
+                            if($data == FALSE ) :?><td>-</td>
+                            <?php else : ?>
+                            <td><?= implode("",realisasi_user($kegiatan['id_kegiatan'], $user['id_user'],0)); ?></td>
+                            <?php endif;?>
+                            
                           <?php endforeach;?>
 
                           <?php // target pejabat
                           foreach($listpejabat as $pejabat) :?>
-                          <td class="kuning">target</td>
-                          <td><?= " - " //$d['realisasi'] ?></td>
+                          <?php 
+                          $data = target_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat']);
+                          if($data == FALSE ) :?><td class="kuning">-</td>
+                            <?php else : ?>
+                            <td class="kuning"><?= implode("",target_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat'])); ?></td>
+                            <?php endif;?>
+
+                          <?php  // aman
+                           $data = realisasi_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat']);
+                            if($data == FALSE ) :?><td>-</td>
+                            <?php else : ?>
+                            <td><?= implode("",realisasi_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat'])); ?></td>
+                            <?php endif;?>
+                            
                           <?php endforeach;?>
                           
-                          <td>
                             <?php foreach($listmitra as $mitra) : ?>
-                          <?= $mitra['nama_mitra']; ?>
+                          
+                          <td>t</td>
+                          
                           <?php endforeach;?>
-                        </td>
                           
-                          <td>jmlh</td>
-                          <td>tidak ada</td>
+                          <td><?= implode("",total_target($kegiatan['id_kegiatan'])); ?></td>
+                          <td><?= implode("",total_realisasi($kegiatan['id_kegiatan'])); ?></td>
                           
+                          <td>ket</td>
                       </tr>
                       <?php endforeach;?>
                       </tbody>
