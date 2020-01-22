@@ -16,7 +16,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Target</div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Target</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= implode("",$sumtarget); ?></div>
                                         </div>
                                         <div class="col-auto">
@@ -33,7 +33,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Realisasi</div>
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Realisasi</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">178</div>
                                         </div>
                                         <div class="col-auto">
