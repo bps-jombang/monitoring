@@ -51,7 +51,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= $seksi['nama_seksi'] ?>
                             <td class="text-center">
-                            <a href="#"   
+                            <a href="<?= base_url('Admin/editseksi/'.$seksi['id_seksi']); ?>"   
                             class="btn btn-warning btn-sm modal-update-seksi" 
                             data-id="<?= $seksi['id_seksi']; ?>" 
                             data-seksi="<?= $seksi['nama_seksi']; ?>">
@@ -82,9 +82,9 @@
               <div class="modal-body">
                 <form method="post">
                     <div class="form-group">
-                      <input type="text" hidden class="form-control" name="id_seksi2" id="id_seksi2">
-                      <label for="nama_seksi2">Nama Seksi</label>
-                      <input type="text" class="form-control nama_seksi2" name="nama_seksi2" id="nama_seksi2">
+                      <input type="text" hidden class="form-control" name="id_seksi_edit" id="id_seksi_edit">
+                      <label for="nama_seksi_edit">Nama Seksi</label>
+                      <input type="text" class="form-control" name="nama_seksi_edit" id="nama_seksi_edit">
                     </div>
                     <button class="btn btn-primary" type="submit" id="btn_update"><i class="fas fa-sync-alt"></i> Update Data</a>
                     <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>

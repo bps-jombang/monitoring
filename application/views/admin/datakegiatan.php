@@ -9,7 +9,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                  <table class="table table-bordered display nowrap tabelku table-hover" id="dataTableku" width="100%" cellspacing="0">
+                  <table class="table table-bordered display nowrap tabelku" id="dataTableku" width="100%" cellspacing="0">
                       <thead class="mytable">
                         <tr>
                         <th rowspan="2" class="text-center">nomor</th>
@@ -35,10 +35,8 @@
                             <?php if($pejabat["id_jabatan"] == 1) : ?>
                             <span class="badge badge-warning"><?= $pejabat['nama_jabatan']; ?></span><?php else : ?><span class="badge badge-info"><?= $pejabat['nama_jabatan']; ?></span> <?php endif;?> <?= $pejabat['nama_seksi'] ?><br><p class="text-primary"><a href="<?= base_url('detailkegiatan/') ?><?= $pejabat['id_pejabat']; ?>" class="text-decoration-none"><?= $pejabat['nama_user']; ?></a></p></th>
                         <?php endforeach;?>
-                        <?php foreach($listmitra as $mitra): ?>
-                          <th colspan="2" class="text-center"><?= $mitra['nama_mitra'] ?></th>
-                        <?php endforeach;?>
-                          <th colspan="2" class="text-center">Jumlah</th>
+                          <th rowspan="2" class="text-center">Mitra</th>
+                          <th rowspan="2" class="text-center">Jumlah</th>
                           <th rowspan="2" class="text-center">Keterangan</th>
                         </tr>
                           <tr>
@@ -51,22 +49,12 @@
                           foreach($listpejabat as $pejabat) :?>
                             <th class="target">T</th>
                             <th class="realisasi">R</th>
-                          <?php endforeach; ?>
-                          <?php 
-                          foreach($listmitra as $mitra) :?>
-                            <th class="target">T</th>
-                            <th class="realisasi">R</th>
-                          <?php endforeach; ?>
-
-                          <th>T</th>
-                          <th>R</th>
-                          <!-- <th>kete</th> -->
-                          </tr>
+                          <?php endforeach; ?></tr>
                       </thead>
                       
                       <tbody>
                       <!-- isi tabel -->
-                      <?php $no=1; $nos=1;
+                      <?php $no=1; 
                       // tinggi tabel mengikuti banyaknya kegiatan
                       foreach($semuakegiatan as $kegiatan) : ?>
                       <tr>
@@ -80,39 +68,34 @@
                             
                           <?php // panjang target & realisasi = mengikuti banyaknya user
                           foreach($listuser as $user) :?>
-                            <td class="kuning">
-                            <?php 
-                            $data = target_user($kegiatan['id_kegiatan'], $user['id_user']);
-                            if ($data == FALSE) : ?></td>
-                            <?php else :?>
-                            <?= implode(" ",target_user($kegiatan['id_kegiatan'], $user['id_user'])); ?>
-                            <?php endif;?>
-                            </td>
-                            <td>
-                            <?php 
-                            $data = target_user($kegiatan['id_kegiatan'], $user['id_user']);
-                            if ($data == FALSE) : ?></td>
-                            <?php else :?>
-                            <?= implode(" ",target_user($kegiatan['id_kegiatan'], $user['id_user'])); ?>
-                            <?php endif;?>
-                            </td>
+                            <?php
+                              $kosong = true; 
+                              foreach($kegiatan_detail as $kgd){
+                                if($kgd['id_kegiatan']==$kegiatan['id_kegiatan'] && $kgd['id_user']==$user['id_user']){
+                                  echo '<td class="kuning">'.$kgd['target'].'</td><td>'.$kgd['realisasi'].'</td>';
+                                  $kosong = false;
+                                }
+                              }
+                              if($kosong == true){
+                                echo '<td class="kuning"></td><td></td>';
+                              }
+                            ?>
                           <?php endforeach;?>
 
                           <?php // target pejabat
                           foreach($listpejabat as $pejabat) :?>
-                          <td class="kuning">targetP</td>
+                          <td class="kuning">target</td>
                           <td><?= " - " //$d['realisasi'] ?></td>
                           <?php endforeach;?>
                           
+                          <td>
                             <?php foreach($listmitra as $mitra) : ?>
-                          <td class="kuning">targetM</td>
-                          <td><?= " - " //$d['realisasi'] ?></td>
+                          <?= $mitra['nama_mitra']; ?>
                           <?php endforeach;?>
+                        </td>
                           
-                          <td><?= implode(" ",total_target($kegiatan['id_kegiatan'])); ?></td>
-                          <td><?= implode(" ",total_realisasi($kegiatan['id_kegiatan'])); ?></td></td>
-
-                          <td>keter</td>
+                          <td>jmlh</td>
+                          <td>tidak ada</td>
                           
                       </tr>
                       <?php endforeach;?>
