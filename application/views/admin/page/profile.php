@@ -18,6 +18,7 @@
                             <div class="collapse" id="collapseExample">
                                 <div class="card card-body">
                                     <h3 class="font-weight-bold text-dark">Ganti Password</h3>
+                                    <form action="" method="post">
                                     <div class="form-group">
                                         <label class="font-weight-bold text-dark" for="exampleInputPassword1">Password Lama</label>
                                         <input type="password" class="form-control" id="exampleInputPassword1">
@@ -26,7 +27,8 @@
                                         <label class="font-weight-bold text-dark" for="exampleInputPassword1">Password Baru</label>
                                         <input type="password" class="form-control" id="exampleInputPassword1">
                                     </div>
-                                    <a class="btn btn-primary btn-lg btn-block text-white" >Ganti Password</a>
+                                    <button class="btn btn-primary btn-lg btn-block text-white" >Ganti Password</a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
