@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 21, 2020 at 01:09 AM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Host: localhost:3306
+-- Generation Time: Jan 22, 2020 at 03:22 AM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `bps`
@@ -26,12 +28,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE IF NOT EXISTS `admin` (
-`id_admin` int(11) NOT NULL,
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
   `id_role` int(11) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
@@ -50,10 +52,10 @@ INSERT INTO `admin` (`id_admin`, `id_role`, `username`, `password`) VALUES
 -- Table structure for table `jabatan`
 --
 
-CREATE TABLE IF NOT EXISTS `jabatan` (
-`id_jabatan` int(11) NOT NULL,
+CREATE TABLE `jabatan` (
+  `id_jabatan` int(11) NOT NULL,
   `nama_jabatan` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jabatan`
@@ -69,11 +71,11 @@ INSERT INTO `jabatan` (`id_jabatan`, `nama_jabatan`) VALUES
 -- Table structure for table `kecamatan`
 --
 
-CREATE TABLE IF NOT EXISTS `kecamatan` (
-`id_kecamatan` int(11) NOT NULL,
+CREATE TABLE `kecamatan` (
+  `id_kecamatan` int(11) NOT NULL,
   `nomor_kecamatan` varchar(3) NOT NULL,
   `nama_kecamatan` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kecamatan`
@@ -113,14 +115,14 @@ INSERT INTO `kecamatan` (`id_kecamatan`, `nomor_kecamatan`, `nama_kecamatan`) VA
 -- Table structure for table `kegiatan`
 --
 
-CREATE TABLE IF NOT EXISTS `kegiatan` (
-`id_kegiatan` int(11) NOT NULL,
+CREATE TABLE `kegiatan` (
+  `id_kegiatan` int(11) NOT NULL,
   `id_seksi` int(11) NOT NULL,
   `uraian_kegiatan` text NOT NULL,
   `vol` int(11) DEFAULT NULL,
   `satuan` varchar(30) DEFAULT NULL,
   `target_penyelesaian` enum('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember') DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kegiatan`
@@ -139,7 +141,7 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `sa
 (15, 4, 'SURVEI HARGA PERDESAAN; HKD', NULL, NULL, NULL),
 (16, 4, 'SURVEI BIDANG JASA PARIWISATA ; VHT-S (5 HOTEL)', NULL, NULL, NULL),
 (17, 4, 'INDEKS KEMAHALAN KONSTRUKSI (IKK) bulan Jan, ApriL, Juli dan Okt', NULL, NULL, NULL),
-(18, 4, 'SURVEI HARGA PRODUSEN ; HP-G (Gabah) "Bulanan"', NULL, NULL, NULL),
+(18, 4, 'SURVEI HARGA PRODUSEN ; HP-G (Gabah) \"Bulanan\"', NULL, NULL, NULL),
 (19, 4, 'SURVEI HARGA PRODUSEN ; HP-BG (Beras di Penggilingan)', NULL, NULL, NULL),
 (20, 4, 'SURVEI HARGA PRODUSEN ; HP (HPS dan HPK), HP-JP (JASA PENDIDIKAN) ', NULL, NULL, NULL),
 (21, 4, 'SURVEI HARGA PERDAGANGAN BESAR (HPB-S) ; 18 RESPONDEN', NULL, NULL, NULL),
@@ -202,26 +204,28 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `sa
 -- Table structure for table `kegiatan_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `kegiatan_detail` (
-`id_kegiatan_detail` int(11) NOT NULL,
+CREATE TABLE `kegiatan_detail` (
+  `id_kegiatan_detail` int(11) NOT NULL,
   `id_kegiatan` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_pejabat` int(11) NOT NULL,
+  `id_mitra` int(11) NOT NULL,
   `target` int(11) DEFAULT NULL,
   `realisasi` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kegiatan_detail`
 --
 
-INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `target`, `realisasi`) VALUES
-(1, 1, 4, 7, 1),
-(2, 2, 4, 70, NULL),
-(3, 3, 4, 3, NULL),
-(4, 4, 9, 5, NULL),
-(6, 1, 9, 2, NULL),
-(7, 1, 1, 5, NULL),
-(8, 1, 2, NULL, NULL);
+INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `id_pejabat`, `id_mitra`, `target`, `realisasi`) VALUES
+(1, 1, 4, 1, 57, 7, 1),
+(2, 2, 4, 2, 54, 7, NULL),
+(3, 3, 4, 3, 54, 3, NULL),
+(4, 4, 9, 4, 54, 5, NULL),
+(6, 1, 9, 5, 54, 2, NULL),
+(7, 1, 1, 6, 54, 5, NULL),
+(8, 1, 2, 7, 54, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -229,10 +233,10 @@ INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `
 -- Table structure for table `mitra`
 --
 
-CREATE TABLE IF NOT EXISTS `mitra` (
-`id_mitra` int(11) NOT NULL,
+CREATE TABLE `mitra` (
+  `id_mitra` int(11) NOT NULL,
   `nama_mitra` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `mitra`
@@ -248,12 +252,12 @@ INSERT INTO `mitra` (`id_mitra`, `nama_mitra`) VALUES
 -- Table structure for table `pejabat`
 --
 
-CREATE TABLE IF NOT EXISTS `pejabat` (
-`id_pejabat` int(11) NOT NULL,
+CREATE TABLE `pejabat` (
+  `id_pejabat` int(11) NOT NULL,
   `id_seksi` int(11) NOT NULL,
   `id_jabatan` int(11) NOT NULL,
   `nama_user` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pejabat`
@@ -281,10 +285,10 @@ INSERT INTO `pejabat` (`id_pejabat`, `id_seksi`, `id_jabatan`, `nama_user`) VALU
 -- Table structure for table `role`
 --
 
-CREATE TABLE IF NOT EXISTS `role` (
-`id_role` int(11) NOT NULL,
+CREATE TABLE `role` (
+  `id_role` int(11) NOT NULL,
   `nama_role` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `role`
@@ -300,10 +304,10 @@ INSERT INTO `role` (`id_role`, `nama_role`) VALUES
 -- Table structure for table `seksi`
 --
 
-CREATE TABLE IF NOT EXISTS `seksi` (
-`id_seksi` int(11) NOT NULL,
+CREATE TABLE `seksi` (
+  `id_seksi` int(11) NOT NULL,
   `nama_seksi` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `seksi`
@@ -323,13 +327,13 @@ INSERT INTO `seksi` (`id_seksi`, `nama_seksi`) VALUES
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
-`id_user` int(11) NOT NULL,
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
   `id_jabatan` int(11) DEFAULT NULL,
   `id_seksi` int(11) DEFAULT NULL,
   `id_kecamatan` int(11) DEFAULT NULL,
   `nama_user` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -367,61 +371,69 @@ INSERT INTO `user` (`id_user`, `id_jabatan`, `id_seksi`, `id_kecamatan`, `nama_u
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
- ADD PRIMARY KEY (`id_admin`), ADD KEY `FK_ROLE_ADMIN` (`id_role`);
+  ADD PRIMARY KEY (`id_admin`),
+  ADD KEY `FK_ROLE_ADMIN` (`id_role`);
 
 --
 -- Indexes for table `jabatan`
 --
 ALTER TABLE `jabatan`
- ADD PRIMARY KEY (`id_jabatan`);
+  ADD PRIMARY KEY (`id_jabatan`);
 
 --
 -- Indexes for table `kecamatan`
 --
 ALTER TABLE `kecamatan`
- ADD PRIMARY KEY (`id_kecamatan`);
+  ADD PRIMARY KEY (`id_kecamatan`);
 
 --
 -- Indexes for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
- ADD PRIMARY KEY (`id_kegiatan`), ADD KEY `FK_KEGIATAN_SEKSI` (`id_seksi`);
+  ADD PRIMARY KEY (`id_kegiatan`),
+  ADD KEY `FK_KEGIATAN_SEKSI` (`id_seksi`);
 
 --
 -- Indexes for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
- ADD PRIMARY KEY (`id_kegiatan_detail`), ADD KEY `FK_KEGDET_KEG` (`id_kegiatan`), ADD KEY `FK_KEGDET_USER` (`id_user`);
+  ADD PRIMARY KEY (`id_kegiatan_detail`),
+  ADD KEY `FK_KEGDET_KEG` (`id_kegiatan`),
+  ADD KEY `FK_KEGDET_USER` (`id_user`),
+  ADD KEY `FK_KEGDET_PEJABAT` (`id_pejabat`),
+  ADD KEY `FK_KEGDET_MITRA` (`id_mitra`);
 
 --
 -- Indexes for table `mitra`
 --
 ALTER TABLE `mitra`
- ADD PRIMARY KEY (`id_mitra`);
+  ADD PRIMARY KEY (`id_mitra`);
 
 --
 -- Indexes for table `pejabat`
 --
 ALTER TABLE `pejabat`
- ADD PRIMARY KEY (`id_pejabat`), ADD KEY `FK_PEJABAT_SEKSI` (`id_seksi`), ADD KEY `FK_PEJABAT_JABATAN` (`id_jabatan`);
+  ADD PRIMARY KEY (`id_pejabat`),
+  ADD KEY `FK_PEJABAT_SEKSI` (`id_seksi`),
+  ADD KEY `FK_PEJABAT_JABATAN` (`id_jabatan`);
 
 --
 -- Indexes for table `role`
 --
 ALTER TABLE `role`
- ADD PRIMARY KEY (`id_role`);
+  ADD PRIMARY KEY (`id_role`);
 
 --
 -- Indexes for table `seksi`
 --
 ALTER TABLE `seksi`
- ADD PRIMARY KEY (`id_seksi`);
+  ADD PRIMARY KEY (`id_seksi`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
- ADD PRIMARY KEY (`id_user`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -431,52 +443,62 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
-MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `kecamatan`
 --
 ALTER TABLE `kecamatan`
-MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
 --
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
 --
 -- AUTO_INCREMENT for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `mitra`
 --
 ALTER TABLE `mitra`
-MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
 --
 -- AUTO_INCREMENT for table `pejabat`
 --
 ALTER TABLE `pejabat`
-MODIFY `id_pejabat` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id_pejabat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `seksi`
 --
 ALTER TABLE `seksi`
-MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id_seksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
 --
 -- Constraints for dumped tables
 --
@@ -485,27 +507,30 @@ MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
 -- Constraints for table `admin`
 --
 ALTER TABLE `admin`
-ADD CONSTRAINT `FK_ROLE_ADMIN` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_ROLE_ADMIN` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-ADD CONSTRAINT `FK_KEGIATAN_SEKSI` FOREIGN KEY (`id_seksi`) REFERENCES `seksi` (`id_seksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_KEGIATAN_SEKSI` FOREIGN KEY (`id_seksi`) REFERENCES `seksi` (`id_seksi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-ADD CONSTRAINT `FK_KEGDET_KEG` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_KEGDET_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_KEGDET_KEG` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_KEGDET_MITRA` FOREIGN KEY (`id_mitra`) REFERENCES `mitra` (`id_mitra`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_KEGDET_PEJABAT` FOREIGN KEY (`id_pejabat`) REFERENCES `pejabat` (`id_pejabat`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_KEGDET_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pejabat`
 --
 ALTER TABLE `pejabat`
-ADD CONSTRAINT `FK_PEJABAT_JABATAN` FOREIGN KEY (`id_jabatan`) REFERENCES `jabatan` (`id_jabatan`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_PEJABAT_SEKSI` FOREIGN KEY (`id_seksi`) REFERENCES `seksi` (`id_seksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_PEJABAT_JABATAN` FOREIGN KEY (`id_jabatan`) REFERENCES `jabatan` (`id_jabatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_PEJABAT_SEKSI` FOREIGN KEY (`id_seksi`) REFERENCES `seksi` (`id_seksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
