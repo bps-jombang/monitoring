@@ -1,7 +1,7 @@
 
     <!-- Sidebar -->
     <?php if($this->session->userdata('id_role') == 1 || $this->session->userdata('id_role') == 2) : ?>
-    <ul class="navku navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin'); ?>">
@@ -87,7 +87,7 @@
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-
+ 
     </ul>
     <?php endif;?>
     <!-- End of Sidebar -->
