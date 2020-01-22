@@ -32,32 +32,32 @@
 		// e.preventDefault();
 		$('#modal_edit').modal('show');
 
-		const idseksi 	= 	$(this).data('id');
-		const namaseksi 		= 	$(this).data('seksi');
-
+		const id_seksi 	= 	$(this).data('id');
+		const nama_seksi 		= 	$(this).data('seksi');
 		// GET DATA FROM INPUT NAME
-		$('[name="nama_seksi_edit"]').val(namaseksi);
-		$('[name="id_seksi_edit"]').val(idseksi);
+		$('[name="nama_seksi2"]').val(nama_seksi);
+		$('[name="id_seksi2"]').val(id_seksi);
 	});
 	$('#btn_update').on('click', function(e){
 		e.preventDefault();
 		console.log('btn_update');
+
+		// const id_seksi = $(this).data('id');
+		// const nama_seksi = $(this).data('seksi');
+
+		let id = $('#id_seksi2').val();
+		let nama = $('#nama_seksi2').val();
 		
-		var idseksi = $('#id_seksi_edit').val();
-		var namaseksi = $('#nama_seksi_edit').val();
 		$.ajax({
-			url: "http://localhost/monitoring/Admin/editseksi",
-			method: "POST",
-			dataType: "json",
+			url: 'http://localhost/monitoring/Admin/editseksi',
+			method: 'POST',
 			data:{
-				"id_seksi":idseksi,"nama_seksi":namaseksi},
+				id_seksi:id,
+				nama_seksi:nama
+			},
+			
 			success: function (data) {
-				console.log('id seksi = '+idseksi+ ' nama ' +namaseksi);
-				// var datas = JSON.parse(data);
 				console.log(data);
-				
-				// parseJSON(data);
-				// document.location.href = "http://localhost/monitoring/Admin/editseksi/";
 			}
 		})
 	});
