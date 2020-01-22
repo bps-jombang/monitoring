@@ -69,8 +69,11 @@ $route['pejabat']         = 'admin/addpejabat';
 $route['seksi']           = 'admin/addseksi';  // DONE
 $route['kegiatan']        = 'admin/addkegiatan';
 $route['targetuser']      = 'admin/addtargetuser';
+$route['profile/(:any)']       = 'Page/profile';
 
 // ROUTES UPDATE DATA
+$route['update'] = 'Page/updatepass';
+
 $route['editmitra/(:any)']     = 'admin/editmitra/$1';
 $route['userupdate']      = 'admin/updateuser';
 $route['pejabatupdate']   = 'admin/updatepejabat';
