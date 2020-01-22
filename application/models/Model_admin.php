@@ -105,15 +105,18 @@ class Model_admin extends CI_Model {
     }
     
     // ONLY UPDATE
-    public function updateData($tabel,$no,$id)
+    public function updateData($tabel,$no)
     {
         // 1 seksi, 2 mitra, 3 kecamatan,4 user,5 kegiatan
         $dataMitra = array ('nama_mitra' => $this->input->post('nama_mitra'));
-        $dataSeksi  =   array(
-            'nama_seksi'    =>  $this->input->post('namaseksi')
-        );
+        $dataSeksi  =  [
+            'id_seksi'    =>  $this->input->post('id_seksi'),
+            'nama_seksi'    =>$this->input->post('nama_seksi2')
+        ];
         if ($no == 1 ) {
-             return $this->db->update($tabel,$dataSeksi,["id_seksi" => $id]);
+            // $this->db->set($dataSeksi);
+            $data = $this->db->update($tabel,["nama_seksi" => $dataSeksi['nama_seksi']],["id_seksi" => $dataSeksi['id_seksi']]);
+            // var_dump($data);
             // return $data;
             // var_dump($data);
         }elseif($no == 2){
