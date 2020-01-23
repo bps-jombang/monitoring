@@ -23,7 +23,7 @@
                         foreach($listuser as $user) :?>
                           <th colspan="2" class="text-center"><?= $user['nomor_kecamatan']; ?> | <?= $user['nama_kecamatan'] ?><br>
                           <?php if($user['nama_user'] != NULL) : ?>
-                          <p class="text-primary"><a href="<?= base_url('detailkegiatan/') ?><?= $user['id_user']; ?>" class="text-decoration-none"><?= $user['nama_user']; ?></a></p></th>
+                          <p class="text-primary"><a href="<?= base_url('detailkegiatan/'.$user['id_user']); ?>" class="text-decoration-none"><?= $user['nama_user']; ?></a></p></th>
                           <?php elseif($user['nama_user'] == NULL) : ?>
                           <p class="text-danger"><?= "KOSONG"; ?></p></th>
                           <?php endif;?>
@@ -33,7 +33,7 @@
                         foreach($listpejabat as $pejabat) : ?>
                             <th colspan="2" class="text-center">
                             <?php if($pejabat["id_jabatan"] == 1) : ?>
-                            <span class="badge badge-warning"><?= $pejabat['nama_jabatan']; ?></span><?php else : ?><span class="badge badge-info"><?= $pejabat['nama_jabatan']; ?></span> <?php endif;?> <?= $pejabat['nama_seksi'] ?><br><p class="text-primary"><a href="<?= base_url('detailkegiatan/') ?><?= $pejabat['id_pejabat']; ?>" class="text-decoration-none"><?= $pejabat['nama_user']; ?></a></p></th>
+                            <span class="badge badge-warning"><?= $pejabat['nama_jabatan']; ?></span><?php else : ?><span class="badge badge-info"><?= $pejabat['nama_jabatan']; ?></span> <?php endif;?> <?= $pejabat['nama_seksi'] ?><br><p class="text-primary"><a href="<?= base_url('detailkegiatan/'.$pejabat['id_pejabat']) ?>" class="text-decoration-none"><?= $pejabat['nama_user']; ?></a></p></th>
                         <?php endforeach;?>
                           <th colspan="2"class="text-center">Mitra</th>
                           <th colspan="2"class="text-center">Jumlah</th>
@@ -77,14 +77,14 @@
                            
                            <?php 
                             $data = target_user($kegiatan['id_kegiatan'],$user['id_user'],0);
-                            if($data == FALSE ) :?><td class="kuning">-</td>
+                            if($data == FALSE ) :?><td class="kuning"></td>
                             <?php else : ?>
                             <td class="kuning"><?= implode("",target_user($kegiatan['id_kegiatan'],$user['id_user'],0));?></td>
                             <?php endif;?>
                            
                            <?php 
                            $data = realisasi_user($kegiatan['id_kegiatan'],$user['id_user'],0);
-                            if($data == FALSE ) :?><td>-</td>
+                            if($data == FALSE ) :?><td></td>
                             <?php else : ?>
                             <td><?= implode("",realisasi_user($kegiatan['id_kegiatan'], $user['id_user'],0)); ?></td>
                             <?php endif;?>
@@ -95,14 +95,14 @@
                           foreach($listpejabat as $pejabat) :?>
                           <?php 
                           $data = target_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat']);
-                          if($data == FALSE ) :?><td class="kuning">-</td>
+                          if($data == FALSE ) :?><td class="kuning"></td>
                             <?php else : ?>
                             <td class="kuning"><?= implode("",target_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat'])); ?></td>
                             <?php endif;?>
 
                           <?php  // aman
                            $data = realisasi_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat']);
-                            if($data == FALSE ) :?><td>-</td>
+                            if($data == FALSE ) :?><td></td>
                             <?php else : ?>
                             <td><?= implode("",realisasi_user($kegiatan['id_kegiatan'],0,$pejabat['id_pejabat'])); ?></td>
                             <?php endif;?>
