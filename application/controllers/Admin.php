@@ -20,9 +20,10 @@ class Admin extends CI_Controller
         $title['judul']     = "BPS";
         $data['sumtarget']  = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
         $data['sumseksi']   = $this->db->select('COUNT(nama_seksi)')->get('seksi')->row_array();
-        $data['listseksi']  = $this->db->get('seksi')->result_array();
         $data['listmenu']   = getMenuLink(); // array di helper   
-
+          $data['hadeh']   = getMenuLink(); // array di helper 
+        // $menu   = getMenuLink(); // array di helper   
+        // print_r(array_values($data['listmenu']));die;
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
@@ -30,29 +31,10 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
-    // public function detailUser() 
-    // {
-    //     $title['judul']     = "Detail Pencapaian User | BPS";
-    //     $data['listmenu']   = getMenuLink(); // array di helper   
-    //     $data['menuform'] = getMenuForm();// array class
-    //     $this->load->view('template_admin/header',$title);
-    //     $this->load->view('template_admin/sidebar',$data);
-    //     $this->load->view('template_admin/navbar');
-    //     $this->load->view('admin/detailUser');
-    //     $this->load->view('template_admin/footer');
-    // }
-
     public function dataKegiatan()
     {
         $title['judul'] = "List Kegiatan | BPS";
-        $this->db->select('k.uraian_kegiatan,s.nama_seksi,k.vol,k.satuan,k.target_penyelesaian,u.nama_user,kc.nama_kecamatan,kd.target,kd.realisasi');
-        $this->db->join('user as u','u.id_user = kd.id_user');
-        $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
-        $this->db->join('kecamatan as kc','kc.id_kecamatan = kd.id_user');
-        $this->db->join('seksi as s','s.id_seksi = kd.id_user');
-        $data['list'] = $this->db->get('kegiatan_detail as kd')->result_array();
 
-        // $this->db->order_by('id_kegiatan');
         $data['semuakegiatan'] = $this->db->get('kegiatan')->result_array();
         $data['listmitra'] = $this->db->get('mitra')->result_array();
         //SELECT k.nama_kecamatan,u.nama_user FROM user as u INNER JOIN kecamatan as k ON k.id_kecamatan = u.id_kecamatan
@@ -60,6 +42,12 @@ class Admin extends CI_Controller
         $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
         $data['listuser'] = $this->db->get('user as u')->result_array();
 
+        // $listuser = $this->db->get('user as u')->result_array();
+        // echo $listuser[0]["nama_user"];die;
+        // echo json_encode($listuser);die;
+        // $nama = json_encode(array('data' => $listuser));
+        // echo $nama['nama_user'];die;
+        
         $data['kegiatan_detail'] = $this->db->get('kegiatan_detail')->result_array();
 
         $this->db->select('j.id_jabatan,j.nama_jabatan,s.nama_seksi,p.nama_user,p.id_pejabat');
@@ -264,6 +252,7 @@ class Admin extends CI_Controller
 
     public function addadmin() // DONE
     {
+        
         if ($this->session->userdata('id_role') == 2) {
             redirect(base_url('admin'));
         }
@@ -271,9 +260,8 @@ class Admin extends CI_Controller
 
         $data['listmenu']       = getMenuLink(); // array di helper
         $data['menuform']       = getMenuForm(); // array di helper
-
         $data['listadmin']      = $this->modeladmin->getUser('admin',0);
-
+        // echo implode(" ",$data['hadeh']);die;
         $this->form_validation->set_rules('username','Username','required');
 
         if ($this->form_validation->run() == FALSE) {
