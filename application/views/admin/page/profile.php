@@ -26,15 +26,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="passbaru">Password baru</label>
-                                            <input type="password" class="form-control" name="passbaru" id="passbaru">
+                                            <input type="password" class="form-control passbaru" name="passbaru" id="passbaru">
                                             <?= form_error('passbaru', '<p class="text-danger pt-2" style="opacity: 0.8">*', '</p>') ?>
                                         </div>
                                         <div class="form-group">
                                             <label for="passkonfir">Password konfirmasi</label>
-                                            <input type="password" class="form-control" name="passkonfir" id="passkonfir">
+                                            <input type="password" class="form-control passkonfir" name="passkonfir" id="passkonfir">
                                             <?= form_error('passkonfir', '<p class="text-danger pt-2" style="opacity: 0.8">*', '</p>') ?>
                                         </div>
-                                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Update Password</button>
+                                        <button type="submit" class="btn btn-primary mr-3"><i class="fas fa-paper-plane"></i> Update Password</button>
+                                        <a href="#" class="btn-default text-decoration-none lihat-pass"><i class="fas fa-eye"></i> Lihat Password</a>
                                     </form>
                                 </div>
                             </div>
