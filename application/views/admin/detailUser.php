@@ -1,107 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Detail Karyawan</title>
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Kegiatan Detail User
+          </div>
+          <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
+    
+          <div class="row">
 
-    <style>
-        .center {
-            margin: auto;
-            width: 50%;
-            padding: 10px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-8">
-                <h3 class="text-primary font-weight-bold">Detail Karyawan</h1>
-                    <div class="card border border-primary" style="width: 18rem;">
-                        <br>
-                        <img src="<?= base_url('assets/') ?>img/man.png" class="card-img-top">
-                        <hr>
-                        <div class="card-body">
-                        <?php foreach($userdetail as $user) : ?>
-                            <h5 class="card-title text-dark font-weight-bold text-center"><?= $user['nama_user']; ?></h5>
-                        <?php endforeach; ?>
-                            <p class="card-text text-dark font-weight-bold text-center">Kasie IPDS</p>
-
-                        </div>
-                    </div>
-            </div>
-            <div class="col-md-4"></div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered text-center bg-primary text-light font-weight-bold">
-                    <thead>
-                        <tr>
-                            <th scope="col">Target</th>
-                            <th scope="col">Realisasi</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <?php //foreach($userdetail as $user) : ?>
-                            <td><?= "t"//$user['target']; ?></td>
-                            <td><?= "r"//$user['realisasi']; ?></td>
-                            <?php //endforeach; ?>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
+            <!-- form input data -->
+            <div class="col-lg-3 offset-lg-1">
+              <div class="card mb-4">
+              <div class="card-header py-3">
+              <?php foreach($userdetail as $user) : ?>
+                  <h6 class="m-0 font-weight-bold"><?= $user['nama_user']; ?> <span class="badge badge-primary float-right px-2 py-1"><?= $user['nama_kecamatan']; ?></span></h6>
+                  <?php endforeach; ?>
+                </div>
+                <div class="card-body">
+                    <img src="<?= base_url('assets/') ?>img/man.png" class="thumbnail w-100 h-50">
+                </div>
+                <div class="card-footer">
+                    <a href="<?= base_url('listkegiatan'); ?>" class="btn btn-info"><i class="fas fa-arrow-left"></i> Back</a>
+                </div>
+              </div>
 
             </div>
 
-            <div class="col-md-12">
-                <table class="table table-bordered text-center bg-info text-light font-weight-bold">
+            <!-- table results -->
+            <div class="col-lg-6 offset-lg-1">
+              <div class="table-responsive">
+                <table id="dtablemitra" class="display table table-bordered"width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th scope="col">Nama Kegiatan</th>
-                            <th scope="col">Target</th>
-                            <th scope="col">Realisasi</th>
+                            <th scope="col">No</th>
+                            <th>Nama Kegiatan</th>
+                            <th>Target</th>
+                            <th>Realisasi</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($kegiatandetail as $kd) :?>
-                    <tr>
-                        <td><?= $kd['uraian_kegiatan'] ?></td>
-                        <td><?= $kd['target'] ?></td>
-                        <td><i class="fas fa-check"></i></td>
-                    </tr>
+                    <?php $no=1; foreach($kegiatandetail as $kegiatan) :?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= ucwords(strtolower($kegiatan['uraian_kegiatan'])) ?></td>
+                            <td><?= $kegiatan['target'] ?></td>
+                            <td><?= $kegiatan['realisasi'] ?></td>
+                            </tr>
                     <?php endforeach;?>
-                        <!-- <tr>
-                            <td>pengawasan update SAK sm I</td>
-                            <td><i class="fas fa-check"></i></td>
-                        </tr>
-                        <tr>
-                            <td>pengawasan pencacahan SAK sm I</td>
-                            <td><i class="fas fa-times"></i></td>
-                        </tr>
-                        <tr>
-                            <td>pelatihan sakernas Sm 1</td>
-                            <td><i class="fas fa-times"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Sampel Ubinan</td>
-                            <td><i class="fas fa-check"></i></td>
-                        </tr> -->
                     </tbody>
                 </table>
+              </div>
             </div>
+          </div>
 
         </div>
-    </div>
-
-</body>
-
-</html>
+        <!-- /.container-fluid -->

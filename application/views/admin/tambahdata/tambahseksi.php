@@ -26,8 +26,7 @@
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
-                        </div>
+                          </div>
                     </form>
                 </div>
               </div>
@@ -49,10 +48,12 @@
                     <?php $no=1; foreach($listseksi as $seksi) : ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= ucwords(strtolower($seksi['nama_seksi'])) ?>
+                            <td><?= $seksi['nama_seksi'] ?>
                             <td class="text-center">
-                            <a href="<?= base_url('seksi/editseksi/'.$seksi['id_seksi']) ?>"   
-                            class="btn btn-warning btn-sm">
+                            <a href="<?= base_url('Admin/editseksi/'.$seksi['id_seksi']); ?>"   
+                            class="btn btn-warning btn-sm modal-update-seksi" 
+                            data-id="<?= $seksi['id_seksi']; ?>" 
+                            data-seksi="<?= $seksi['nama_seksi']; ?>">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $seksi['id_seksi']; ?>" class="btn btn-danger btn-sm tombol-hapus-seksi"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
@@ -66,3 +67,30 @@
 
         </div>
         <!-- /.container-fluid -->
+
+        <!-- Edit Modal-->
+        <div class="modal fade" style="margin-top:150px;" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Form Edit Seksi</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                      <input type="text" hidden class="form-control" name="id_seksi_edit" id="id_seksi_edit">
+                      <label for="nama_seksi_edit">Nama Seksi</label>
+                      <input type="text" class="form-control" name="nama_seksi_edit" id="nama_seksi_edit">
+                    </div>
+                    <button class="btn btn-primary" type="submit" id="btn_update"><i class="fas fa-sync-alt"></i> Update Data</a>
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                </form>
+              </div>
+              <!-- <div class="modal-footer">
+              </div> -->
+            </div>
+          </div>
+        </div>

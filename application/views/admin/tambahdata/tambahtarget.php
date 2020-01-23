@@ -38,44 +38,35 @@
                             </select>
                           </div>
                           <div class="form-group col-md-5">
-                            <label for="input_target">Target</label>
-                            <input type="text" class="form-control" name="input_target" id="input_target">
-                            <?= form_error('input_target','<div class="alert alert-warning mt-3">','</div>'); ?>
+                            <label for="target_user">Target</label>
+                            <input type="text" class="form-control" name="target_user" id="target_user">
+                            <?= form_error('target_user','<div class="alert alert-warning mt-3">','</div>'); ?>
                           </div>
                         </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="input_pejabat">Pejabat</label>
+                            <select id="input_pejabat" name="input_pejabat" class="selectpicker form-control" title="Cari Nama Pejabat" data-live-search="true">
+                              <?php foreach($listpejabat as $pejabat):?>
+                              <option value="<?= $pejabat['id_pejabat']; ?>"><?= $pejabat['nama_user']; ?> | <b><?= $pejabat['nama_jabatan']; ?></b> | <?= $pejabat['nama_seksi']; ?></option>
+                              <?php endforeach; ?>
+                            </select>
+                          </div>
+                          <div class="form-group col-md-5">
+                            <label for="target_pejabat">Target</label>
+                            <input type="text" class="form-control" name="target_pejabat" id="target_pejabat">
+                            <?= form_error('target_pejabat','<div class="alert alert-warning mt-3">','</div>'); ?>
+                          </div>
+                        </div>
+                          <p class="text-danger" style="opacity: 0.8">* pejabat & anggota <b>boleh tidak dipilih salah satu.<b></p>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
-                          <button class="btn btn-md btn-default resetyo" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
                         </div>
                     </form>
                 </div>
               </div>
 
             </div>
-            <!-- table results
-            <div class="col-lg-5 offset-1">
-                  <div class="table-responsive">
-                      <table class="table table-condensed">
-                          <thead>
-                              <tr>
-                                  <th>No</th>
-                                  <th>Nama Seksi</th>
-                                  <th colspan="2" class="text-center">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>1</td>
-                                  <td>Testing</td>
-                                  <td class="text-center">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-            </div> -->
 
           </div>
 

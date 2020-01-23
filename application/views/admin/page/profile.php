@@ -1,32 +1,42 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="card border border-primary" style="width: 18rem;">
+                        <div class="col-12 col-lg-4">
+                            <div class="card border mb-5" style="width: 18rem;">
                                 <br>
-                                <!-- <img src="<?= base_url('assets/') ?>img/man.png" alt="..." class="img-thumbnail"> -->
-                                <img src="<?= base_url('assets/') ?>img/man.png" class="card-img-top" >
+                                 <img src="<?= base_url('assets/') ?>img/man.png" class="card-img-top" >
                                 <hr>
                                 <div class="card-body">
                                     <h5 class="card-title text-dark font-weight-bold"><?= strtoupper($this->session->userdata('username')) ?></h5>
-                                    <p class="card-text text-dark font-weight-bold">Kasie IPDS</p>
-                                    <a class="btn btn-primary btn-lg btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit Data</a>
+                                    <p class="card-text text-dark font-weight-bold"><span class="badge badge-primary"><?php if($this->session->userdata('id_role') == 1): ?>Superadmin
+                                    <?php else : ?>Admin <?php endif;?></span></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="collapse" id="collapseExample">
-                                <div class="card card-body">
-                                    <h3 class="font-weight-bold text-dark">Ganti Password</h3>
-                                    <div class="form-group">
-                                        <label class="font-weight-bold text-dark" for="exampleInputPassword1">Password Lama</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="font-weight-bold text-dark" for="exampleInputPassword1">Password Baru</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                    </div>
-                                    <a class="btn btn-primary btn-lg btn-block text-white" >Ganti Password</a>
+                        <div class="col-12 col-lg-6 offset-lg-1">
+                            <div class="card">
+                                <h5 class="card-header">Update Password</h5>
+                                <div class="card-body">
+                                    <form method="post" action="<?= base_url('update') ?>">
+                                        <div class="form-group">
+                                        <?= $this->session->flashdata('pesan'); ?>
+                                            <label for="passlama">Password lama</label>
+                                            <input type="password" class="form-control" name="passlama" id="passlama">
+                                            <?= form_error('passlama', '<p class="text-danger pt-2" style="opacity: 0.8">*', '</p>') ?>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="passbaru">Password baru</label>
+                                            <input type="password" class="form-control passbaru" name="passbaru" id="passbaru">
+                                            <?= form_error('passbaru', '<p class="text-danger pt-2" style="opacity: 0.8">*', '</p>') ?>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="passkonfir">Password konfirmasi</label>
+                                            <input type="password" class="form-control passkonfir" name="passkonfir" id="passkonfir">
+                                            <?= form_error('passkonfir', '<p class="text-danger pt-2" style="opacity: 0.8">*', '</p>') ?>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mr-3"><i class="fas fa-paper-plane"></i> Update Password</button>
+                                        <a href="#" class="btn-default text-decoration-none lihat-pass"><i class="fas fa-eye"></i> Lihat Password</a>
+                                    </form>
                                 </div>
                             </div>
                         </div>

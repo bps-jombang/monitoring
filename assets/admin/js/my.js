@@ -1,14 +1,17 @@
 // $(document).ready(function() {
-	const hapusadmin 	= "http://localhost/monitoring/hapusadmin";// DONE
-	const hapusmitra 	= "http://localhost/monitoring/hapusmitra"; // DONE
-	const hapusseksi 	= "http://localhost/monitoring/hapusseksi";// DONE
-	const hapususer 	= "http://localhost/monitoring/hapususer";// DONE
-	const hapusjabatan = "http://localhost/monitoring/hapusjabatan"; // DONE
-	const hapuspejabat = "http://localhost/monitoring/hapuspejabat"; // DONE
+	const sites			= "http://localhost/monitoring";
+	const urleditseksi  	= sites+"/Admin/editseksi/";
+
+	const hapusadmin 	= sites+"/hapusadmin";	// DONE
+	const hapusmitra 	= sites+"/hapusmitra"; 	// DONE
+	const hapusseksi 	= sites+"/hapusseksi";	// DONE
+	const hapususer 	= sites+"/hapususer";		// DONE
+	const hapusjabatan 	= sites+"/hapusjabatan"; 	// DONE
+	const hapuspejabat 	= sites+"/hapuspejabat"; 	// DONE
 	
 	// hapus kegiatan 
-	const hapuskegiatan 		= "http://localhost/monitoring/hapuskegiatan";
-	const hapuskegiatandetail 	= "http://localhost/monitoring/hapuskegiatandetail";
+	const hapuskegiatan 		= sites+"/hapuskegiatan";
+	const hapuskegiatandetail 	= sites+"/hapuskegiatandetail";
 
     const tabel = $(".mytable tr th");
     tabel.addClass("align-middle");
@@ -23,6 +26,41 @@
 			icon: 'success'
 		});
 	}
+
+	// GET MODAL EDIT
+	$('.modal-update-seksi').on('click',function(){
+		// e.preventDefault();
+		$('#modal_edit').modal('show');
+
+		const id_seksi 	= 	$(this).data('id');
+		const nama_seksi 		= 	$(this).data('seksi');
+		// GET DATA FROM INPUT NAME
+		$('[name="nama_seksi2"]').val(nama_seksi);
+		$('[name="id_seksi2"]').val(id_seksi);
+	});
+	$('#btn_update').on('click', function(e){
+		e.preventDefault();
+		console.log('btn_update');
+
+		// const id_seksi = $(this).data('id');
+		// const nama_seksi = $(this).data('seksi');
+
+		let id = $('#id_seksi2').val();
+		let nama = $('#nama_seksi2').val();
+		
+		$.ajax({
+			url: 'http://localhost/monitoring/Admin/editseksi',
+			method: 'POST',
+			data:{
+				id_seksi:id,
+				nama_seksi:nama
+			},
+			
+			success: function (data) {
+				console.log(data);
+			}
+		})
+	});
 	
 // ALERT HAPUS DATA
 	// Hapus Mitra
@@ -77,7 +115,7 @@
 	$('.tombol-hapus-seksi').on('click', function(e){
 		e.preventDefault();
 		const idseksi = $(this).attr('id');
-
+		
 		swal.fire({
 			title	: 	'Apakah anda yakin',
 			text	: 	'Data ini akan dihapus',
@@ -221,3 +259,38 @@
 	});
 
 // });
+
+
+$('.nav-item').on('click', function () {
+	$('.nav-item').removeClass('active');
+	$(this).addClass('active');
+});
+
+$('.lihat-pass').on('click',function (){
+	// e.preventDefault();
+	// console.log('tombol see');
+	const con = $('.passkonfir').attr('input');
+	
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

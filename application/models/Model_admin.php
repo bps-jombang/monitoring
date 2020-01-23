@@ -3,14 +3,15 @@
 class Model_admin extends CI_Model {  
 
     private $_seksi = "seksi", $_mitra = "mitra", $_kecamatan = "kecamatan", $_pejabat = "pejabat",
-            $_user   = "user", $_admin   = "admin", $_kegiatan = "kegiatan", $_jabatan = "jabatan";
+            $_kegiatan_detail = "kegiatan_detail", $_user   = "user", $_admin   = "admin", 
+            $_kegiatan = "kegiatan", $_jabatan = "jabatan";
 
     // ONLY CREATES 
     public function createData($tabel,$no)
     {
-        // 1 = seksi, 2 = mitra, 3 kecamatan, 4 = user, 5 = kegiatan, 6 = jabatan
+        // 1 = seksi, 2 = mitra, 3 = jabatan, 4 = user, 5 = kegiatan,  6 = kegiatan detail, 7 = admin, 8 = pejabat
         $dataSeksi = array(
-            'nama_seksi' => strtolower(htmlspecialchars($this->input->post('nama_seksi',TRUE)))
+            'nama_seksi' => ucwords(htmlspecialchars($this->input->post('nama_seksi',TRUE)))
         );
         $dataAdmin = array(
             'id_role'  => $this->input->post('check'),
@@ -20,103 +21,89 @@ class Model_admin extends CI_Model {
         $dataMitra = array( // TABEL MITRA
             'nama_mitra' => htmlspecialchars(ucwords($this->input->post('nama_mitra',TRUE))) // NAME LABEL DI VIEWS ex: name="apa"
         );
-        $dataKecamatan = array( // TABEL KECAMATAN
-            'nomor_kecamatan' => stripslashes($this->input->post('nokec')), 
-            'nama_kecamatan' => stripslashes($this->input->post('nakec'))
-        );
         $dataUser = array ( // USER
             'id_jabatan'    => $this->input->post('input_jabatan'),
-            'id_seksi' => $this->input->post('input_seksi'),
-            'id_kecamatan' => $this->input->post('input_kecamatan'),
-            'nama_user' => htmlspecialchars($this->input->post('nama_user',TRUE)),
+            'id_seksi'      => $this->input->post('input_seksi'),
+            'id_kecamatan'  => $this->input->post('input_kecamatan'),
+            'nama_user'     => htmlspecialchars($this->input->post('nama_user',TRUE)),
         );
-        $dataKegiatan = array ( // KEGIATAN
-            'id_seksi' => htmlspecialchars($this->input->post('input_seksi')),
-            'uraian_kegiatan' => htmlspecialchars($this->input->post('nama_kegiatan')),
-            'vol' => htmlspecialchars($this->input->post('input_vol')),
-            'satuan' => htmlspecialchars($this->input->post('input_satuan')),
-            'target_penyelesaian' => htmlspecialchars($this->input->post('target_penyelesaian'))
+        $dataKegiatan = array ( // Kegiatan
+            'id_seksi'              => htmlspecialchars($this->input->post('input_seksi')),
+            'uraian_kegiatan'       => htmlspecialchars($this->input->post('nama_kegiatan')),
+            'vol'                   => htmlspecialchars($this->input->post('input_vol')),
+            'satuan'                => htmlspecialchars($this->input->post('input_satuan')),
+            'target_penyelesaian'   => htmlspecialchars($this->input->post('target_penyelesaian'))
         );
-        $dataKegiatandetail = array(
-            'id_user' => htmlspecialchars($this->input->post('input_user')), 
-            'id_kegiatan' => htmlspecialchars($this->input->post('input_kegiatan')), 
-            'target' => htmlspecialchars($this->input->post('input_target'))
+        $dataKegiatandetail = array( // Kegiatan detail
+            'id_user'       => htmlspecialchars($this->input->post('input_user')), 
+            'id_kegiatan'   => htmlspecialchars($this->input->post('input_kegiatan')), 
+            'target'        => htmlspecialchars($this->input->post('input_target'))
         );
-        $dataJabatan = array ( // JABATAN
-            'nama_jabatan' => htmlspecialchars($this->input->post('nama_jabatan',TRUE))
+        $dataJabatan = array ( // Jabatan
+            'nama_jabatan'  => htmlspecialchars($this->input->post('nama_jabatan',TRUE))
         );
-        $dataPejabat = array ( // JABATAN
+        $dataPejabat = array ( // Pejabat
             'id_jabatan'    => $this->input->post('input_jabatan'),
-            'id_seksi' => $this->input->post('input_seksi'),
-            'nama_user' => ucwords(htmlspecialchars($this->input->post('nama_user',TRUE)))
+            'id_seksi'      => $this->input->post('input_seksi'),
+            'nama_user'     => ucwords(htmlspecialchars($this->input->post('nama_user',TRUE)))
         );
-        // SESUAIKAN DI DATABASE YAA
-
 
         if ($no == 1) { // insert ke tabel seksi
-            // var_dump($dataSeksi);die;
-            $this->db->insert($tabel,$dataSeksi);
+            $this->db->insert($tabel,$dataSeksi); // DONE
         }else if($no == 2){ // insert ke tabel mitra
-            // var_dump($dataMitra);die;    
-            $this->db->insert($tabel,$dataMitra);
+            $this->db->insert($tabel,$dataMitra); // DONE
         }else if($no == 3){ // insert ke tabel Jabatan
-            // var_dump($dataJabatan);die;
-            $this->db->insert($tabel,$dataJabatan);
+            $this->db->insert($tabel,$dataJabatan); // DONE
         }else if($no == 4){ // insert ke tabel user
-            // var_dump($dataUser);die;
-            $this->db->insert($tabel,$dataUser);
-        }else if($no == 5){ // insert tabael kegiatan
-            // echo json_encode($dataKegiatan);die;
-            // var_dump($dataKegiatan);die;
-            $this->db->insert($tabel,$dataKegiatan);
-        }else if($no == 6){
-            // var_dump($dataJabatan);die;
-            $this->db->insert($tabel,$dataJabatan);
-        }else if($no == 7){
-            // echo json_encode($dataKegiatandetail);die;
+            $this->db->insert($tabel,$dataUser); // DONE
+        }else if($no == 5){ // insert ke tabel kegiatan
+            $this->db->insert($tabel,$dataKegiatan);  // DONE
+        }else if($no == 6){ // insert ke tabel kegiatan detail
             $this->db->insert($tabel,$dataKegiatandetail);
-        }else if($no == 8){
+        }else if($no == 7){ // insert ke tabel admin
             $result     =   $this->db->get_where($tabel,['username' => $dataAdmin["username"]])->row_array();
             if ($dataAdmin["username"] == $result["username"] ) {
                 return true;
             }else{
-                // echo "tidak sama";die;
                 if ($dataAdmin["id_role"] == "on") {
-                    // var_dump($dataAdmin);die;
                     $dataAsli       =   array("on",$dataAdmin["username"],$dataAdmin["password"]);
                     $dataReplace    =   array(1,$dataAdmin["username"],$dataAdmin["password"]);
-                    // $dataFinish     =   array();
-                    // print_r($dataReplace[0]);die;
-                    $dataBaru = array("id_role" => $dataReplace[0],"username" => $dataReplace[1],"password" => $dataReplace[2]);
-                    // print_r(array_replace($dataAsli,$dataReplace));die;
+                    $dataBaru       =   array("id_role" => $dataReplace[0],"username" => $dataReplace[1],"password" => $dataReplace[2]);
                     $this->db->insert($tabel,$dataBaru);
                 }else{
                     $dataAsli       =   array(NULL,$dataAdmin["username"],$dataAdmin["password"]);
                     $dataReplace    =   array(2,$dataAdmin["username"],$dataAdmin["password"]);
-                    $dataBaru = array("id_role" => $dataReplace[0],"username" => $dataReplace[1],"password" => $dataReplace[2]);
+                    $dataBaru       =   array("id_role" => $dataReplace[0],"username" => $dataReplace[1],"password" => $dataReplace[2]);
                     $this->db->insert($tabel,$dataBaru);
                 }
             }
-        }else if($no == 9){
-            // echo json_encode($dataPejabat);die;
-            // var_dump($dataPejabat);die;
+        }else if($no == 8){
             $this->db->insert($tabel,$dataPejabat);
         }
     }
     
     // ONLY UPDATE
-    public function updateData($tabel,$no,$id)
+    public function updateData($tabel,$no)
     {
         // 1 seksi, 2 mitra, 3 kecamatan,4 user,5 kegiatan
         $dataMitra = array ('nama_mitra' => $this->input->post('nama_mitra'));
+        $dataSeksi  =  [
+            'id_seksi'    =>  $this->input->post('id_seksi'),
+            'nama_seksi'    =>$this->input->post('nama_seksi2')
+        ];
         if ($no == 1 ) {
-            // var_dump($dataMitra);die;
+            // $this->db->set($dataSeksi);
+            $data = $this->db->update($tabel,["nama_seksi" => $dataSeksi['nama_seksi']],["id_seksi" => $dataSeksi['id_seksi']]);
+            // var_dump($data);
+            // return $data;
+            // var_dump($data);
+        }elseif($no == 2){
             return $this->db->update($tabel,$dataMitra,["id_mitra" => $id]);
         }
     }
 
     // ONLY SHOW ALL & SHOW BY ID
-    public function getUser($tabel,$id = null)
+    public function getData($tabel,$id = null)
     {
         // 1 = seksi, 2 = user,3 = mitra, 4 = kegiatan, 5 = kecamatan
         if ($tabel == "seksi") {
@@ -143,94 +130,75 @@ class Model_admin extends CI_Model {
         }else if($tabel == "kegiatan") {
             // select tabel kegiatan
             if ($id) {
-                return json_encode($this->db->get_where($this->_kegiatan,["id_kegiatan" => $id])->row_array());
+                return $this->db->get_where($this->_kegiatan,["id_kegiatan" => $id])->row_array();
             }else{
-                return json_encode($this->db->get($this->_kegiatan)->result_array());
+                return $this->db->get($this->_kegiatan)->result_array();
             }
         }else if($tabel == "admin") {
             // select tabel kecamatan
             if ($id) {
-                return $this->db->get_where($this->_admin,["id_admin" => $id_admin])->row_array();
+                return $this->db->get_where($this->_admin,["id_admin" => $id])->row_array();
             }else{
                 return $this->db->get($this->_admin)->result_array();
             }
         }else if($tabel == "jabatan") {
             // select tabel kecamatan
             if ($id) {
-                return $this->db->get_where($this->_jabatan,["id_jabatan" => $id_jabatan])->row_array();
+                return $this->db->get_where($this->_jabatan,["id_jabatan" => $id])->row_array();
             }else{
                 return $this->db->get($this->_jabatan)->result_array();
             }
         }else if($tabel == "kecamatan") {
             // select tabel kecamatan
             if ($id) {
-                return $this->db->get_where($this->_kecamatan,["id_kecamatan" => $id_kecamatan])->row_array();
+                return $this->db->get_where($this->_kecamatan,["id_kecamatan" => $id])->row_array();
             }else{
                 return $this->db->get($this->_kecamatan)->result_array();
             }
         }else if($tabel == "pejabat") {
             // select tabel pejabat
             if ($id) {
-                return $this->db->get_where($this->_pejabat,["id_pejabat" => $id_pejabat])->row_array();
+                return $this->db->get_where($this->_pejabat,["id_pejabat" => $id])->row_array();
             }else{
                 return $this->db->get($this->_pejabat)->result_array();
             }
         }else if($tabel == "jabatan") {
             // select tabel jabatan
             if ($id) {
-                return $this->db->get_where($this->_jabatan,["id_jabatan" => $id_jabatan])->row_array();
+                return $this->db->get_where($this->_jabatan,["id_jabatan" => $id])->row_array();
             }else{
                 return $this->db->get($this->_jabatan)->result_array();
             }
+        }else if($tabel == "kegiatan_detail") {
+            // select tabel kegiatan_detail
+            if ($id) {
+                return $this->db->get_where($this->_kegiatan_detail,["id_kegiatan_detail" => $id])->row_array();
+            }else{
+                return $this->db->get($this->_kegiatan_detail)->result_array();
+            }
         }
-        // else{
-        //     return json_encode($this->db->get($this->user)->result_array());
-        // }
     }
 
     // ONLY DELETE
     public function deleteData($tabel,$no,$id)
     {
-        // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin
+        // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat
         if ($no == 1 ) {
-            return $this->db->delete($tabel,["id_seksi" => $id]);
+            return $this->db->delete($tabel,["id_seksi"     => $id]); // DONE
         }else if($no == 2){
-            return $this->db->delete($tabel,["id_mitra" => $id]);
-        }
-        else if($no == 3){
-            return $this->db->delete($tabel,["id_user" => $id]);
-        }
-        else if($no == 4){
-            return $this->db->delete($tabel,["id_kegiatan" => $id]);
-        }
-        else if($no == 5){
-            return $this->db->delete($tabel,["id_jabatan" => $id]);
-        }
-        else if($no == 6){
-            return $this->db->delete($tabel,["id_admin" => $id]);
-        }
-        else if($no == 7){
-            return $this->db->delete($tabel,["id_pejabat" => $id]);
+            return $this->db->delete($tabel,["id_mitra"     => $id]); // DONE
+        }else if($no == 3){
+            return $this->db->delete($tabel,["id_user"      => $id]);
+        }else if($no == 4){
+            return $this->db->delete($tabel,["id_kegiatan"  => $id]);
+        }else if($no == 5){
+            return $this->db->delete($tabel,["id_jabatan"   => $id]); // DONE
+        }else if($no == 6){
+            return $this->db->delete($tabel,["id_admin"     => $id]); // DONE
+        }else if($no == 7){
+            return $this->db->delete($tabel,["id_pejabat"   => $id]); // DONE
         }
     }
 
-    public function getRealisasi($id_kegiatan, $id_user) {
-        $data = $this->db->get_where('kegiatan_detail', array('id_kegiatan' => $id_kegiatan, 'id_user' => $id_user))->result_array();
-        if(count($data) > 0) {
-            return $data[0]['realisasi'];
-        } else {
-            return "-";
-        }
-    }
-
-    public function getTarget($id_kegiatan, $id_user) {
-        $data = $this->db->get_where('kegiatan_detail', array('id_kegiatan' => $id_kegiatan, 'id_user' => $id_user))->result_array();
-
-        if(count($data) > 0) {
-            return $data[0]['target'];
-        } else {
-            return "-";
-        }
-    }
 }
 ?>

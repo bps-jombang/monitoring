@@ -1,7 +1,7 @@
 
     <!-- Sidebar -->
     <?php if($this->session->userdata('id_role') == 1 || $this->session->userdata('id_role') == 2) : ?>
-    <ul class="navku navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin'); ?>">
@@ -15,7 +15,11 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
+      <?php if($this->uri->segment(1) == "admin") : ?>
       <li class="nav-item active">
+      <?php else : ?>
+      <li class="nav-item">
+      <?php endif;?>
         <a class="nav-link" href="<?= base_url('admin'); ?>">
         <?php if($this->session->userdata('id_role') == 1) : ?>
           <i class="fas fa-fw fa-desktop"></i>
@@ -35,25 +39,41 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+          <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan") : ?>
+          <li class="nav-item active">
+          <?php else :?> 
+          <li class="nav-item"> 
+          <?php endif;?>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-plus"></i>
           <span>Tambah Data</span>
         </a>
+        <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan") :?>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+        <?php else : ?>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+            <div class="bg-white py-2 collapse-inner rounded">
+        <?php endif; ?>
           <?php if($this->session->userdata('id_role') == 1) : // master : ?>
             <?php // $i biasa tanpa => ambil value dari key $i => ambil keynya saja
-              foreach($listmenu as $key => $value) :?>
-                <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+            foreach($listmenu as $key => $value) :?>
+              <?php if($this->uri->segment(1) == $value) : ?>
+                <a class="collapse-item active" href="<?= base_url($value); ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+              <?php else : ?>
+                <a class="collapse-item" href="<?= base_url($value); ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+              <?php endif;?>
             <?php endforeach; ?>
 
-          <?php else :?>
+          <?php else : // ROLE ADMIN?>
             <?php  // $i biasa tanpa => ambil value dari key, $i => ambil keynya saja
               foreach($listmenu as $key => $value) :?>
               <?php if($key != "Tambah Admin") : ?>
+                <?php if($this->uri->segment(1) == $value) :?>
+                  <a class="collapse-item active" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+                <?php else : ?>
                   <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
-              <?php endif; endforeach; ?>
+              <?php endif; endif; endforeach; ?>
           <?php endif;?>
           </div>
         </div>
@@ -67,13 +87,18 @@
         List
       </div>
 
-      <!-- Nav Item - Tables -->
+      <!-- Table Kegiatan -->
+      <?php if($this->uri->segment(1) == "listkegiatan") : ?>
+      <li class="nav-item active">
+      <?php else :?>
       <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('Admin/dataKegiatan') ?>">
+      <?php endif;?>
+        <a class="nav-link" href="<?= base_url('listkegiatan') ?>">
           <i class="fas fa-fw fa-table"></i>
           <span>Tabel Kegiatan</span></a>
       </li>
 
+      <!-- Logout -->
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('logout'); ?>" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt"></i>
@@ -86,7 +111,7 @@
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-
+ 
     </ul>
     <?php endif;?>
     <!-- End of Sidebar -->
