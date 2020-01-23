@@ -23,28 +23,6 @@
                             <label for="nama_user">Nama Anggota</label>
                             <input type="text" class="form-control" name="nama_user" id="nama_user">
                         </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="input_seksi">Seksi</label>
-                            <select name="input_seksi" id="input_seksi" class="form-control">
-                              <option value="NULL" selected>Pilih Seksi</option>
-                              <?php foreach($listseksi as $seksi):?>
-                              <option value="<?= $seksi['id_seksi']; ?>"><?= $seksi['nama_seksi']; ?></option>
-                              <?php endforeach; ?>
-                            </select>
-                            <p class="text-danger pt-1" style="opacity: 0.7">* boleh tidak dipilih</p>
-                          </div>
-                            <div class="form-group col-md-6">
-                                <label for="input_jabatan">Jabatan</label>
-                              <select name="input_jabatan" id="input_jabatan" class="form-control">
-                                <option value="NULL" selected>Pilih Jabatan</option>
-                                <?php foreach($listjabatan as $jabatan):?>
-                                <option value="<?= $jabatan['id_jabatan']; ?>"><?= $jabatan['nama_jabatan']; ?></option>
-                                <?php endforeach; ?>
-                              </select>
-                              <p class="text-danger pt-1" style="opacity: 0.7">* boleh tidak dipilih</p>
-                          </div>
-                        </div>
                         <div class="form-group">
                             <label for="input_kecamatan">Kecamatan</label>
                             <select name="input_kecamatan" id="input_kecamatan" class="selectpicker form-control" title="Cari Kecamatan" data-live-search="true">
@@ -55,8 +33,7 @@
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
-                        </div>
+                          </div>
                     </form>
                 </div>
               </div>
