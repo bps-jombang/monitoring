@@ -31,6 +31,14 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
+    public function datadebug()
+    {
+        $data      = json_encode(array("data" => $this->modeladmin->getData('kegiatan',0)));
+        echo $data;
+        
+        
+    }
+
     public function dataKegiatan()
     {
         $title['judul'] = "List Kegiatan | BPS";
@@ -72,24 +80,31 @@ class Admin extends CI_Controller
     public function detailKegiatanUser($id)
     {
         if (!$id) {
-            redirect(base_url('Admin/dataKegiatan'));
+            redirect(base_url('listkegiatan'));
         }
-        $title['judul'] = "Kegiatan Detail User | BPS";
+        $title['judul']     = "Kegiatan Detail User | BPS";
 
         $data['listmenu']   = getMenuLink(); // array di helper   
-        $data['menuform'] = getMenuForm();// array class
+        $data['menuform']   = getMenuForm();// array class
 
         $this->db->select('k.uraian_kegiatan,u.nama_user,kd.target,kd.realisasi,kd.target');
         $this->db->join('user as u','u.id_user = kd.id_user');
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
         $data['kegiatandetail']     = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
-        $data['userdetail']         = $this->db->get_where('user',["id_user" => $id])->result_array();
+        $this->db->select('k.nama_kecamatan,u.nama_user');
+        $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
+        $data['userdetail']         = $this->db->get_where('user as u',["u.id_user" => $id])->result_array();
 
-        $this->load->view('template_admin/header',$title);
-        $this->load->view('template_admin/sidebar',$data);
-        $this->load->view('template_admin/navbar');
-        $this->load->view('admin/detailuser');
-        $this->load->view('template_admin/footer');
+        if ($data['userdetail'] != NULL) {
+            $this->load->view('template_admin/header',$title);
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/detailuser');
+            $this->load->view('template_admin/footer');
+        } else {
+            redirect(base_url('admin'));
+        }
+        
     }
 
     public function addseksi() // DONE
@@ -99,7 +114,7 @@ class Admin extends CI_Controller
         $data['listmenu']       = getMenuLink(); // array di helper   
         $data['menuform']       = getMenuForm();// array class
 
-        $data['listseksi']      = $this->modeladmin->getUser('seksi',0);
+        $data['listseksi']      = $this->modeladmin->getData('seksi',0);
         
         $this->form_validation->set_rules('nama_seksi','Nama Seksi','required'); // validation 
 
@@ -125,7 +140,7 @@ class Admin extends CI_Controller
         $data['listmenu']       = getMenuLink(); // array di helper
         $data['menuform']       = getMenuForm();// array class
 
-        $data['listmitra']      = $this->modeladmin->getUser('mitra',0);
+        $data['listmitra']      = $this->modeladmin->getData('mitra',0);
         
         $this->form_validation->set_rules('nama_mitra','Mitra','required'); // validation
 
@@ -150,7 +165,7 @@ class Admin extends CI_Controller
 
         $data['listmenu']       = getMenuLink(); // array di helper
         $data['menuform']       = getMenuForm();// array class
-        $data['listjabatan']    = $this->modeladmin->getUser('jabatan',0);
+        $data['listjabatan']    = $this->modeladmin->getData('jabatan',0);
         
 
         $this->form_validation->set_rules('nama_jabatan','Jabatan','required'); // validation
@@ -176,7 +191,7 @@ class Admin extends CI_Controller
 
         $data['listmenu']       = getMenuLink(); // array di helper
         $data['menuform']       = getMenuForm();// array class
-        $data['listseksi']      = $this->modeladmin->getUser('seksi',0);
+        $data['listseksi']      = $this->modeladmin->getData('seksi',0);
         $data['listuser']       = $this->db->get_where('user',["nama_user !=" => NULL])->result_array();
 
         $this->form_validation->set_rules('nama_kegiatan','Kegiatan','required'); // validation
@@ -203,6 +218,10 @@ class Admin extends CI_Controller
         $data['listmenu']       = getMenuLink(); // array di helper
         $data['menuform']       = getMenuForm();// array class
         $data['listuser']       = $this->db->get_where('user',["nama_user !=" => NULL])->result_array();
+        $this->db->select('p.id_pejabat,s.nama_seksi,j.nama_jabatan,p.nama_user');
+        $this->db->join('seksi as s','s.id_seksi = p.id_seksi');
+        $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
+        $data['listpejabat']        = $this->db->get('pejabat as p')->result_array();
         $data['listkegiatan']   = $this->db->get('kegiatan')->result_array();
 
         $this->form_validation->set_rules('input_target','Target','required'); // validation
@@ -221,6 +240,7 @@ class Admin extends CI_Controller
             redirect(base_url('targetuser')); 
         }
     }
+
     public function adduser() // DONE
     {
         $title['judul']         = "Tambah User | BPS";
@@ -229,9 +249,9 @@ class Admin extends CI_Controller
         $data['menuform']       = getMenuForm();// array class
         
         $data['listuser']       = $this->db->get_where('user',["nama_user !=" => NULL])->result_array();
-        $data['listseksi']      = $this->modeladmin->getUser('seksi',0);
-        $data['listjabatan']    = $this->modeladmin->getUser('jabatan',0);
-        $data['listkecamatan']  = $this->modeladmin->getUser('kecamatan',0);
+        $data['listseksi']      = $this->modeladmin->getData('seksi',0);
+        $data['listjabatan']    = $this->modeladmin->getData('jabatan',0);
+        $data['listkecamatan']  = $this->modeladmin->getData('kecamatan',0);
 
         $this->form_validation->set_rules('nama_user','User','required'); // validation
 
@@ -260,7 +280,7 @@ class Admin extends CI_Controller
 
         $data['listmenu']       = getMenuLink(); // array di helper
         $data['menuform']       = getMenuForm(); // array di helper
-        $data['listadmin']      = $this->modeladmin->getUser('admin',0);
+        $data['listadmin']      = $this->modeladmin->getData('admin',0);
         // echo implode(" ",$data['hadeh']);die;
         $this->form_validation->set_rules('username','Username','required');
 
@@ -273,7 +293,7 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $data = $this->modeladmin->createData('admin',8);
+            $data = $this->modeladmin->createData('admin',7);
             if ($data == true) {
                 $this->session->set_flashdata('usernamesama','<div class="alert alert-danger" role="alert" dismiss="close">Username <strong>tidak boleh sama</strong></div>');
                 redirect(base_url('addadmin'));
@@ -297,8 +317,8 @@ class Admin extends CI_Controller
         $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
         $data['listpejabat']    = $this->db->get('pejabat as p')->result_array();
 
-        $data['listseksi']      = $this->modeladmin->getUser('seksi',0);
-        $data['listjabatan']    = $this->modeladmin->getUser('jabatan',0);
+        $data['listseksi']      = $this->modeladmin->getData('seksi',0);
+        $data['listjabatan']    = $this->modeladmin->getData('jabatan',0);
 
         $this->form_validation->set_rules('nama_user','Nama Anggota','required'); // validation
 
@@ -311,7 +331,7 @@ class Admin extends CI_Controller
             $this->load->view('template_admin/footer');
         }else{
             // jika validation sukses maka insert data
-            $this->modeladmin->createData('pejabat',9);
+            $this->modeladmin->createData('pejabat',8);
             $this->session->set_flashdata('pesan','Ditambah');
             redirect(base_url('pejabat')); 
         }
@@ -332,6 +352,7 @@ class Admin extends CI_Controller
         echo json_encode($data);
 
     }
+
     public function editmitra($id = null) // DONE
     {
         if ($id == null) {
@@ -340,8 +361,8 @@ class Admin extends CI_Controller
         $title['judul']     = "Edit Mitra  | BPS";
         $data['listmenu']   = getMenuLink(); // array di helper
         $data['menuform'] = getMenuForm();// array class
-        $data['listmitra']  = $this->modeladmin->getUser('mitra',$id);
-        $data['allmitra']   = $this->modeladmin->getUser('mitra',0);
+        $data['listmitra']  = $this->modeladmin->getData('mitra',$id);
+        $data['allmitra']   = $this->modeladmin->getData('mitra',0);
 
         $this->form_validation->set_rules('nama_mitra','Nama Mitra','required'); // validation
 
@@ -375,10 +396,8 @@ class Admin extends CI_Controller
 
 
 
-    // --------------------------- \\
-    //        DELETE FUNCTIONS      \\
-    // ----------------------------- \\
-    // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat
+    /*  Fungsi delete
+    1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat   */
     public function deleteSeksi($id = null) // DONE
     {
         if ($id == null) {
@@ -387,6 +406,7 @@ class Admin extends CI_Controller
         $this->modeladmin->deleteData('seksi',1,$id);
         $this->session->set_flashdata('pesan','Dihapus');
     }
+
     public function deleteMitra($id = null) // DONE
     {
         if ($id == null) {
@@ -395,36 +415,13 @@ class Admin extends CI_Controller
         $this->modeladmin->deleteData('mitra',2,$id);
         $this->session->set_flashdata('pesan','Dihapus');
     }
+    
     public function deleteUser($id = null) // DONE
     {
         if ($id == null) {
             redirect(base_url('user'));
         }
         $this->modeladmin->deleteData('user',3,$id);
-        $this->session->set_flashdata('pesan','Dihapus');
-    }
-    public function deleteAdmin($id = null) // DONE
-    {
-        if ($id == null) {
-            redirect(base_url('addadmin'));
-        }
-        $this->modeladmin->deleteData('admin',6,$id);
-        $this->session->set_flashdata('pesan','Dihapus');
-    }
-    public function deleteJabatan($id = null) // DONE
-    {
-        if ($id == null) {
-            redirect(base_url('jabatan'));
-        }
-        $this->modeladmin->deleteData('jabatan',5,$id);
-        $this->session->set_flashdata('pesan','Dihapus');
-    }
-    public function deletePejabat($id = null) // DONE
-    {
-        if ($id == null) {
-            redirect(base_url('pejabat'));
-        }
-        $this->modeladmin->deleteData('pejabat',7,$id);
         $this->session->set_flashdata('pesan','Dihapus');
     }
 
@@ -434,7 +431,7 @@ class Admin extends CI_Controller
             $data = array('status' => false , 'messages' => 'no results from database' );
             echo json_encode($data);
         }else{
-            $data = $this->modeladmin->deleteData('kegiatan',5,$id);
+            $data = $this->modeladmin->deleteData('kegiatan',4,$id);
             if ($data == true) {
                 $this->session->set_flashdata('hapus','Berhasil dihapus');
                 redirect(base_url('kegiatan'));
@@ -443,48 +440,33 @@ class Admin extends CI_Controller
             }
         }
     }
-    
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // INI JANGAN DIUTIK GAYS :D BUAT TESTING 
-    public function show(){
-        $res = $this->db->get('user')->result_object();
-        echo json_encode(array("data" => $res));
-    }
-    public function tes()
+    public function deleteJabatan($id = null) // DONE
     {
-        
-        $data['listmenu']   = getMenuLink(); // array di helper   
-        $data['menuform'] = getMenuForm();// array class
-        $this->load->view('template_admin/header');
-        $this->load->view('template_admin/sidebar',$data);
-        $this->load->view('template_admin/navbar');
-        $this->load->view('admin/tes');
-        $this->load->view('template_admin/footer');
-        
+        if ($id == null) {
+            redirect(base_url('jabatan'));
+        }
+        $this->modeladmin->deleteData('jabatan',5,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
     }
 
+    public function deleteAdmin($id = null) // DONE
+    {
+        if ($id == null) {
+            redirect(base_url('addadmin'));
+        }
+        $this->modeladmin->deleteData('admin',6,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
+    }
+
+    public function deletePejabat($id = null) // DONE
+    {
+        if ($id == null) {
+            redirect(base_url('pejabat'));
+        }
+        $this->modeladmin->deleteData('pejabat',7,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
+    }
+
+    
 }
