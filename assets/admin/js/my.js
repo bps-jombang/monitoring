@@ -266,6 +266,14 @@ $('.nav-item').on('click', function () {
 	$(this).addClass('active');
 });
 
+$('.lihat-pass').on('click',function (){
+	// e.preventDefault();
+	// console.log('tombol see');
+	const con = $('.passkonfir').attr('input');
+	
+	
+});
+
 
 
 
