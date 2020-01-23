@@ -264,19 +264,6 @@
 $('.nav-item').on('click', function () {
 	$('.nav-item').removeClass('active');
 	$(this).addClass('active');
-	console.log('pindah aktif');
-	
-});
-$('.collapse-item').on('click', function () {
-	// $()
-	// e.preventDefault();
-	console.log('aktif');
-	const a = $('.collapse-item');
-	a.removeClass('active');
-	const s = $(this).addClass('active');
-	// console.log(s);
-	
-	
 });
 
 
