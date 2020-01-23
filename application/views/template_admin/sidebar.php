@@ -69,8 +69,11 @@
             <?php  // $i biasa tanpa => ambil value dari key, $i => ambil keynya saja
               foreach($listmenu as $key => $value) :?>
               <?php if($key != "Tambah Admin") : ?>
+                <?php if($this->uri->segment(1) == $value) :?>
+                  <a class="collapse-item active" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+                <?php else : ?>
                   <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
-              <?php endif; endforeach; ?>
+              <?php endif; endif; endforeach; ?>
           <?php endif;?>
           </div>
         </div>
