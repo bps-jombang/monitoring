@@ -74,15 +74,15 @@ if ( ! function_exists('getMenuLink'))
 {
     function getMenuLink()
     {
-        return  [
-                "Tambah Admin"          => base_url('addadmin'),
-                "Tambah Seksi"          => base_url('seksi'),
-                "Tambah Kegiatan"       => base_url('kegiatan'),
-                "Tambah Pejabat"        => base_url('pejabat'),
-                "Tambah Jabatan"        => base_url('jabatan'),
-                "Tambah Target User"    => base_url('targetuser'),
-                "Tambah Anggota"        => base_url('user'),
-                "Tambah Mitra"          => base_url('mitra')
+        return  [ // Menu sidebar           // Url on routes
+                "Tambah Admin"          => 'addadmin',
+                "Tambah Seksi"          => 'seksi',
+                "Tambah Kegiatan"       => 'kegiatan',
+                "Tambah Pejabat"        => 'pejabat',
+                "Tambah Jabatan"        => 'jabatan',
+                "Tambah Target User"    => 'targetuser',
+                "Tambah Anggota"        => 'user',
+                "Tambah Mitra"          => 'mitra'
         ];
     }
 }
