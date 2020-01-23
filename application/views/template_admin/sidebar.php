@@ -15,7 +15,11 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
+      <?php if($this->uri->segment(1) == "admin") : ?>
       <li class="nav-item active">
+      <?php else : ?>
+      <li class="nav-item">
+      <?php endif;?>
         <a class="nav-link" href="<?= base_url('admin'); ?>">
         <?php if($this->session->userdata('id_role') == 1) : ?>
           <i class="fas fa-fw fa-desktop"></i>
@@ -35,20 +39,33 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+          <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan") : ?>
+          <li class="nav-item active">
+          <?php else :?> 
+          <li class="nav-item"> 
+          <?php endif;?>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-plus"></i>
           <span>Tambah Data</span>
         </a>
+        <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan") :?>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+        <?php else : ?>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+            <div class="bg-white py-2 collapse-inner rounded">
+        <?php endif; ?>
           <?php if($this->session->userdata('id_role') == 1) : // master : ?>
             <?php // $i biasa tanpa => ambil value dari key $i => ambil keynya saja
-              foreach($listmenu as $key => $value) :?>
-                <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+            foreach($listmenu as $key => $value) :?>
+              <?php if($this->uri->segment(1) == $value) : ?>
+                <a class="collapse-item active" href="<?= base_url($value); ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+              <?php else : ?>
+                <a class="collapse-item" href="<?= base_url($value); ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+              <?php endif;?>
             <?php endforeach; ?>
 
-          <?php else :?>
+          <?php else : // ROLE ADMIN?>
             <?php  // $i biasa tanpa => ambil value dari key, $i => ambil keynya saja
               foreach($listmenu as $key => $value) :?>
               <?php if($key != "Tambah Admin") : ?>
@@ -68,8 +85,12 @@
       </div>
 
       <!-- Table Kegiatan -->
+      <?php if($this->uri->segment(1) == "listkegiatan") : ?>
+      <li class="nav-item active">
+      <?php else :?>
       <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('Admin/dataKegiatan') ?>">
+      <?php endif;?>
+        <a class="nav-link" href="<?= base_url('listkegiatan') ?>">
           <i class="fas fa-fw fa-table"></i>
           <span>Tabel Kegiatan</span></a>
       </li>
