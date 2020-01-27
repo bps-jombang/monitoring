@@ -10,7 +10,7 @@
           <div class="row">
 
             <!-- form input data -->
-            <div class="col-lg-3 offset-lg-1">
+            <div class="col-lg-3">
               <div class="card mb-4">
               <div class="card-header py-3">
               <?php foreach($userdetail as $user) : ?>
@@ -28,7 +28,7 @@
             </div>
 
             <!-- table results -->
-            <div class="col-lg-6 offset-lg-1">
+            <div class="col-lg-6">
               <div class="table-responsive">
                 <table id="dtablemitra" class="display table table-bordered"width="100%" cellspacing="0">
                     <thead>
@@ -37,6 +37,7 @@
                             <th>Nama Kegiatan</th>
                             <th>Target</th>
                             <th>Realisasi</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +47,11 @@
                             <td><?= ucwords(strtolower($kegiatan['uraian_kegiatan'])) ?></td>
                             <td><?= $kegiatan['target'] ?></td>
                             <td><?= $kegiatan['realisasi'] ?></td>
+                            <td class="text-center"><a href="<?= base_url('admin/editadmin/'.$kegiatan['id_kegiatan_detail']) ?>"   
+                            class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit</a>
+                            <a href="#" id="<?= $kegiatan['id_kegiatan_detail']; ?>" class="btn btn-danger btn-sm tombol-hapus-admin"><i class="fas fa-trash"></i> Hapus</a></td>
+                        </td>
                             </tr>
                     <?php endforeach;?>
                     </tbody>
