@@ -22,8 +22,6 @@ class Model_admin extends CI_Model {
             'nama_mitra' => htmlspecialchars(ucwords($this->input->post('nama_mitra',TRUE))) // NAME LABEL DI VIEWS ex: name="apa"
         );
         $dataUser = array ( // USER
-            'id_jabatan'    => $this->input->post('input_jabatan'),
-            'id_seksi'      => $this->input->post('input_seksi'),
             'id_kecamatan'  => $this->input->post('input_kecamatan'),
             'nama_user'     => htmlspecialchars($this->input->post('nama_user',TRUE)),
         );
@@ -83,25 +81,42 @@ class Model_admin extends CI_Model {
     }
     
     // ONLY UPDATE
-    public function updateData($tabel,$no)
+    public function updateData($tabel,$no,$id)
     {
-        // 1 seksi, 2 mitra, 3 kecamatan,4 user,5 kegiatan
-        $dataMitra = array ('nama_mitra' => $this->input->post('nama_mitra'));
-        $dataSeksi  =  [
-            'id_seksi'    =>  $this->input->post('id_seksi'),
-            'nama_seksi'    =>$this->input->post('nama_seksi2')
-        ];
+        // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = Kegiatan Detail, 7 = pejabat
+        $dataSeksi = array (
+            'nama_seksi' => $this->input->post('nama_seksi')
+        );
+        $dataMitra = array (
+            'nama_mitra' => $this->input->post('nama_mitra')
+        );
+        $dataUser = array(
+            'id_kecamatan' => $this->input->post('input_kecamatan'),
+            'nama_user' => $this->input->post('nama_user')
+        );
+        $dataKegiatan = array(
+            'nama_user' => $this->input->post('nama_user')
+        );
+        $dataJabatan = array ('');
+        $dataKegiatanDetail = array ('');
+        $dataPejabat = array ('');
         if ($no == 1 ) {
-            // $this->db->set($dataSeksi);
-            $data = $this->db->update($tabel,["nama_seksi" => $dataSeksi['nama_seksi']],["id_seksi" => $dataSeksi['id_seksi']]);
-            // var_dump($data);
-            // return $data;
-            // var_dump($data);
+            return $this->db->update($tabel,$dataSeksi,['id_seksi' => $id]); // DONE
         }elseif($no == 2){
-            return $this->db->update($tabel,$dataMitra,["id_mitra" => $id]);
+            return $this->db->update($tabel,$dataMitra,['id_mitra' => $id]);// DONE
+        }elseif($no == 3){
+            return $this->db->update($tabel,$dataUser,['id_user' => $id]);// DONE
+        }elseif($no == 4){
+            return $this->db->update($tabel,$dataKegiatan,['id_kegiatan' => $id]);
+        }elseif($no == 5){
+            return $this->db->update($tabel,$dataJabatan,['id_jabatan' => $id]);
+        }elseif($no == 6){
+            return $this->db->update($tabel,$dataKegiatanDetail,['id_kegiatan_detail' => $id]);
+        }elseif($no == 7){
+            return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);
         }
     }
-
+    
     // ONLY SHOW ALL & SHOW BY ID
     public function getData($tabel,$id = null)
     {
@@ -116,7 +131,7 @@ class Model_admin extends CI_Model {
         }else if($tabel == "user") {
             // select tabel user
             if ($id) {
-                return json_encode($this->db->get_where($this->_user,["id_user" => $id])->row_array());
+                return $this->db->get_where($this->_user,["id_user" => $id])->row_array();
             }else{
                 return $this->db->get($this->_user)->result_array();
             }
@@ -139,7 +154,8 @@ class Model_admin extends CI_Model {
             if ($id) {
                 return $this->db->get_where($this->_admin,["id_admin" => $id])->row_array();
             }else{
-                return $this->db->get($this->_admin)->result_array();
+                return $this->db->get($this->_admin);
+                
             }
         }else if($tabel == "jabatan") {
             // select tabel kecamatan
