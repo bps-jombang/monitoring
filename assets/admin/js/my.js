@@ -1,7 +1,5 @@
 // $(document).ready(function() {
 	const sites			= "http://localhost/monitoring";
-	const urleditseksi  	= sites+"/Admin/editseksi/";
-
 	const hapusadmin 	= sites+"/hapusadmin";	// DONE
 	const hapusmitra 	= sites+"/hapusmitra"; 	// DONE
 	const hapusseksi 	= sites+"/hapusseksi";	// DONE
@@ -27,92 +25,6 @@
 		});
 	}
 
-	// GET MODAL EDIT
-	// $('.modal-update-seksi').on('click',function(){
-	// 	e.preventDefault();
-	// 	$('#modal_edit').modal('show');
-
-	// 	const id_seksi 	= 	$(this).data('id');
-	// 	const nama_seksi 		= 	$(this).data('seksi');
-	// 	// GET DATA FROM INPUT NAME
-	// 	$('[name="nama_seksi2"]').val(nama_seksi);
-	// 	$('[name="id_seksi2"]').val(id_seksi);
-	// });
-	// $('#btn_update').on('click', function(e){
-	// 	e.preventDefault();
-	// 	console.log('btn_update');
-
-	// 	// const id_seksi = $(this).data('id');
-	// 	// const nama_seksi = $(this).data('seksi');
-
-	// 	let id = $('#id_seksi2').val();
-	// 	let nama = $('#nama_seksi2').val();
-		
-	// 	$.ajax({
-	// 		url: 'http://localhost/monitoring/Admin/editseksi',
-	// 		method: 'POST',
-	// 		data:{
-	// 			id_seksi:id,
-	// 			nama_seksi:nama
-	// 		},
-			
-	// 		success: function (data) {
-	// 			console.log(data);
-	// 		}
-	// 	})
-	// });
-
-	// MODAL EDIT MITRA
-	$('.modal-update-mitra').on('click', function(e){
-		e.preventDefault();
-		// $('#modal_edit').modal('show');
-		const id = $(this).data('id');
-		// const nama = $(this).data('nama');
-		// $('[name="id_mitra_edit"]').val(id_mitra);
-		// $('#nama_mitra_edit').val(nama_mitra);
-		$.ajax({
-				type: "GET",
-				url : "http://localhost/monitoring/Admin/get_mitra",
-				dataType: "JSON",
-				data: {id_mitra:id},
-				success: function (data) {
-						$.each(data,function(){
-							$('#modal_edit').modal('show');
-							$('#nama_mitra_edit').val(data[0].nama_mitra);
-							$('#id_mitra_edit').val(data[0].id_mitra);
-							// console.log(data[0]);
-							
-								// $('#modal_edit').modal('show');
-							// $('[name="id_mitra_edit"]').val(data.id_mitra);
-							// console.log('id'+data.id_mitra);
-							// console.log('nama'+data.nama_mitra);
-							
-							// $('#nama_mitra_edit').val(data.nama_mitra);
-				});
-			}
-		});
-		return false;
-	});
-	$('#btn_update').on('click',function(){
-		// e.preventDefault();
-		let id_mitra = $('#id_mitra_edit').val();
-		let nama_mitra = $('#nama_mitra_edit').val();
-		$.ajax({
-			type:"POST",
-			url: "http://localhost/monitoring/Admin/update_mitra",
-			dataType:"JSON",
-			data:{id_mitra:id_mitra,nama_mitra:nama_mitra},
-			success:function (data) {
-				$('[name="nama_mitra_edit"]').val("");
-				$('[name="id_mitra_edit"]').val("");
-				$('#modal_edit').modal('hide');
-				console.log(data);
-				
-			}
-		});
-		return false;
-	});
-	
 // ALERT HAPUS DATA
 	// Hapus Mitra
 	$('.tombol-hapus-mitra').on('click', function(e){
