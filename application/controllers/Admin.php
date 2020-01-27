@@ -31,32 +31,28 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
-    public function datadebug()
-    {
-        $data      = json_encode(array("data" => $this->modeladmin->getData('kegiatan',0)));
-        echo $data;
-        
-        
-    }
-
     public function dataKegiatan()
     {
         $title['judul'] = "List Kegiatan | BPS";
 
-        $data['semuakegiatan'] = $this->db->get('kegiatan')->result_array();
-        $data['listmitra'] = $this->db->get('mitra')->result_array();
+        // $data['semuakegiatan'] = $this->db->get('kegiatan')->result_array();
+        // $data['listmitra'] = $this->db->get('mitra')->result_array();
+        $data['semuakegiatan'] = $this->modeladmin->getData('kegiatan',0);
+        $data['listmitra'] = $this->modeladmin->getData('mitra',0);
         //SELECT k.nama_kecamatan,u.nama_user FROM user as u INNER JOIN kecamatan as k ON k.id_kecamatan = u.id_kecamatan
         $this->db->select('u.id_user,k.nomor_kecamatan,k.nama_kecamatan,u.nama_user');
         $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
         $data['listuser'] = $this->db->get('user as u')->result_array();
 
-        // $listuser = $this->db->get('user as u')->result_array();
+        $listuser = $this->db->get('user as u')->result_array();
         // echo $listuser[0]["nama_user"];die;
         // echo json_encode($listuser);die;
         // $nama = json_encode(array('data' => $listuser));
         // echo $nama['nama_user'];die;
         
-        $data['kegiatan_detail'] = $this->db->get('kegiatan_detail')->result_array();
+        // $data['kegiatan_detail'] = $this->db->get('kegiatan_detail')->result_array();
+        
+        $data['kegiatan_detail'] = $this->modeladmin->getData('kegiatan_detail',0);
 
         $this->db->select('j.id_jabatan,j.nama_jabatan,s.nama_seksi,p.nama_user,p.id_pejabat');
         $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
@@ -87,7 +83,7 @@ class Admin extends CI_Controller
         $data['listmenu']   = getMenuLink(); // array di helper   
         $data['menuform']   = getMenuForm();// array class
 
-        $this->db->select('k.uraian_kegiatan,u.nama_user,kd.target,kd.realisasi,kd.target');
+        $this->db->select('kd.id_kegiatan_detail,k.uraian_kegiatan,u.nama_user,kd.target,kd.realisasi,kd.target');
         $this->db->join('user as u','u.id_user = kd.id_user');
         $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
         $data['kegiatandetail']     = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
@@ -337,25 +333,39 @@ class Admin extends CI_Controller
         }
     }
 
-
-    public function editseksi()
+    /*  Fungsi edit
+    1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat   */
+    public function editseksi($id)
     {
-            
-        // $data = [
-        //     'id_seksi' => $this->input->post('id_seksi'),
-        //     'nama_seksi' => $this->input->post('nama_seksi_edit')
-        // ];
-            $data = $this->modeladmin->updateData('seksi',1);
-            // var_dump($data);
-            // $this->load->view('admin/editdata/editseksi');
-            
-        echo json_encode($data);
+        if (!$id) {
+            redirect(base_url('seksi'));
+        }
+        $title['judul']     = "Edit Seksi  | BPS";
+        $data['listmenu']   = getMenuLink(); // array di helper
+        $data['menuform'] = getMenuForm();// array class
+        $data['listseksi']  = $this->modeladmin->getData('seksi',$id);
+        $data['allseksi']   = $this->modeladmin->getData('seksi',0);
 
+        $this->form_validation->set_rules('nama_seksi','Nama seksi','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header',$title);
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/editdata/editseksi', $data);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->updateData('seksi',1,$id);
+            $this->session->set_flashdata('pesan','Diubah');
+            redirect(base_url('seksi')); 
+        }
     }
 
-    public function editmitra($id = null) // DONE
+    public function editmitra($id) // DONE
     {
-        if ($id == null) {
+        if (!$id) {
             redirect(base_url('mitra'));
         }
         $title['judul']     = "Edit Mitra  | BPS";
@@ -381,6 +391,50 @@ class Admin extends CI_Controller
         }
         
     }
+
+    public function edituser($id)
+    {
+        if (!$id) {
+            redirect(base_url('user'));
+        }
+        $title['judul']     = "Edit User  | BPS";
+        $data['listmenu']   = getMenuLink(); // array di helper
+        $data['menuform'] = getMenuForm();// array class
+        $data['listuser']  = $this->modeladmin->getData('user',$id);
+        $data['listkec']   = $this->modeladmin->getData('kecamatan',0);
+        // SELECT k.nama_kecamatan,u.nama_user  FROM user as u 
+// inner join kecamatan as k 
+// on k.id_kecamatan = u.id_kecamatan
+// where u.id_user = 5
+        $this->db->select('u.id_user,k.nama_kecamatan,u.nama_user');
+        $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
+        $data['alluserkec'] = $this->db->get('user as u')->result_array();
+        // $data['alluser']   = $this->modeladmin->getData('user',0);
+
+        $this->form_validation->set_rules('nama_user','Nama user','required'); // validation
+
+        if ($this->form_validation->run() == FALSE) {
+            // jika validation gagal maka dikembalikan ke halaman insert tadi
+            $this->load->view('template_admin/header',$title);
+            $this->load->view('template_admin/sidebar',$data);
+            $this->load->view('template_admin/navbar');
+            $this->load->view('admin/editdata/edituser', $data);
+            $this->load->view('template_admin/footer');
+        }else{
+            // jika validation sukses maka insert data
+            $this->modeladmin->updateData('user',3,$id);
+            $this->session->set_flashdata('pesan','Diubah');
+            redirect(base_url('user')); 
+        }
+    }
+
+
+
+
+
+
+
+
 
     
     public function getData($id_kegiatan,$id_user)
