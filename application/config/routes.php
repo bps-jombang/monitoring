@@ -76,6 +76,10 @@ $route['profile/(:any)']       = 'Page/profile';
 $route['update'] = 'Page/updatepass';
 
 $route['editmitra/(:any)']     = 'admin/editmitra/$1';
+$route['editseksi/(:any)']     = 'admin/editseksi/$1';
+$route['edituser/(:any)']     = 'admin/edituser/$1';
+
+
 $route['userupdate']      = 'admin/updateuser';
 $route['pejabatupdate']   = 'admin/updatepejabat';
 $route['jabatanupdate']   = 'admin/updatejabatan';
