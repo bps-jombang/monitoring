@@ -57,7 +57,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= ucwords(strtolower($user['nama_user'])) ?>
                             <td class="text-center">
-                            <a href="<?= base_url('user/edituser/'.$user['id_user']) ?>"   
+                            <a href="<?= base_url('edituser/'.$user['id_user']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $user['id_user']; ?>" class="btn btn-danger btn-sm tombol-hapus-user"><i class="fas fa-trash"></i> Hapus</a></td>
