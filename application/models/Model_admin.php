@@ -95,11 +95,19 @@ class Model_admin extends CI_Model {
             'nama_user' => $this->input->post('nama_user')
         );
         $dataKegiatan = array(
-            'nama_user' => $this->input->post('nama_user')
+            'id_seksi' => $this->input->post('input_seksi'),
+            'uraian_kegiatan' => $this->input->post('nama_kegiatan'),
+            'vol'	=> htmlspecialchars($this->input->post('input_vol')),
+            'satuan'	=> htmlspecialchars($this->input->post('input_satuan')),
+            'target_penyelesaian'	=> $this->input->post('target_penyelesaian')
         );
         $dataJabatan = array ('');
         $dataKegiatanDetail = array ('');
-        $dataPejabat = array ('');
+        $dataPejabat = array (
+            'id_seksi' => $this->input->post('input_seksi'),
+            'id_jabatan' => $this->input->post('input_jabatan'),
+            'nama_user' => $this->input->post('nama_pejabat')
+        );
         if ($no == 1 ) {
             return $this->db->update($tabel,$dataSeksi,['id_seksi' => $id]); // DONE
         }elseif($no == 2){
@@ -107,18 +115,21 @@ class Model_admin extends CI_Model {
         }elseif($no == 3){
             return $this->db->update($tabel,$dataUser,['id_user' => $id]);// DONE
         }elseif($no == 4){
+            // var_dump($dataKegiatan);die;
             return $this->db->update($tabel,$dataKegiatan,['id_kegiatan' => $id]);
+            
         }elseif($no == 5){
             return $this->db->update($tabel,$dataJabatan,['id_jabatan' => $id]);
         }elseif($no == 6){
             return $this->db->update($tabel,$dataKegiatanDetail,['id_kegiatan_detail' => $id]);
         }elseif($no == 7){
-            return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);
+               return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);
+            
         }
     }
     
     // ONLY SHOW ALL & SHOW BY ID
-    public function getData($tabel,$id = null)
+    public function readData($tabel,$id = null)
     {
         // 1 = seksi, 2 = user,3 = mitra, 4 = kegiatan, 5 = kecamatan
         if ($tabel == "seksi") {
@@ -154,7 +165,7 @@ class Model_admin extends CI_Model {
             if ($id) {
                 return $this->db->get_where($this->_admin,["id_admin" => $id])->row_array();
             }else{
-                return $this->db->get($this->_admin);
+                return $this->db->get($this->_admin)->result_array();
                 
             }
         }else if($tabel == "jabatan") {
