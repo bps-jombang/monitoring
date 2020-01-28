@@ -64,7 +64,7 @@
                             <span class="badge badge-primary float-right mt-1">Superadmin</span>
                             <?php endif;?></td>
                             <td class="text-center">
-                            <a href="<?= base_url('admin/editadmin/'.$admin['id_admin']) ?>"   
+                            <a href="<?= base_url('editadmin/'.$admin['id_admin']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $admin['id_admin']; ?>" class="btn btn-danger btn-sm tombol-hapus-admin"><i class="fas fa-trash"></i> Hapus</a></td>

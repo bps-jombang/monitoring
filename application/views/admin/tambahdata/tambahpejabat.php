@@ -82,7 +82,7 @@
                                     <?php endforeach;?></td>
                             
                             <td class="text-center">
-                            <a href="<?= base_url('user/edituser/'.$pejabat['id_pejabat']) ?>"   
+                            <a href="<?= base_url('editpejabat/'.$pejabat['id_pejabat']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $pejabat['id_pejabat']; ?>" class="btn btn-danger btn-sm tombol-hapus-pejabat"><i class="fas fa-trash"></i> Hapus</a></td>
