@@ -101,7 +101,9 @@ class Model_admin extends CI_Model {
             'satuan'	=> htmlspecialchars($this->input->post('input_satuan')),
             'target_penyelesaian'	=> $this->input->post('target_penyelesaian')
         );
-        $dataJabatan = array ('');
+        $dataJabatan = array (
+            'nama_jabatan'=> htmlspecialchars($this->input->post('nama_jabatan'))
+        );
         $dataKegiatanDetail = array ('');
         $dataPejabat = array (
             'id_seksi' => $this->input->post('input_seksi'),
@@ -115,15 +117,13 @@ class Model_admin extends CI_Model {
         }elseif($no == 3){
             return $this->db->update($tabel,$dataUser,['id_user' => $id]);// DONE
         }elseif($no == 4){
-            // var_dump($dataKegiatan);die;
-            return $this->db->update($tabel,$dataKegiatan,['id_kegiatan' => $id]);
-            
+            return $this->db->update($tabel,$dataKegiatan,['id_kegiatan' => $id]);// DONE
         }elseif($no == 5){
             return $this->db->update($tabel,$dataJabatan,['id_jabatan' => $id]);
         }elseif($no == 6){
             return $this->db->update($tabel,$dataKegiatanDetail,['id_kegiatan_detail' => $id]);
         }elseif($no == 7){
-               return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);
+               return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);// DONE
             
         }
     }
