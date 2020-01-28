@@ -83,6 +83,7 @@ $route['editseksi/(:any)']     = 'admin/editseksi/$1';
 $route['edituser/(:any)']     = 'admin/edituser/$1';
 $route['editkegiatan/(:any)']     = 'admin/editkegiatan/$1';
 $route['editpejabat/(:any)']     = 'admin/editpejabat/$1';
+$route['editjabatan/(:any)']     = 'admin/editjabatan/$1';
 
 
 $route['userupdate']      = 'admin/updateuser';
