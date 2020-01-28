@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-if ( ! function_exists('random')){
+if ( ! function_exists('random'))
+{
 
     function getuser(){
         $CI =& get_instance();
