@@ -223,6 +223,23 @@
 
 // });
 
+$('.btn-detail-user').on('click', function (){
+	$('#modalku').modal('show');
+	let id_kegiatan = $(this).data('id');
+	let iduser = $(this).data('user');
+	let target = $(this).data('targetuser');
+	let realisasi = $(this).data('realisasi');
+	let uraian = $(this).data('uraian');
+	// console.log(id_kegiatan);
+	$('[name="idkeg"]').val(id_kegiatan);
+	$('[name="target"]').val(target);
+	$('[name="iduser"]').val(iduser);
+	$('[name="realisasi"]').val(realisasi);
+	$('[name="uraian_kegiatan"]').val(uraian)
+	
+
+});
+
 
 $('.nav-item').on('click', function () {
 	$('.nav-item').removeClass('active');
