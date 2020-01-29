@@ -39,7 +39,7 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-          <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan") : ?>
+          <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat") : ?>
           <li class="nav-item active">
           <?php else :?> 
           <li class="nav-item"> 
@@ -48,7 +48,7 @@
           <i class="fas fa-fw fa-user-plus"></i>
           <span>Tambah Data</span>
         </a>
-        <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan") :?>
+        <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat") :?>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
         <?php else : ?>
@@ -70,9 +70,9 @@
               foreach($listmenu as $key => $value) :?>
               <?php if($key != "Tambah Admin") : ?>
                 <?php if($this->uri->segment(1) == $value) :?>
-                  <a class="collapse-item active" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+                  <a class="collapse-item active" href="<?= base_url($value); ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
                 <?php else : ?>
-                  <a class="collapse-item" href="<?= $value ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
+                  <a class="collapse-item" href="<?= base_url($value); ?>"><i class="fas fa-fw fa-user-plus"></i> <?= $key ?></a>
               <?php endif; endif; endforeach; ?>
           <?php endif;?>
           </div>
