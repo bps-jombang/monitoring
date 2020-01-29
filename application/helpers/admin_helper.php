@@ -105,3 +105,26 @@ if ( ! function_exists('getMenuForm'))
         ];
     }
 }  
+if ( ! function_exists('getUserKecamatan'))
+{
+
+    function getUserKecamatan(){
+        $CI =& get_instance();
+        $CI->db->select('u.id_user,k.nomor_kecamatan,k.nama_kecamatan,u.nama_user');
+        $CI->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
+        return $CI->db->get('user as u')->result_array();
+    }
+
+}
+if ( ! function_exists('getPejabatDetail'))
+{
+
+    function getPejabatDetail(){
+        $CI =& get_instance();
+        $CI->db->select('j.id_jabatan,j.nama_jabatan,s.nama_seksi,p.nama_user,p.id_pejabat');
+        $CI->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
+        $CI->db->join('seksi as s','s.id_seksi = p.id_seksi');
+        return $CI->db->get('pejabat as p')->result_array();
+    }
+
+}
