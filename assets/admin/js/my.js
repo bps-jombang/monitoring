@@ -1,7 +1,5 @@
 // $(document).ready(function() {
 	const sites			= "http://localhost/monitoring";
-	const urleditseksi  	= sites+"/Admin/editseksi/";
-
 	const hapusadmin 	= sites+"/hapusadmin";	// DONE
 	const hapusmitra 	= sites+"/hapusmitra"; 	// DONE
 	const hapusseksi 	= sites+"/hapusseksi";	// DONE
@@ -27,41 +25,6 @@
 		});
 	}
 
-	// GET MODAL EDIT
-	$('.modal-update-seksi').on('click',function(){
-		// e.preventDefault();
-		$('#modal_edit').modal('show');
-
-		const id_seksi 	= 	$(this).data('id');
-		const nama_seksi 		= 	$(this).data('seksi');
-		// GET DATA FROM INPUT NAME
-		$('[name="nama_seksi2"]').val(nama_seksi);
-		$('[name="id_seksi2"]').val(id_seksi);
-	});
-	$('#btn_update').on('click', function(e){
-		e.preventDefault();
-		console.log('btn_update');
-
-		// const id_seksi = $(this).data('id');
-		// const nama_seksi = $(this).data('seksi');
-
-		let id = $('#id_seksi2').val();
-		let nama = $('#nama_seksi2').val();
-		
-		$.ajax({
-			url: 'http://localhost/monitoring/Admin/editseksi',
-			method: 'POST',
-			data:{
-				id_seksi:id,
-				nama_seksi:nama
-			},
-			
-			success: function (data) {
-				console.log(data);
-			}
-		})
-	});
-	
 // ALERT HAPUS DATA
 	// Hapus Mitra
 	$('.tombol-hapus-mitra').on('click', function(e){
@@ -259,6 +222,23 @@
 	});
 
 // });
+
+$('.btn-detail-user').on('click', function (){
+	$('#modalku').modal('show');
+	let id_kegiatan = $(this).data('id');
+	let iduser = $(this).data('user');
+	let target = $(this).data('targetuser');
+	let realisasi = $(this).data('realisasi');
+	let uraian = $(this).data('uraian');
+	// console.log(id_kegiatan);
+	$('[name="idkeg"]').val(id_kegiatan);
+	$('[name="target"]').val(target);
+	$('[name="iduser"]').val(iduser);
+	$('[name="realisasi"]').val(realisasi);
+	$('[name="uraian_kegiatan"]').val(uraian)
+	
+
+});
 
 
 $('.nav-item').on('click', function () {

@@ -67,30 +67,3 @@
 
         </div>
         <!-- /.container-fluid -->
-
-        <!-- Edit Modal-->
-        <div class="modal fade" style="margin-top:150px;" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Form Edit Seksi</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form method="post">
-                    <div class="form-group">
-                      <input type="text" hidden class="form-control" name="id_seksi_edit" id="id_seksi_edit">
-                      <label for="nama_seksi_edit">Nama Seksi</label>
-                      <input type="text" class="form-control" name="nama_seksi_edit" id="nama_seksi_edit">
-                    </div>
-                    <button class="btn btn-primary" type="submit" id="btn_update"><i class="fas fa-sync-alt"></i> Update Data</a>
-                    <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-                </form>
-              </div>
-              <!-- <div class="modal-footer">
-              </div> -->
-            </div>
-          </div>
-        </div>

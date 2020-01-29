@@ -49,7 +49,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= ucwords(strtolower($jabatan['nama_jabatan'])) ?>
                             <td class="text-center">
-                            <a href="<?= base_url('jabatan/editjabatan/'.$jabatan['id_jabatan']) ?>"   
+                            <a href="<?= base_url('editjabatan/'.$jabatan['id_jabatan']) ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $jabatan['id_jabatan']; ?>" class="btn btn-danger btn-sm tombol-hapus-jabatan"><i class="fas fa-trash"></i> Hapus</a></td>

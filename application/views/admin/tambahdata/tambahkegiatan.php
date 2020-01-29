@@ -11,7 +11,7 @@
           <div class="row">
 
             <!-- form input data -->
-            <div class="col-lg-8">
+            <div class="col-lg-5">
 
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -67,18 +67,46 @@
                         </div>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
-                          <button class="btn btn-md btn-default" type="reset" name="reset"><i class="fas fa-sync-alt"></i> Reset</button>
-                        </div>
+                          </div>
                     </form>
                 </div>
               </div>
 
             </div>
 
-            <div class="col-lg-4">
-              <?php if($this->session->flashdata('pesan')) : ?>
-                <?= $this->session->flashdata('pesan');?>
-              <?php endif; ?>
+            <!-- table results -->
+            <div class="col-lg-7">
+              <div class="table-responsive">
+                <table id="dtablemitra" class="display table table-bordered"width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Nama Kegiatan</th>
+                            <th>Seksi</th>
+                            <th>Volume</th>
+                            <th>Target</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php $no=1; foreach($allkegsek as $kegiatan) :?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= $kegiatan['uraian_kegiatan'] ?>
+                            <td><?= $kegiatan['nama_seksi'] ?></td>
+                            <td><?= $kegiatan['vol'] ?></td>
+                            <td><?= $kegiatan['target_penyelesaian'] ?></td>
+                            <td class="text-center">
+                            <a href="<?= base_url('editkegiatan/'.$kegiatan['id_kegiatan']); ?>"   
+                            class="btn btn-warning btn-sm" >
+                            <i class="fas fa-edit"></i> Edit</a>
+                            <a href="#" id="<?= $kegiatan['id_kegiatan']; ?>" class="btn btn-danger btn-sm tombol-hapus-kegiatan"><i class="fas fa-trash"></i> Hapus</a></td>
+                        
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+              </div>
             </div>
           </div>
 

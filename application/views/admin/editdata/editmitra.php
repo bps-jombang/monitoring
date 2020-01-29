@@ -4,7 +4,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Ubah mitra</h1>
+            <h1 class="h3 mb-0 text-gray-800"><a href="<?= base_url('mitra'); ?>" class="btn btn-default btn-md text-grey"><i class="fas fa-arrow-left"></i> Kembali</a>Ubah mitra</h1>
           </div>
 
           <div class="row">
