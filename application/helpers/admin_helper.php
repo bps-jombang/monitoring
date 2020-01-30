@@ -106,25 +106,32 @@ if ( ! function_exists('getMenuForm'))
 }  
 if ( ! function_exists('getUserKecamatan'))
 {
-    function getUserKecamatan(){
+    function getUserKecamatan()
+    {
         $CI =& get_instance();
         $CI->db->select('u.id_user,k.nomor_kecamatan,k.nama_kecamatan,u.nama_user');
         $CI->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
         return $CI->db->get('user as u')->result_array();
     }
 }
+if ( ! function_exists('getSeksiKegiatan'))
+{
+    function getSeksiKegiatan()
+    {
+        $CI =& get_instance();
+        $CI->db->select('s.nama_seksi');
+        $CI->db->join('seksi as s','s.id_seksi = k.id_seksi');
+        return $CI->db->get('kegiatan as k')->result_array();
+    }
+}
 if ( ! function_exists('getPejabatDetail'))
 {
-    function getPejabatDetail(){
+    function getPejabatDetail()
+    {
         $CI =& get_instance();
         $CI->db->select('p.id_pejabat,j.id_jabatan,j.nama_jabatan,p.id_seksi,s.nama_seksi,p.nama_user,p.id_pejabat');
         $CI->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
         $CI->db->join('seksi as s','s.id_seksi = p.id_seksi');
         return $CI->db->get('pejabat as p')->result_array();
-
-        // $this->db->join('seksi as s','s.id_seksi = p.id_seksi');
-        // $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
-        // $data['listpejabat']        = $this->db->get('pejabat as p')->result_array();
     }
-
 }
