@@ -37,12 +37,10 @@ class Auth extends CI_Controller {
             if ($query > 0 ) {
                 if($query["id_role"] == 2){
                     $data = ["id_admin" => $query['id_admin'],"username" => $username, "id_role" => $query['id_role']];
-                    // echo json_encode($data);die;
                     $this->session->set_userdata($data);
                     redirect(base_url('admin'));
                 }else{
                     $data = ["id_admin" => $query['id_admin'],"username" => $username, "id_role" => $query['id_role']];
-                    // echo json_encode($data);die;
                     $this->session->set_userdata($data);
                     redirect(base_url('admin'));
                 }
