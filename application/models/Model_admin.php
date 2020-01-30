@@ -100,32 +100,35 @@ class Model_admin extends CI_Model {
     // ONLY UPDATE
     public function updateData($tabel,$no,$id)
     {
-        // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = Kegiatan Detail, 7 = pejabat
-        $dataSeksi = array (
-            'nama_seksi' => $this->input->post('nama_seksi')
+        // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = Kegiatan Detail, 7 = pejabat, 8 = Admin
+        $dataSeksi = array ( // DONE MODAL
+            'nama_seksi'            => htmlspecialchars($this->input->post('modal_namaseksi',TRUE))
         );
-        $dataMitra = array (
-            'nama_mitra' => $this->input->post('nama_mitra')
+        $dataMitra = array ( // DONE MODAL
+            'nama_mitra'            => htmlspecialchars($this->input->post('modal_namamitra',TRUE))
         );
         $dataUser = array(
-            'id_kecamatan' => $this->input->post('input_kecamatan'),
-            'nama_user' => $this->input->post('nama_user')
+            'id_kecamatan'          => $this->input->post('input_kecamatan'),
+            'nama_user'             => htmlspecialchars($this->input->post('nama_user',TRUE))
         );
         $dataKegiatan = array(
-            'id_seksi' => $this->input->post('input_seksi'),
-            'uraian_kegiatan' => $this->input->post('nama_kegiatan'),
-            'vol'	=> htmlspecialchars($this->input->post('input_vol')),
-            'satuan'	=> htmlspecialchars($this->input->post('input_satuan')),
-            'target_penyelesaian'	=> $this->input->post('target_penyelesaian')
+            'id_seksi'              => $this->input->post('input_seksi'),
+            'uraian_kegiatan'       => $this->input->post('nama_kegiatan'),
+            'vol'	                => htmlspecialchars($this->input->post('input_vol',TRUE)),
+            'satuan'	            => htmlspecialchars($this->input->post('input_satuan',TRUE)),
+            'target_penyelesaian'	=> htmlspecialchars($this->input->post('target_penyelesaian',TRUE))
         );
-        $dataJabatan = array (
-            'nama_jabatan'=> htmlspecialchars($this->input->post('nama_jabatan'))
+        $dataJabatan = array ( // DONE MODAL
+            'nama_jabatan'          => htmlspecialchars($this->input->post('modal_namajabatan',TRUE))
         );
-        $dataKegiatanDetail = array ('');
+        $dataKegiatanDetail = array ( // DONE MODAL
+            'target'                => htmlspecialchars($this->input->post('target',TRUE)),
+            'realisasi'             => htmlspecialchars($this->input->post('realisasi',TRUE))
+        );
         $dataPejabat = array (
-            'id_seksi' => $this->input->post('input_seksi'),
-            'id_jabatan' => $this->input->post('input_jabatan'),
-            'nama_user' => $this->input->post('nama_pejabat')
+            'id_seksi'              => $this->input->post('input_seksi'),
+            'id_jabatan'            => $this->input->post('input_jabatan'),
+            'nama_user'             => htmlspecialchars($this->input->post('nama_pejabat',TRUE))
         );
         if ($no == 1 ) {
             return $this->db->update($tabel,$dataSeksi,['id_seksi' => $id]); // DONE
@@ -136,12 +139,11 @@ class Model_admin extends CI_Model {
         }elseif($no == 4){
             return $this->db->update($tabel,$dataKegiatan,['id_kegiatan' => $id]);// DONE
         }elseif($no == 5){
-            return $this->db->update($tabel,$dataJabatan,['id_jabatan' => $id]);
+            return $this->db->update($tabel,$dataJabatan,['id_jabatan' => $id]);// DONE
         }elseif($no == 6){
-            return $this->db->update($tabel,$dataKegiatanDetail,['id_kegiatan_detail' => $id]);
+            return $this->db->update($tabel,$dataKegiatanDetail,['id_kegiatan_detail' => $id]);// DONE
         }elseif($no == 7){
-               return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);// DONE
-            
+            return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);// DONE
         }
     }
     
