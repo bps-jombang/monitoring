@@ -43,15 +43,15 @@
                     <tbody>
                     <?php $no=1; foreach($kegiatandetail as $kegiatan) :?>
                         <tr>
-                            <td><?= $no++; ?></td>
+                            <td><?= $kegiatan['id_kegiatan_detail']; ?></td>
                             <td><?= ucwords(strtolower($kegiatan['uraian_kegiatan'])) ?></td>
                             <td><?= $kegiatan['target'] ?></td>
                             <td><?= $kegiatan['realisasi']; ?></td>
                             <td class="text-center"><a href="#"   
-                            class="btn btn-warning btn-sm btn-detail-user" data-user="<?= $kegiatan['id_user']; ?>" data-id="<?= $kegiatan['id_kegiatan']; ?>" 
+                            class="btn btn-warning btn-sm btn-detail-user" data-usersid="<?= $kegiatan['id_user']; ?>" data-id="<?= $kegiatan['id_kegiatan']; ?>" 
                             data-realisasi="<?= $kegiatan['realisasi']; ?>" data-targetuser="<?= $kegiatan['target'] ?>" data-uraian="<?= ucwords(strtolower($kegiatan['uraian_kegiatan'])) ?>"
                             data-toggle="modal" data-target="#modalku">
-                            <i class="fas fa-edit"></i> Edit</a> <a href="#" id="<?= $kegiatan['id_kegiatan_detail']; ?>" class="btn btn-danger btn-sm tombol-hapus-admin"><i class="fas fa-trash"></i> Hapus</a></td>
+                            <i class="fas fa-edit"></i> Edit</a> <a href="#" id="<?= $kegiatan['id_kegiatan_detail']; ?>" class="btn btn-danger btn-sm tombol-hapus-kegiatan-detail"><i class="fas fa-trash"></i> Hapus</a></td>
                         
                             </td>
                             </tr>
@@ -75,15 +75,9 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="<?= base_url('Admin/updatedetailuser')?>" method="post">
-            <div class="form-group">
-            <label for="idkeg">id keg</label>
-            <input type="text" class="form-control" name="idkeg" id="idkeg" disabled>
-            </div>
-            <div class="form-group">
-            <label for="iduser">id user</label>
-            <input type="text" class="form-control" name="iduser" id="iduser" disabled>
-            </div>
+            <form id="formupdateuser" >
+            <input type="text" class="form-control" name="idkeg" id="idkeg" hidden>
+            <input type="text" class="form-control" name="iduser" id="iduser" hidden>
               <div class="form-group">
               <label for="uraian_kegiatan">Uraian Kegiatan</label>
               <input type="text" class="form-control" name="uraian_kegiatan" id="uraian_kegiatan" disabled>
@@ -96,7 +90,7 @@
             <label for="realisasi">realisasi</label>
             <input type="text" class="form-control" name="realisasi" id="realisasi">
             </div>
-            <button type="submit" class="btn btn-md btn-primary"> Update</button>
+            <button type="submit" class="btn btn-md btn-primary" id="btn-update"> Update</button>
             </form>
         </div>
       </div>
