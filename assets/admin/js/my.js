@@ -179,7 +179,7 @@
 
 		swal.fire({
 			title: 'Apakah anda yakin',
-			text: 'Data ini akan dihapus',
+			text: 'Jika data kegiatan akan dihapus, kegiatan detail juga akan terhapus',
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
@@ -226,18 +226,18 @@
 $('.btn-detail-user').on('click', function (){
 	$('#modalku').modal('show');
 	let id_kegiatan = $(this).data('id');
-	let iduser = $(this).data('user');
+	let usersid = $(this).data('usersid');
 	let target = $(this).data('targetuser');
 	let realisasi = $(this).data('realisasi');
 	let uraian = $(this).data('uraian');
-	// console.log(id_kegiatan);
+	// console.log('id keg '+id_kegiatan);
+	// console.log('id user '+usersid);
 	$('[name="idkeg"]').val(id_kegiatan);
 	$('[name="target"]').val(target);
-	$('[name="iduser"]').val(iduser);
+	$('[name="iduser"]').val(usersid);
 	$('[name="realisasi"]').val(realisasi);
 	$('[name="uraian_kegiatan"]').val(uraian)
-	
-
+	// console.log(usersid);
 });
 
 
