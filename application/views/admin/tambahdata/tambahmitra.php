@@ -50,7 +50,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= ucwords(strtolower($mitra['nama_mitra'])) ?></td>
                             <td class="text-center">
-                            <a href="<?= base_url('Admin/editmitra/'.$mitra['id_mitra']); ?>"   
+                            <a href="<?= base_url('editmitra/'.$mitra['id_mitra']); ?>"   
                             class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $mitra['id_mitra']; ?>" class="btn btn-danger btn-sm tombol-hapus-mitra"><i class="fas fa-trash"></i> Hapus</a></td>

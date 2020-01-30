@@ -11,7 +11,7 @@
           <div class="row">
 
             <!-- form input data -->
-            <div class="col-lg-5">
+            <div class="col-lg-6">
 
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -66,6 +66,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                          <label for="keterangan">Keterangan</label>
+                          <textarea class="form-control" name="keterangan" id="keterangan" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
                           </div>
                     </form>
@@ -75,12 +79,12 @@
             </div>
 
             <!-- table results -->
-            <div class="col-lg-7">
+            <div class="col-lg-6">
               <div class="table-responsive">
                 <table id="dtablemitra" class="display table table-bordered"width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Nomor</th>
+                            <th>No</th>
                             <th>Nama Kegiatan</th>
                             <th>Seksi</th>
                             <th>Volume</th>

@@ -50,7 +50,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= $seksi['nama_seksi'] ?>
                             <td class="text-center">
-                            <a href="<?= base_url('Admin/editseksi/'.$seksi['id_seksi']); ?>"   
+                            <a href="<?= base_url('editseksi/'.$seksi['id_seksi']); ?>"   
                             class="btn btn-warning btn-sm modal-update-seksi" 
                             data-id="<?= $seksi['id_seksi']; ?>" 
                             data-seksi="<?= $seksi['nama_seksi']; ?>">
