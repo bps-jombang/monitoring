@@ -67,7 +67,6 @@ if ( ! function_exists('total_realisasi'))
         $CI =& get_instance();
         $CI->db->select('SUM(realisasi)');
         $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan])->row_array();
-        // echo $CI->db->last_query();
         return $query;
     }
 }
@@ -76,14 +75,14 @@ if ( ! function_exists('getMenuLink'))
     function getMenuLink()
     {
         return  [ // Menu sidebar           // Url on routes
-                "Tambah Admin"          => 'addadmin',
-                "Tambah Seksi"          => 'seksi',
-                "Tambah Kegiatan"       => 'kegiatan',
-                "Tambah Pejabat"        => 'pejabat',
-                "Tambah Jabatan"        => 'jabatan',
-                "Tambah Target User"    => 'targetuser',
-                "Tambah Anggota"        => 'user',
-                "Tambah Mitra"          => 'mitra'
+                "Kelola Admin"          => 'addadmin',
+                "Kelola Seksi"          => 'seksi',
+                "Kelola Kegiatan"       => 'kegiatan',
+                "Kelola Pejabat"        => 'pejabat',
+                "Kelola Jabatan"        => 'jabatan',
+                "Kelola Target User"    => 'targetuser',
+                "Kelola Anggota"        => 'user',
+                "Kelola Mitra"          => 'mitra'
         ];
     }
 }
@@ -107,24 +106,25 @@ if ( ! function_exists('getMenuForm'))
 }  
 if ( ! function_exists('getUserKecamatan'))
 {
-
     function getUserKecamatan(){
         $CI =& get_instance();
         $CI->db->select('u.id_user,k.nomor_kecamatan,k.nama_kecamatan,u.nama_user');
         $CI->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
         return $CI->db->get('user as u')->result_array();
     }
-
 }
 if ( ! function_exists('getPejabatDetail'))
 {
-
     function getPejabatDetail(){
         $CI =& get_instance();
-        $CI->db->select('j.id_jabatan,j.nama_jabatan,s.nama_seksi,p.nama_user,p.id_pejabat');
+        $CI->db->select('p.id_pejabat,j.id_jabatan,j.nama_jabatan,p.id_seksi,s.nama_seksi,p.nama_user,p.id_pejabat');
         $CI->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
         $CI->db->join('seksi as s','s.id_seksi = p.id_seksi');
         return $CI->db->get('pejabat as p')->result_array();
+
+        // $this->db->join('seksi as s','s.id_seksi = p.id_seksi');
+        // $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
+        // $data['listpejabat']        = $this->db->get('pejabat as p')->result_array();
     }
 
 }
