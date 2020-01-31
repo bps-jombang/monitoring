@@ -16,7 +16,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">Form Edit Data</h6>
                 </div>
                 <div class="card-body">
-                    <form action="<?= base_url('Admin/editkegiatan/'.$listkegiatan['id_kegiatan']) ?>" method="post">
+                    <form action="<?= base_url('editkegiatan/'.$listkegiatan['id_kegiatan']) ?>" method="post">
                         <div class="form-row">
                           <div class="form-group col-md-12">
                             <label for="nama_kegiatan">Nama Kegiatan (Uraian Kegiatan)</label>
