@@ -39,16 +39,16 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-          <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat") : ?>
+          <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat" && $this->uri->segment(1) != "editadmin" && $this->uri->segment(1) != "editseksi" && $this->uri->segment(1) != "editkegiatan" && $this->uri->segment(1) != "editjabatan" && $this->uri->segment(1) != "editmitra" && $this->uri->segment(1) != "edituser") : ?>
           <li class="nav-item active">
           <?php else :?> 
           <li class="nav-item"> 
           <?php endif;?>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-plus"></i>
-          <span>Tambah Data</span>
+          <span>Kelola Data</span>
         </a>
-        <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat") :?>
+        <?php if($this->uri->segment(1) != "admin" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat" && $this->uri->segment(1) != "editadmin" && $this->uri->segment(1) != "editseksi" && $this->uri->segment(1) != "editkegiatan" && $this->uri->segment(1) != "editjabatan" && $this->uri->segment(1) != "editmitra" && $this->uri->segment(1) != "edituser") :?>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
         <?php else : ?>

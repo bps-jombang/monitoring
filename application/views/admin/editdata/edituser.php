@@ -17,7 +17,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">Form Edit Data</h6>
                 </div>
                 <div class="card-body">
-                    <form action="<?= base_url('admin/edituser/'.$listuser["id_user"]) ?>" method="post">
+                    <form action="<?= base_url('edituser/'.$listuser["id_user"]) ?>" method="post">
                         <div class="form-group">
                         <?= form_error('nama_user','<div class="alert alert-warning mt-3">','</div>'); ?>
                             <label for="nama_user">Nama Anggota</label>

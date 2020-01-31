@@ -50,7 +50,8 @@
                             <td><?= ucwords(strtolower($jabatan['nama_jabatan'])) ?>
                             <td class="text-center">
                             <a href="<?= base_url('editjabatan/'.$jabatan['id_jabatan']) ?>"   
-                            class="btn btn-warning btn-sm">
+                            class="btn btn-warning btn-sm btn-detail-jabatan" data-id="<?= $jabatan['id_jabatan']; ?>"
+                            data-nama="<?= ucwords(strtolower($jabatan['nama_jabatan'])) ?>" data-target="#modalku" data-toggle="modal">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $jabatan['id_jabatan']; ?>" class="btn btn-danger btn-sm tombol-hapus-jabatan"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
@@ -64,3 +65,27 @@
 
         </div>
         <!-- /.container-fluid -->
+        <div class="modal fade" style="margin-top:100px;" id="modalku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form id="formupdatejabatan" action="" method="post">
+                      <input type="text" class="form-control" name="id_jabatan" id="id_jabatan" hidden>
+                      <div class="form-group">
+                        <label for="modal_namajabatan">Nama Jabatan</label>
+                        <input type="text" class="form-control" name="modal_namajabatan" id="modal_namajabatan">
+                      </div>
+                      <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
+                      <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+

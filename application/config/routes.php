@@ -78,12 +78,13 @@ $route['update'] = 'Page/updatepass';
 
 $route['editadmin/(:any)']     = 'admin/editadmin/$1';
 
-$route['editmitra/(:any)']     = 'admin/editmitra/$1';
-$route['editseksi/(:any)']     = 'admin/editseksi/$1';
-$route['edituser/(:any)']     = 'admin/edituser/$1';
-$route['editkegiatan/(:any)']     = 'admin/editkegiatan/$1';
+$route['editmitra/(:any)']     = 'admin/editmitra/$1'; // DONE
+$route['editseksi/(:any)']     = 'admin/editseksi/$1';// DONE
+$route['edituser/(:any)']     = 'admin/edituser/$1'; 
+$route['editkegiatan/(:any)']     = 'admin/editkegiatan/$1'; // DONE
 $route['editpejabat/(:any)']     = 'admin/editpejabat/$1';
 $route['editjabatan/(:any)']     = 'admin/editjabatan/$1';
+$route['updatedetailuser/(:any)']     = 'admin/updatedetailuser/$1';
 
 
 $route['userupdate']      = 'admin/updateuser';
