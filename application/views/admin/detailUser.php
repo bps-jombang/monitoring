@@ -43,12 +43,12 @@
                     <tbody>
                     <?php $no=1; foreach($kegiatandetail as $kegiatan) :?>
                         <tr>
-                            <td><?= $kegiatan['id_kegiatan_detail']; ?></td>
+                            <td><?= $no++; ?></td>
                             <td><?= ucwords(strtolower($kegiatan['uraian_kegiatan'])) ?></td>
                             <td><?= $kegiatan['target'] ?></td>
                             <td><?= $kegiatan['realisasi']; ?></td>
                             <td class="text-center"><a href="#"   
-                            class="btn btn-warning btn-sm btn-detail-user" data-usersid="<?= $kegiatan['id_user']; ?>" data-id="<?= $kegiatan['id_kegiatan']; ?>" 
+                            class="btn btn-warning btn-sm btn-detail-user" data-usersid="<?= $kegiatan['id_user']; ?>" data-id="<?= $kegiatan['id_kegiatan_detail']; ?>" 
                             data-realisasi="<?= $kegiatan['realisasi']; ?>" data-targetuser="<?= $kegiatan['target'] ?>" data-uraian="<?= ucwords(strtolower($kegiatan['uraian_kegiatan'])) ?>"
                             data-toggle="modal" data-target="#modalku">
                             <i class="fas fa-edit"></i> Edit</a> <a href="#" id="<?= $kegiatan['id_kegiatan_detail']; ?>" class="btn btn-danger btn-sm tombol-hapus-kegiatan-detail"><i class="fas fa-trash"></i> Hapus</a></td>
@@ -66,33 +66,34 @@
         <!-- /.container-fluid -->
         
         <div class="modal fade" style="margin-top:20px;" id="modalku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form id="formupdateuser" >
-            <input type="text" class="form-control" name="idkeg" id="idkeg" hidden>
-            <input type="text" class="form-control" name="iduser" id="iduser" hidden>
-              <div class="form-group">
-              <label for="uraian_kegiatan">Uraian Kegiatan</label>
-              <input type="text" class="form-control" name="uraian_kegiatan" id="uraian_kegiatan" disabled>
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
               </div>
-              <div class="form-group">
-            <label for="target">target</label>
-            <input type="text" class="form-control" name="target" id="target">
+              <div class="modal-body">
+                  <form id="formupdateuser" action="" method="post">
+                      <input type="text" class="form-control" name="idkegdet" id="idkegdet" hidden>
+                      <input type="text" class="form-control" name="iduser" id="iduser" hidden>
+                      <div class="form-group">
+                        <label for="uraian_kegiatan">Uraian Kegiatan</label>
+                        <input type="text" class="form-control" name="uraian_kegiatan" id="uraian_kegiatan" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="target">Target</label>
+                        <input type="text" class="form-control" name="target" id="target">
+                      </div>
+                      <div class="form-group">
+                        <label for="realisasi">Realisasi</label>
+                        <input type="text" class="form-control" name="realisasi" id="realisasi">
+                      </div>
+                      <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
+                      <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                  </form>
+              </div>
             </div>
-            <div class="form-group">
-            <label for="realisasi">realisasi</label>
-            <input type="text" class="form-control" name="realisasi" id="realisasi">
-            </div>
-            <button type="submit" class="btn btn-md btn-primary" id="btn-update"> Update</button>
-            </form>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
