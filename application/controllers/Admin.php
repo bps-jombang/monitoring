@@ -332,57 +332,27 @@ class Admin extends CI_Controller
 
     /*  Fungsi edit
     1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = Kegiatan Detail, 7 = pejabat, 8 = Admin   */
-    public function editseksi($id) // DONE
+    public function updateseksi($id) // DONE 1 WITH MODAL BOOTSTRAP
     {
         if (is_numeric($id) == FALSE || !$id) {
             redirect(base_url('seksi'));
         }
-        $title['judul']     = "Edit Seksi  | BPS";
-        $data['listmenu']   = getMenuLink(); 
-        $data['menuform']   = getMenuForm();
-
-        $data['listseksi']  = $this->modeladmin->readData('seksi',$id);
-        $data['allseksi']   = $this->modeladmin->readData('seksi',0);
-
-        $this->form_validation->set_rules('nama_seksi','Nama seksi','required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('template_admin/header',$title);
-            $this->load->view('template_admin/sidebar',$data);
-            $this->load->view('template_admin/navbar');
-            $this->load->view('admin/editdata/editseksi', $data);
-            $this->load->view('template_admin/footer');
-        }else{
-            $this->modeladmin->updateData('seksi',1,$id);
+        $query      =   $this->modeladmin->updateData('seksi',1,$id);
+        if ($query) {
             $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('seksi')); 
+            redirect(base_url('seksi'));
         }
     }
 
-    public function editmitra($id) // DONE
+    public function updatemitra($id) // DONE 2 WITH MODAL BOOTSTRAP
     {
         if (is_numeric($id) == FALSE || !$id) {
             redirect(base_url('mitra'));
         }
-        $title['judul']     = "Edit Mitra  | BPS";
-        $data['listmenu']   = getMenuLink(); 
-        $data['menuform']   = getMenuForm();
-
-        $data['listmitra']  = $this->modeladmin->readData('mitra',$id);
-        $data['allmitra']   = $this->modeladmin->readData('mitra',0);
-
-        $this->form_validation->set_rules('nama_mitra','Nama Mitra','required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('template_admin/header',$title);
-            $this->load->view('template_admin/sidebar',$data);
-            $this->load->view('template_admin/navbar');
-            $this->load->view('admin/editdata/editmitra', $data);
-            $this->load->view('template_admin/footer');
-        }else{
-            $this->modeladmin->updateData('mitra',2,$id);
+        $query      =   $this->modeladmin->updateData('mitra',2,$id);
+        if ($query) {
             $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('mitra')); 
+            redirect(base_url('mitra'));
         }
     }
 
@@ -444,58 +414,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function editjabatan($id) // DONE
-    {
-        if (is_numeric($id) == FALSE || !$id) {
-            redirect(base_url('jabatan'));
-        }
-        $title['judul']         = "Edit Jabatan  | BPS";
-        $data['listmenu']       = getMenuLink(); 
-        $data['menuform']       = getMenuForm();
-
-        $data['listjabatan']    = $this->modeladmin->readData('jabatan',$id);
-        $data['alljabatan']     = $this->modeladmin->readData('jabatan',0);
-
-        $this->form_validation->set_rules('nama_jabatan','Nama Jabatan','required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('template_admin/header',$title);
-            $this->load->view('template_admin/sidebar',$data);
-            $this->load->view('template_admin/navbar');
-            $this->load->view('admin/editdata/editjabatan', $data);
-            $this->load->view('template_admin/footer');
-        }else{
-            $this->modeladmin->updateData('jabatan',5,$id);
-            $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('jabatan'));
-        }
-    }
-
-    /// MODAL UPDATE
-    public function updateseksi($id) // DONE 1
-    {
-        if (is_numeric($id) == FALSE || !$id) {
-            redirect(base_url('seksi'));
-        }
-        $query      =   $this->modeladmin->updateData('seksi',1,$id);
-        if ($query) {
-            $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('seksi'));
-        }
-    }
-
-    public function updatemitra($id) // DONE 2
-    {
-        if (is_numeric($id) == FALSE || !$id) {
-            redirect(base_url('mitra'));
-        }
-        $query      =   $this->modeladmin->updateData('mitra',2,$id);
-        if ($query) {
-            $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('mitra'));
-        }
-    }
-    public function updatejabatan($id) // DONE 5
+    public function updatejabatan($id) // DONE 5 WITH MODAL BOOTSTRAP
     {
         if (is_numeric($id) == FALSE || !$id) {
             redirect(base_url('jabatan'));
@@ -507,7 +426,7 @@ class Admin extends CI_Controller
         }
     }
     
-    public function updatedetailuser($id) // DONE AS KEGIATAN DETAIL
+    public function updatedetailuser($id) // DONE 6 AS KEGIATAN DETAIL WITH MODAL BOOTSTRAP
     {
         $id_user    =   $this->input->post('iduser');
         $query      =   $this->modeladmin->updateData('kegiatan_detail',6,$id);
