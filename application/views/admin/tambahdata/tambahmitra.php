@@ -51,7 +51,10 @@
                             <td><?= ucwords(strtolower($mitra['nama_mitra'])) ?></td>
                             <td class="text-center">
                             <a href="<?= base_url('editmitra/'.$mitra['id_mitra']); ?>"   
-                            class="btn btn-warning btn-sm">
+                            class="btn btn-warning btn-sm btn-detail-mitra" 
+                            data-id="<?= $mitra['id_mitra']; ?>" data-nama="<?= ucwords(strtolower($mitra['nama_mitra'])) ?>"
+                            data-targetmitra="" data-realisasi=""
+                            data-target="#modalku" data-toggle="modal">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $mitra['id_mitra']; ?>" class="btn btn-danger btn-sm tombol-hapus-mitra"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
@@ -64,4 +67,35 @@
 
         </div>
         <!-- /.container-fluid -->
+        <div class="modal fade" style="margin-top:20px;" id="modalku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form id="formupdatemitra" action="" method="post">
+                      <input type="text" class="form-control" name="id_mitra" id="id_mitra" hidden>
+                      <div class="form-group">
+                        <label for="modal_namamitra">Nama Mitra</label>
+                        <input type="text" class="form-control" name="modal_namamitra" id="modal_namamitra">
+                      </div>
+                      <div class="form-group">
+                        <label for="modal_targetmitra">Target</label>
+                        <input type="text" class="form-control" name="modal_targetmitra" id="modal_targetmitra">
+                      </div>
+                      <div class="form-group">
+                        <label for="modal_realisasimitra">Realisasi</label>
+                        <input type="text" class="form-control" name="modal_realisasimitra" id="modal_realisasimitra">
+                      </div>
+                      <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
+                      <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
 

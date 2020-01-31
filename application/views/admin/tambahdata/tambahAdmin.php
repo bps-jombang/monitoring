@@ -65,7 +65,7 @@
                             <?php endif;?></td>
                             <td class="text-center">
                             <a href="<?= base_url('editadmin/'.$admin['id_admin']) ?>"   
-                            class="btn btn-warning btn-sm">
+                            class="btn btn-warning btn-sm btn-detail-admin" data-toggle="modal" data-target="#modalku">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $admin['id_admin']; ?>" class="btn btn-danger btn-sm tombol-hapus-admin"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
@@ -79,3 +79,35 @@
 
         </div>
         <!-- /.container-fluid -->
+        <div class="modal fade" style="margin-top:20px;" id="modalku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form id="formupdateuser" action="" method="post">
+                      <input type="text" class="form-control" name="idkegdet" id="idkegdet" hidden>
+                      <input type="text" class="form-control" name="iduser" id="iduser" hidden>
+                      <div class="form-group">
+                        <label for="uraian_kegiatan">Uraian Kegiatan</label>
+                        <input type="text" class="form-control" name="uraian_kegiatan" id="uraian_kegiatan" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="target">Target</label>
+                        <input type="text" class="form-control" name="target" id="target">
+                      </div>
+                      <div class="form-group">
+                        <label for="realisasi">Realisasi</label>
+                        <input type="text" class="form-control" name="realisasi" id="realisasi">
+                      </div>
+                      <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
+                      <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
