@@ -4,7 +4,8 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><a href="<?= base_url('user'); ?>" class="btn btn-default btn-md text-grey"><i class="fas fa-arrow-left"></i> Kembali</a>Ubah User
+            <h1 class="h3 mb-0 text-gray-800">
+            <a href="<?= base_url('listkegiatan'); ?>" class="btn btn-default btn-md"><i class="fas fa-angle-left"></i> Back</a>Ubah User
           </div>
           <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           <div class="row">
