@@ -75,7 +75,7 @@ if ( ! function_exists('getMenuLink'))
     function getMenuLink()
     {
         return  [ // Menu sidebar           // Url on routes
-                "Kelola Admin"          => 'addadmin',
+                "Kelola Admin"          => 'admin',
                 "Kelola Seksi"          => 'seksi',
                 "Kelola Kegiatan"       => 'kegiatan',
                 "Kelola Pejabat"        => 'pejabat',
