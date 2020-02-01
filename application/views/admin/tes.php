@@ -5,7 +5,10 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Laporan</h6>
+              <form action="" method="post">
+                <button type="submit" class="btn btn-sm btn-primary float-right"><i class="fas fa-file-csv"></i> Export CSV</button>
+              </form>
+              <h6 class="m-0 font-weight-bold text-primary float-left">DataTables Laporan</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -18,7 +21,7 @@
                         <th rowspan="2" class="text-center">vol</th>
                         <th rowspan="2" class="text-center">satuan</th>
                         <th rowspan="2" class="text-center">target penyelesaian</th>
-<?php //var_dump($listuser);die;?>
+
                         <?php // panjang = mengikuti banyaknya user
                         foreach(json_decode($listuser,true) as $user) :?>
                           <th colspan="2" class="text-center"><?= $user['nomor_kecamatan']; ?> | <?= $user['nama_kecamatan'] ?><br>
@@ -49,7 +52,7 @@
                             <th class="target">T</th>
                             <th class="realisasi">R</th>
                           <?php endforeach; ?>
-                          <th>T</th>
+                          <th>Tm</th>
                           <th>R</th>
 
                           <th>T</th>
