@@ -19,7 +19,7 @@
                 
                 
                 <div class="card-body">
-                    <form action="<?= base_url('addadmin') ?>" method="post">
+                    <form action="<?= base_url('admin') ?>" method="post">
                   <?= $this->session->flashdata('usernamesama'); ?>
                 
                         <div class="form-group">

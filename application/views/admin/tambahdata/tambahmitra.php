@@ -25,6 +25,10 @@
                             <input type="text" class="form-control" name="nama_mitra" id="nama_mitra">
                         </div>
                         <div class="form-group">
+                            <label for="target_mitra">Target Mitra</label>
+                            <input type="number" min="0" class="form-control" name="target_mitra" id="target_mitra">
+                        </div>
+                        <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
                           </div>
                     </form>
@@ -41,6 +45,7 @@
                         <tr>
                             <th>Nomor</th>
                             <th>Nama Mitra</th>
+                            <th>Target</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -49,6 +54,7 @@
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= ucwords(strtolower($mitra['nama_mitra'])) ?></td>
+                            <td>target </td>
                             <td class="text-center">
                             <a href="<?= base_url('editmitra/'.$mitra['id_mitra']); ?>"   
                             class="btn btn-warning btn-sm btn-detail-mitra" 
@@ -86,10 +92,6 @@
                       <div class="form-group">
                         <label for="modal_targetmitra">Target</label>
                         <input type="text" class="form-control" name="modal_targetmitra" id="modal_targetmitra">
-                      </div>
-                      <div class="form-group">
-                        <label for="modal_realisasimitra">Realisasi</label>
-                        <input type="text" class="form-control" name="modal_realisasimitra" id="modal_realisasimitra">
                       </div>
                       <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
                       <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
