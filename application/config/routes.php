@@ -55,11 +55,13 @@ $route['default_controller'] = 'auth';
 
 // ROUTES AUTHENTIFICATION LOGIN
 $route['process']         = 'auth/prosesloginadmin';
-$route['loginadmin']      = 'auth/index';
+$route['loginadmin']      = 'auth/admin';
+$route['logout']          = 'auth/logout';
 $route['logout']          = 'auth/logout';
 
 // ROUTES DETAIL DATA
-$route['detailkegiatan/(:any)'] = 'admin/detailKegiatanUser/$1';
+$route['detailkegiatan/(:any)/(:any)']              = 'admin/detailKegiatanUser/$1/$2';
+// $route['detailkegiatan/(:any)']              = 'admin/detailKegiatanUser/$1/';
 // ROUTES CREATE DATA
 $route['home']           = 'admin/index'; 
 $route['admin']        = 'admin/addadmin'; // DONE
@@ -85,7 +87,11 @@ $route['edituser/(:any)']               = 'admin/edituser/$1';
 $route['editkegiatan/(:any)']           = 'admin/editkegiatan/$1'; // DONE
 $route['editpejabat/(:any)']            = 'admin/editpejabat/$1';
 $route['editjabatan/(:any)']            = 'admin/editjabatan/$1';
+
+// Modal
 $route['updatedetailuser/(:any)']       = 'admin/updatedetailuser/$1';
+$route['updatedetailpejabat/(:any)']    = 'admin/updatedetailpejabat/$1';
+$route['updatedetailmitra/(:any)']      = 'admin/updatedetailmitra/$1';
 
 /* Routes update data */
 $route['userupdate']                    = 'admin/updateuser';
