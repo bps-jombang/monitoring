@@ -20,7 +20,7 @@
                     <form action="<?= base_url('targetuser') ?>" method="post">
                         <div class="form-row">
                           <div class="form-group col-md-12">
-                            <label for="input_kegiatan">Pilih Kegiatan</label>
+                            <label for="input_kegiatan">Pilih Kegiatan <b class="text-danger">(Wajib diisi)</b></label>
                             <select name="input_kegiatan" id="input_kegiatan" class="selectpicker form-control input_kegiatan" title="Cari Nama Kegiatan" data-live-search="true">
                               <?php foreach($listkegiatan as $kegiatan):?>
                                 <option value="<?= $kegiatan['id_kegiatan'] ?>"><?= $kegiatan['uraian_kegiatan'] ?></option>
@@ -39,7 +39,7 @@
                           </div>
                           <div class="form-group col-md-5">
                             <label for="target_user">Target</label>
-                            <input type="text" class="form-control" name="target_user" id="target_user">
+                            <input type="number" min="0" class="form-control" name="target_user" id="target_user">
                           </div>
                         </div>
                         <div class="form-row">
@@ -55,7 +55,7 @@
                           </div>
                           <div class="form-group col-md-5">
                             <label for="target_pejabat">Target</label>
-                            <input type="text" class="form-control" name="target_pejabat" id="target_pejabat">
+                            <input type="number" min="0" class="form-control" name="target_pejabat" id="target_pejabat">
                           </div>
                         </div>
                         <div class="form-row">
@@ -69,10 +69,10 @@
                           </div>
                           <div class="form-group col-md-5">
                             <label for="target_mitra">Target</label>
-                            <input type="text" class="form-control" name="target_mitra" id="target_mitra">
+                            <input type="number" min="0" class="form-control" name="target_mitra" id="target_mitra">
                           </div>
                         </div>
-                          <p class="text-danger" style="opacity: 0.8">* pejabat, anggota atau mitra <b>boleh tidak dipilih salah satu.<b></p>
+                          <p class="text-danger" style="opacity: 0.8">* pejabat, anggota atau mitra <b>boleh tidak dipilih salah satu.</b></p>
                         <div class="form-group">
                           <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
                         </div>
