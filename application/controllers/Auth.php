@@ -11,7 +11,7 @@ class Auth extends CI_Controller {
     
     public function index()
     {
-        redirect(base_url('auth/admin'));
+        redirect(base_url('loginadmin'));
     }
 
     public function admin()
