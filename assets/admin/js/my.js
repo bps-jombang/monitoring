@@ -229,24 +229,41 @@
 		let realisasi 			= $(this).data('realisasi');
 		let uraian_kegiatan		= $(this).data('uraian');
 		$('[name="idkegdet"]').val(id_kegiatan_detail);
-		$('[name="target"]').val(target);
-		$('[name="iduser"]').val(usersid);
-		$('[name="realisasi"]').val(realisasi);
 		$('[name="uraian_kegiatan"]').val(uraian_kegiatan)
-		$('#formupdateuser').attr('action', sites + '/updatedetailuser/' + id_kegiatan_detail);
+		$('[name="iduser"]').val(usersid);
+		$('[name="target"]').val(target);
+		$('[name="realisasi"]').val(realisasi);
+		$('#formupdate').attr('action', sites + '/updatedetailuser/' + id_kegiatan_detail);
 	});
 	$('.btn-detail-mitra').on('click', function () {
 		$('#modalku').modal('show');
-		let id_mitra 	= $(this).data('id');
-		let nama_mitra 	= $(this).data('nama');
-		let target 		= $(this).data('targetmitra');
-		let realisasi 	= $(this).data('realisasi');
-		$('[name="id_mitra"]').val(id_mitra);
-		$('[name="modal_namamitra"]').val(nama_mitra);
-		$('[name="modal_targetitra"]').val(target);
-		$('[name="modal_realisasimitra"]').val(realisasi);
-		$('#formupdatemitra').attr('action', sites + '/Admin/updatemitra/' + id_mitra);
+		let id_kegiatan_detail 	= $(this).data('id');
+		let idmitra 			= $(this).data('usersid');
+		let target 				= $(this).data('targetuser');
+		let realisasi 			= $(this).data('realisasi');
+		let uraian_kegiatan 	= $(this).data('uraian');
+		$('[name="idkegdet"]').val(id_kegiatan_detail);
+		$('[name="uraian_kegiatan"]').val(uraian_kegiatan);
+		$('[name="idmitra"]').val(idmitra);
+		$('[name="target"]').val(target);
+		$('[name="realisasi"]').val(realisasi);
+		$('#formupdate').attr('action', sites + '/updatedetailmitra/' + id_kegiatan_detail);
 	});
+	$('.btn-detail-pejabat').on('click', function () {
+		$('#modalku').modal('show');
+		let id_kegiatan_detail 	= $(this).data('id');
+		let idpejabat 			= $(this).data('usersid');
+		let target 				= $(this).data('targetuser');
+		let realisasi 			= $(this).data('realisasi');
+		let uraian_kegiatan 	= $(this).data('uraian');
+		$('[name="idkegdet"]').val(id_kegiatan_detail);
+		$('[name="uraian_kegiatan"]').val(uraian_kegiatan);
+		$('[name="idpejabat"]').val(idpejabat);
+		$('[name="target"]').val(target);
+		$('[name="realisasi"]').val(realisasi);
+		$('#formupdate').attr('action', sites + '/updatedetailpejabat/' + id_kegiatan_detail);
+	});
+
 	$('.btn-detail-seksi').on('click',function(){
 		$('#modalku').modal('show');
 		let id_seksi = $(this).data('id');
