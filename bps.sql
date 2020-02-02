@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 29, 2020 at 01:51 AM
+-- Generation Time: Feb 02, 2020 at 01:22 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -44,7 +44,8 @@ INSERT INTO `admin` (`id_admin`, `id_role`, `username`, `password`) VALUES
 (2, 2, 'nania', '$2y$10$EHEao/B62NdUSYRDFe11wuAKnyrOjjYwyEIaUGu2c4yP4LZAfOxcm'),
 (3, 2, 'alfaza', '$2y$10$/TotjWlJGd4DbH9n1bViuOlWI8JtzfxmiF7XrxkaZuAdX4Bs.f.aa'),
 (4, 2, 'dzikri', '$2y$10$EuvSDutwBCoRc5QuHefFEuDa4dBGMnLcUKZWGsXeyi9wy8DzUmaiG'),
-(12, 1, 'superbps', '$2y$10$mZwq.i0pn/8CLwJVoJBYguJnkjvd1KB7Ui.h34i4sx2anWNpME33G');
+(12, 1, 'superbps', '$2y$10$mZwq.i0pn/8CLwJVoJBYguJnkjvd1KB7Ui.h34i4sx2anWNpME33G'),
+(14, 2, 'admin', '$2y$10$eVPO34sO9FXf8Buw/VofPOAFkFJQ.wpRvZkYfwDEUfB4MLoeTpevK');
 
 -- --------------------------------------------------------
 
@@ -196,7 +197,8 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `sa
 (69, 2, 'Pengawasan Updating Podes', NULL, NULL, NULL, ''),
 (70, 2, 'Pelatihan Sakernas Agustus', NULL, NULL, NULL, ''),
 (71, 2, 'Pengawasan Updating Sakernas', NULL, NULL, NULL, ''),
-(72, 2, 'Pengawasan dan Pemeriksaan SAKERNAS Agustus', NULL, NULL, NULL, '');
+(72, 2, 'Pengawasan dan Pemeriksaan SAKERNAS Agustus', NULL, NULL, NULL, ''),
+(74, 4, 'anjay gurinjay', 1945, 'merdeka', 'Agustus', 'makan gorengan mantap');
 
 -- --------------------------------------------------------
 
@@ -219,16 +221,25 @@ CREATE TABLE `kegiatan_detail` (
 --
 
 INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `id_pejabat`, `id_mitra`, `target`, `realisasi`) VALUES
-(1, 1, 4, NULL, NULL, 10, 1),
-(2, 2, 4, NULL, NULL, 6, NULL),
-(3, 3, 4, NULL, NULL, 3, NULL),
-(4, 4, 9, NULL, NULL, 300, 0),
-(6, 1, 9, NULL, NULL, 2, NULL),
-(7, 1, 1, NULL, NULL, 5, NULL),
-(8, 1, 2, NULL, NULL, 1, 0),
-(9, 1, 3, NULL, NULL, 50, NULL),
-(12, 1, NULL, 1, NULL, 10, 4),
-(13, 1, NULL, 2, NULL, 15, NULL);
+(1, 1, 4, NULL, NULL, 30, 10),
+(2, 2, 4, NULL, NULL, 20, 10),
+(3, 3, 4, NULL, NULL, 40, 15),
+(4, 4, 9, NULL, NULL, 30, 0),
+(6, 1, 9, NULL, NULL, 30, 0),
+(7, 1, 1, NULL, NULL, 9, 2),
+(8, 1, 2, NULL, NULL, 20, 5),
+(9, 1, 3, NULL, NULL, 5, 0),
+(12, 1, NULL, 1, NULL, 25, 10),
+(13, 1, NULL, 2, NULL, 15, 5),
+(28, 15, 12, NULL, NULL, 5, NULL),
+(29, 15, NULL, 9, NULL, 10, NULL),
+(30, 16, 6, NULL, NULL, 500, 100),
+(32, 16, NULL, 7, NULL, 15, NULL),
+(34, 74, NULL, 9, NULL, 10, NULL),
+(36, 13, NULL, 12, NULL, 20, NULL),
+(38, 1, NULL, NULL, 54, 20, 3),
+(39, 1, NULL, NULL, 57, 5, 1),
+(40, 3, NULL, NULL, 54, 80, 20);
 
 -- --------------------------------------------------------
 
@@ -443,7 +454,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `jabatan`
@@ -461,13 +472,13 @@ ALTER TABLE `kecamatan`
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `mitra`
