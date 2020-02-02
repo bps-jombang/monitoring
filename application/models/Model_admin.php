@@ -7,7 +7,7 @@ class Model_admin extends CI_Model {
             $_kegiatan = "kegiatan", $_jabatan = "jabatan";
 
     // ONLY CREATES 
-    public function createData($tabel,$no)
+    public function createData($tabel,$no) // DONE ALL
     {
         // 1 = seksi, 2 = mitra, 3 = jabatan, 4 = user, 5 = kegiatan,  6 = kegiatan detail, 7 = admin, 8 = pejabat
         $dataSeksi = array(
@@ -75,7 +75,7 @@ class Model_admin extends CI_Model {
                 $this->db->insert($tabel,$dataKegiatanDetail[0]); // insert target user
             }elseif($dataKegiatanDetail[1]['id_pejabat'] != NULL && $dataKegiatanDetail[0]['id_user'] == NULL && $dataKegiatanDetail[2]['id_mitra'] == NULL){
                 $this->db->insert($tabel,$dataKegiatanDetail[1]); // insert target pejabat
-            }elseif($dataKegiatanDetail[2]['id_mitra'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] != NULL && $dataKegiatanDetail[0]['id_user'] == NULL){
+            }elseif($dataKegiatanDetail[2]['id_mitra'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] == NULL && $dataKegiatanDetail[0]['id_user'] == NULL){
                 $this->db->insert($tabel,$dataKegiatanDetail[2]); // insert target mitra
             }elseif($dataKegiatanDetail[0]['id_user'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] != NULL && $dataKegiatanDetail[2]['id_mitra'] != NULL){
                 $this->db->insert($tabel,$dataKegiatanDetail[0]);
@@ -105,7 +105,7 @@ class Model_admin extends CI_Model {
     }
     
     // ONLY UPDATE
-    public function updateData($tabel,$no,$id)
+    public function updateData($tabel,$no,$id) // DONE ALL
     {
         // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = Kegiatan Detail, 7 = pejabat, [8] = Admin
         $dataSeksi = array ( // DONE MODAL
@@ -155,7 +155,7 @@ class Model_admin extends CI_Model {
     }
     
     // ONLY SHOW ALL & SHOW BY ID
-    public function readData($tabel,$id = null)
+    public function readData($tabel,$id = null) // DONE ALL
     {
         /*  1 = seksi, 2 = user,3 = mitra, 4 = kegiatan, 5 = admin, 
             6 = jabatan, 7 = kecamatan, 8 = pejabat,9 = jabatan, 10 kegiatan_detail */
@@ -234,7 +234,7 @@ class Model_admin extends CI_Model {
     }
 
     // ONLY DELETE
-    public function deleteData($tabel,$no,$id)
+    public function deleteData($tabel,$no,$id) // DONE ALL
     {
         // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat
         if ($no == 1 ) {
@@ -244,7 +244,7 @@ class Model_admin extends CI_Model {
         }else if($no == 3){
             return $this->db->delete($tabel,["id_user"              => $id]); // DONE
         }else if($no == 4){
-            return $this->db->delete($tabel,["id_kegiatan"          => $id]);
+            return $this->db->delete($tabel,["id_kegiatan"          => $id]); // DONE
         }else if($no == 5){
             return $this->db->delete($tabel,["id_jabatan"           => $id]); // DONE
         }else if($no == 6){
