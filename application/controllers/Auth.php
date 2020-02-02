@@ -11,15 +11,15 @@ class Auth extends CI_Controller {
     
     public function index()
     {
-        redirect(base_url('auth/admin'));
+        redirect(base_url('loginadmin'));
     }
 
     public function admin()
     {
-        if (($this->session->userdata('username'))) { // Jika ada session admin tidak boleh login lagi
-			redirect(base_url('admin'));
+        if ($this->session->userdata('username')) { // Jika ada session admin tidak boleh login lagi
+            redirect(base_url('home'));
 		} else {
-			redirect(base_url('loginadmin'));
+            $this->load->view('auth/loginadmin');
 		}
     }
 
@@ -38,11 +38,11 @@ class Auth extends CI_Controller {
                 if($query["id_role"] == 2){
                     $data = ["id_admin" => $query['id_admin'],"username" => $username, "id_role" => $query['id_role']];
                     $this->session->set_userdata($data);
-                    redirect(base_url('admin'));
+                    redirect(base_url('home'));
                 }else{
                     $data = ["id_admin" => $query['id_admin'],"username" => $username, "id_role" => $query['id_role']];
                     $this->session->set_userdata($data);
-                    redirect(base_url('admin'));
+                    redirect(base_url('home'));
                 }
             }else{
                 $this->session->set_flashdata('gagal','<div class="alert alert-danger" role="alert">Username atau Password salah!!</div>');
@@ -53,7 +53,7 @@ class Auth extends CI_Controller {
 
     public function logout()
     {
-        $this->session->unset_userdata('username');
+        $this->session->sess_destroy();
         $this->session->set_flashdata('pesan','<div class="alert alert-success" role="alert">You have been logged out!</div>');
         redirect(base_url('loginadmin'));
     }

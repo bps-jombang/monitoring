@@ -54,14 +54,17 @@ $route['default_controller'] = 'auth';
 // $route['admin/tes/(:any)'] = 'admin/tes/$1';
 
 // ROUTES AUTHENTIFICATION LOGIN
-$route['loginadmin']      = 'auth/prosesloginadmin';
+$route['process']         = 'auth/prosesloginadmin';
+$route['loginadmin']      = 'auth/admin';
+$route['logout']          = 'auth/logout';
 $route['logout']          = 'auth/logout';
 
 // ROUTES DETAIL DATA
-$route['detailkegiatan/(:any)'] = 'admin/detailKegiatanUser/$1';
+$route['detailkegiatan/(:any)/(:any)']              = 'admin/detailKegiatanUser/$1/$2';
+// $route['detailkegiatan/(:any)']              = 'admin/detailKegiatanUser/$1/';
 // ROUTES CREATE DATA
-$route['admin']           = 'admin/index'; 
-$route['addadmin']        = 'admin/addadmin'; // DONE
+$route['home']           = 'admin/index'; 
+$route['admin']        = 'admin/addadmin'; // DONE
 $route['mitra']           = 'admin/addmitra'; // DONE
 $route['user']            = 'admin/adduser'; // DONE
 $route['jabatan']         = 'admin/addjabatan';
@@ -78,34 +81,36 @@ $route['update'] = 'Page/updatepass';
 
 $route['editadmin/(:any)']     = 'admin/editadmin/$1';
 
-$route['editmitra/(:any)']     = 'admin/editmitra/$1'; // DONE
-$route['editseksi/(:any)']     = 'admin/editseksi/$1';// DONE
-$route['edituser/(:any)']     = 'admin/edituser/$1'; 
-$route['editkegiatan/(:any)']     = 'admin/editkegiatan/$1'; // DONE
-$route['editpejabat/(:any)']     = 'admin/editpejabat/$1';
-$route['editjabatan/(:any)']     = 'admin/editjabatan/$1';
-$route['updatedetailuser/(:any)']     = 'admin/updatedetailuser/$1';
+$route['editmitra/(:any)']              = 'admin/editmitra/$1'; // DONE
+$route['editseksi/(:any)']              = 'admin/editseksi/$1';// DONE
+$route['edituser/(:any)']               = 'admin/edituser/$1'; 
+$route['editkegiatan/(:any)']           = 'admin/editkegiatan/$1'; // DONE
+$route['editpejabat/(:any)']            = 'admin/editpejabat/$1';
+$route['editjabatan/(:any)']            = 'admin/editjabatan/$1';
 
+// Modal
+$route['updatedetailuser/(:any)']       = 'admin/updatedetailuser/$1';
+$route['updatedetailpejabat/(:any)']    = 'admin/updatedetailpejabat/$1';
+$route['updatedetailmitra/(:any)']      = 'admin/updatedetailmitra/$1';
 
-$route['userupdate']      = 'admin/updateuser';
-$route['pejabatupdate']   = 'admin/updatepejabat';
-$route['jabatanupdate']   = 'admin/updatejabatan';
-$route['seksiupdate']     = 'admin/updateseksi';
-$route['mitraupdate']     = 'admin/updatemitra';
-$route['kegiatanupdate']  = 'admin/updatekegiatan';
-$route['targetuserupdate']= 'admin/updatetargetuser';
+/* Routes update data */
+$route['userupdate']                    = 'admin/updateuser';
+$route['pejabatupdate']                 = 'admin/updatepejabat';
+$route['jabatanupdate']                 = 'admin/updatejabatan';
+$route['seksiupdate']                   = 'admin/updateseksi';
+$route['mitraupdate']                   = 'admin/updatemitra';
+$route['kegiatanupdate']                = 'admin/updatekegiatan';
+$route['targetuserupdate']              = 'admin/updatetargetuser';
 
-// ROUTES DELETE DATA JIKA ADA ID
-$route['hapusmitra/(:any)'] = 'admin/deleteMitra/$1'; // CLEAR
-$route['hapususer/(:any)'] = 'admin/deleteUser/$1'; 
-$route['hapuspejabat/(:any)'] = 'admin/deletePejabat/$1'; 
-$route['hapusjabatan/(:any)'] = 'admin/deleteJabatan/$1'; 
-$route['hapuskegiatan/(:any)'] = 'admin/deleteKegiatan/$1'; 
-$route['hapusseksi/(:any)'] = 'admin/deleteSeksi/$1'; 
-$route['hapusadmin/(:any)'] = 'admin/deleteAdmin/$1'; 
-
-
-$route['hapusdata']        = 'admin/deleteUser'; // jika tidak ada id
+// Routes delete data
+$route['hapusmitra/(:any)']             = 'admin/deleteMitra/$1'; // CLEAR
+$route['hapususer/(:any)']              = 'admin/deleteUser/$1'; // CLEAR
+$route['hapuspejabat/(:any)']           = 'admin/deletePejabat/$1'; // CLEAR
+$route['hapusjabatan/(:any)']           = 'admin/deleteJabatan/$1'; // CLEAR
+$route['hapuskegiatan/(:any)']          = 'admin/deleteKegiatan/$1'; 
+$route['hapusseksi/(:any)']             = 'admin/deleteSeksi/$1'; // CLEAR
+$route['hapusadmin/(:any)']             = 'admin/deleteAdmin/$1'; // CLEAR
+$route['hapuskegiatandetail/(:any)']    = 'admin/deleteKegiatanDetail/$1'; 
 
 
 $route['404_override'] = '';

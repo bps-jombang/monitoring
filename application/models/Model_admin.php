@@ -7,25 +7,25 @@ class Model_admin extends CI_Model {
             $_kegiatan = "kegiatan", $_jabatan = "jabatan";
 
     // ONLY CREATES 
-    public function createData($tabel,$no)
+    public function createData($tabel,$no) // DONE ALL
     {
         // 1 = seksi, 2 = mitra, 3 = jabatan, 4 = user, 5 = kegiatan,  6 = kegiatan detail, 7 = admin, 8 = pejabat
         $dataSeksi = array(
             'nama_seksi' => ucwords(htmlspecialchars($this->input->post('nama_seksi',TRUE)))
         );
-        $dataAdmin = array(
+        $dataAdmin = array( // Tabel Admin
             'id_role'  => $this->input->post('check'),
             'username' => strtolower(htmlspecialchars($this->input->post('username',TRUE))),
             'password' => password_hash($this->input->post('username',TRUE),PASSWORD_DEFAULT)
         );
-        $dataMitra = array( // TABEL MITRA
-            'nama_mitra' => htmlspecialchars(ucwords($this->input->post('nama_mitra',TRUE))) // NAME LABEL DI VIEWS ex: name="apa"
+        $dataMitra = array( // Tabel Mitra
+            'nama_mitra' => htmlspecialchars(ucwords($this->input->post('nama_mitra',TRUE))), // NAME LABEL DI VIEWS ex: name="apa"
         );
-        $dataUser = array ( // USER
+        $dataUser = array ( // Tabel User
             'id_kecamatan'  => $this->input->post('input_kecamatan'),
             'nama_user'     => htmlspecialchars($this->input->post('nama_user',TRUE)),
         );
-        $dataKegiatan = array ( // Kegiatan
+        $dataKegiatan = array ( // Tabel Kegiatan
             'id_seksi'              => htmlspecialchars($this->input->post('input_seksi')),
             'uraian_kegiatan'       => htmlspecialchars($this->input->post('nama_kegiatan')),
             'vol'                   => htmlspecialchars($this->input->post('input_vol')),
@@ -33,8 +33,7 @@ class Model_admin extends CI_Model {
             'target_penyelesaian'   => htmlspecialchars($this->input->post('target_penyelesaian')),
             'keterangan'            => htmlspecialchars($this->input->post('keterangan')),
         );
-        $dataKegiatanDetail = 
-            array( // Kegiatan detail
+        $dataKegiatanDetail = array( // Tabel Kegiatan detail
             array(
                 'id_kegiatan'   => $this->input->post('input_kegiatan'), 
                 'id_user'       => $this->input->post('input_user'),
@@ -44,12 +43,17 @@ class Model_admin extends CI_Model {
                 'id_kegiatan'   => $this->input->post('input_kegiatan'), 
                 'id_pejabat'    => $this->input->post('input_pejabat'),
                 'target'        => htmlspecialchars($this->input->post('target_pejabat')),
+            ),
+            array(
+                'id_kegiatan'   => $this->input->post('input_kegiatan'), 
+                'id_mitra'      => $this->input->post('input_mitra'),
+                'target'        => htmlspecialchars($this->input->post('target_mitra')),
             )
         );
-        $dataJabatan = array ( // Jabatan
+        $dataJabatan = array ( // Tabel Jabatan
             'nama_jabatan'  => htmlspecialchars($this->input->post('nama_jabatan',TRUE))
         );
-        $dataPejabat = array ( // Pejabat
+        $dataPejabat = array ( // Tabel Pejabat
             'id_jabatan'    => $this->input->post('input_jabatan'),
             'id_seksi'      => $this->input->post('input_seksi'),
             'nama_user'     => ucwords(htmlspecialchars($this->input->post('nama_user',TRUE)))
@@ -67,13 +71,16 @@ class Model_admin extends CI_Model {
             $this->db->insert($tabel,$dataKegiatan);  // DONE
         }else if($no == 6){ // DONE insert tabel kegiatan detail
             // insert ke tabel kegiatan detail 
-            if ($dataKegiatanDetail[0]['id_user'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] == NULL) {
+            if ($dataKegiatanDetail[0]['id_user'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] == NULL && $dataKegiatanDetail[2]['id_mitra'] == NULL) {
+                $this->db->insert($tabel,$dataKegiatanDetail[0]); // insert target user
+            }elseif($dataKegiatanDetail[1]['id_pejabat'] != NULL && $dataKegiatanDetail[0]['id_user'] == NULL && $dataKegiatanDetail[2]['id_mitra'] == NULL){
+                $this->db->insert($tabel,$dataKegiatanDetail[1]); // insert target pejabat
+            }elseif($dataKegiatanDetail[2]['id_mitra'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] == NULL && $dataKegiatanDetail[0]['id_user'] == NULL){
+                $this->db->insert($tabel,$dataKegiatanDetail[2]); // insert target mitra
+            }elseif($dataKegiatanDetail[0]['id_user'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] != NULL && $dataKegiatanDetail[2]['id_mitra'] != NULL){
                 $this->db->insert($tabel,$dataKegiatanDetail[0]);
-            }elseif($dataKegiatanDetail[1]['id_pejabat'] != NULL && $dataKegiatanDetail[0]['id_user'] == NULL){
                 $this->db->insert($tabel,$dataKegiatanDetail[1]);
-            }elseif($dataKegiatanDetail[0]['id_user'] != NULL && $dataKegiatanDetail[1]['id_pejabat'] != NULL){
-                $this->db->insert($tabel,$dataKegiatanDetail[0]);
-                $this->db->insert($tabel,$dataKegiatanDetail[1]);
+                $this->db->insert($tabel,$dataKegiatanDetail[2]);
             }
         }else if($no == 7){ // insert ke tabel admin
             $result     =   $this->db->get_where($tabel,['username' => $dataAdmin["username"]])->row_array();
@@ -98,9 +105,9 @@ class Model_admin extends CI_Model {
     }
     
     // ONLY UPDATE
-    public function updateData($tabel,$no,$id)
+    public function updateData($tabel,$no,$id) // DONE ALL
     {
-        // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = Kegiatan Detail, 7 = pejabat, 8 = Admin
+        // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = Kegiatan Detail, 7 = pejabat, [8] = Admin
         $dataSeksi = array ( // DONE MODAL
             'nama_seksi'            => htmlspecialchars($this->input->post('modal_namaseksi',TRUE))
         );
@@ -148,7 +155,7 @@ class Model_admin extends CI_Model {
     }
     
     // ONLY SHOW ALL & SHOW BY ID
-    public function readData($tabel,$id = null)
+    public function readData($tabel,$id = null) // DONE ALL
     {
         /*  1 = seksi, 2 = user,3 = mitra, 4 = kegiatan, 5 = admin, 
             6 = jabatan, 7 = kecamatan, 8 = pejabat,9 = jabatan, 10 kegiatan_detail */
@@ -227,23 +234,25 @@ class Model_admin extends CI_Model {
     }
 
     // ONLY DELETE
-    public function deleteData($tabel,$no,$id)
+    public function deleteData($tabel,$no,$id) // DONE ALL
     {
         // 1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat
         if ($no == 1 ) {
-            return $this->db->delete($tabel,["id_seksi"     => $id]); // DONE
+            return $this->db->delete($tabel,["id_seksi"             => $id]); // DONE
         }else if($no == 2){
-            return $this->db->delete($tabel,["id_mitra"     => $id]); // DONE
+            return $this->db->delete($tabel,["id_mitra"             => $id]); // DONE
         }else if($no == 3){
-            return $this->db->delete($tabel,["id_user"      => $id]);
+            return $this->db->delete($tabel,["id_user"              => $id]); // DONE
         }else if($no == 4){
-            return $this->db->delete($tabel,["id_kegiatan"  => $id]);
+            return $this->db->delete($tabel,["id_kegiatan"          => $id]); // DONE
         }else if($no == 5){
-            return $this->db->delete($tabel,["id_jabatan"   => $id]); // DONE
+            return $this->db->delete($tabel,["id_jabatan"           => $id]); // DONE
         }else if($no == 6){
-            return $this->db->delete($tabel,["id_admin"     => $id]); // DONE
+            return $this->db->delete($tabel,["id_admin"             => $id]); // DONE
         }else if($no == 7){
-            return $this->db->delete($tabel,["id_pejabat"   => $id]); // DONE
+            return $this->db->delete($tabel,["id_pejabat"           => $id]); // DONE
+        }else if($no == 8){
+            return $this->db->delete($tabel,["id_kegiatan_detail"   => $id]); // DONE
         }
     }
 

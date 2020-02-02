@@ -17,10 +17,13 @@ class Admin extends CI_Controller
 
     public function index() // DONE
     {
-        $title['judul']     = "BPS";
-        $data['sumtarget']  = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
-        $data['sumseksi']   = $this->db->select('COUNT(nama_seksi)')->get('seksi')->row_array();
-        $data['listmenu']   = getMenuLink();    
+        $title['judul']         = "BPS";
+        $data['listmenu']       = getMenuLink(); 
+
+        $data['sumtarget']      = $this->db->select('SUM(target)')->get('kegiatan_detail')->row_array();
+        $data['sumvol']         = $this->db->select('SUM(vol)')->get('kegiatan')->row_array();
+        $data['sumrealisasi']   = $this->db->select('SUM(realisasi)')->get('kegiatan_detail')->row_array();
+        $data['sumseksi']       = $this->db->select('COUNT(nama_seksi)')->get('seksi')->row_array();
 
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
@@ -29,9 +32,12 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
-    public function tes()
+    public function dataKegiatan()
     {
         $title['judul'] = "List Kegiatan | BPS";
+
+        $data['listmenu']       = getMenuLink();    
+        $data['menuform']       = getMenuForm();
 
         $semuakegiatan          = $this->modeladmin->readData('kegiatan',0);
         $data['semuakegiatan']  = json_encode($semuakegiatan);
@@ -42,9 +48,9 @@ class Admin extends CI_Controller
         $listpejabat            = getPejabatDetail();// join 3 tabel
         $data['listpejabat']    = json_encode($listpejabat);
 
+        $listmitra              = $this->modeladmin->readData('mitra',0);
         $data['listmitra']      = json_encode($this->modeladmin->readData('mitra',0));
-        $data['listmenu']       = getMenuLink();    
-        $data['menuform']       = getMenuForm();
+        
 
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
@@ -53,38 +59,7 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
-    public function dataKegiatan()
-    {
-        $title['judul'] = "List Kegiatan | BPS";
-
-        $data['semuakegiatan'] = $this->modeladmin->readData('kegiatan',0);
-        $data['listmitra'] = $this->modeladmin->readData('mitra',0);
-        //SELECT k.nama_kecamatan,u.nama_user FROM user as u INNER JOIN kecamatan as k ON k.id_kecamatan = u.id_kecamatan
-        $this->db->select('u.id_user,k.nomor_kecamatan,k.nama_kecamatan,u.nama_user');
-        $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
-        $data['listuser'] = $this->db->get('user as u')->result_array();
-
-        $listuser = $this->db->get('user as u')->result_array();
-        
-        $data['kegiatan_detail'] = $this->modeladmin->readData('kegiatan_detail',0);
-
-        $this->db->select('j.id_jabatan,j.nama_jabatan,s.nama_seksi,p.nama_user,p.id_pejabat');
-        $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
-        $this->db->join('seksi as s','s.id_seksi = p.id_seksi');
-        $this->db->group_by('p.id_pejabat');
-        $data['listpejabat'] = $this->db->get('pejabat as p')->result_array();
-
-        // $data['mitra'] = $this->db->get('mitra')->result_array();
-        $data['listmenu']   = getMenuLink();    
-        $data['menuform'] = getMenuForm();
-        $this->load->view('template_admin/header',$title);
-        $this->load->view('template_admin/sidebar',$data);
-        $this->load->view('template_admin/navbar');
-        $this->load->view('admin/dataKegiatan');
-        $this->load->view('template_admin/footer');
-    }
-
-    public function detailKegiatanUser($id)
+    public function detailKegiatanUser($id,$str = null)
     {
         if (!$id) {
             redirect(base_url('listkegiatan'));
@@ -94,23 +69,54 @@ class Admin extends CI_Controller
         $data['listmenu']   = getMenuLink();    
         $data['menuform']   = getMenuForm();
 
-        $this->db->select('u.id_user,k.id_kegiatan,kd.id_kegiatan_detail,k.uraian_kegiatan,u.nama_user,kd.target,kd.realisasi,kd.target');
-        $this->db->join('user as u','u.id_user = kd.id_user');
-        $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
-        $data['kegiatandetail']     = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
-        $this->db->select('k.nama_kecamatan,u.nama_user');
-        $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
-        $data['userdetail']         = $this->db->get_where('user as u',["u.id_user" => $id])->result_array();
+        if ($str == "user") {
+            $this->db->select('u.id_user,kd.id_kegiatan_detail,k.uraian_kegiatan,kd.target,kd.realisasi,kd.target');
+            $this->db->join('user as u','u.id_user = kd.id_user');
+            $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
+            $data['kegiatandetail']     = $this->db->get_where('kegiatan_detail as kd',["kd.id_user" => $id])->result_array();
+            $this->db->select('k.nama_kecamatan,u.nama_user');
+            $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
+            $data['userdetail']         = $this->db->get_where('user as u',["u.id_user" => $id])->result_array();
 
-        if ($data['userdetail'] != NULL) {
-            $this->load->view('template_admin/header',$title);
-            $this->load->view('template_admin/sidebar',$data);
-            $this->load->view('template_admin/navbar');
-            $this->load->view('admin/detailuser');
-            $this->load->view('template_admin/footer');
-        } else {
-            redirect(base_url('admin'));
+        }elseif($str == "pejabat"){
+            $this->db->select('p.id_pejabat,kd.id_kegiatan_detail,k.uraian_kegiatan,p.nama_user,kd.realisasi,kd.target');
+            $this->db->join('pejabat as p','p.id_pejabat = kd.id_pejabat');
+            $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
+            $data['kegiatandetail']     = $this->db->get_where('kegiatan_detail as kd',["kd.id_pejabat" => $id])->result_array();
+            
+            $this->db->select('p.nama_user,s.nama_seksi,j.nama_jabatan');
+            $this->db->join('seksi as s','s.id_seksi = p.id_seksi');
+            $this->db->join('jabatan as j','j.id_jabatan = p.id_jabatan');
+            $data['pejabatdetail']         = $this->db->get_where('pejabat as p',["p.id_pejabat" => $id])->result_array();
+
+        }elseif($str == "mitra"){
+            $this->db->select('m.id_mitra,kd.id_kegiatan_detail,k.uraian_kegiatan,m.nama_mitra,kd.realisasi,kd.target');
+            $this->db->join('mitra as m','m.id_mitra = kd.id_mitra');
+            $this->db->join('kegiatan as k','k.id_kegiatan = kd.id_kegiatan');
+            $data['kegiatandetail'] = $this->db->get_where('kegiatan_detail as kd',["kd.id_mitra" => $id])->result_array();
+            
+            $data['mitradetail']    = $this->db->get_where('mitra',["id_mitra" => $id])->result_array();
+            // var_dump($data['mitradetail']);die;
+        }else{
+
+            redirect(base_url('Admin/tes'));
         }
+
+        $this->load->view('template_admin/header',$title);
+        $this->load->view('template_admin/sidebar',$data);
+        $this->load->view('template_admin/navbar');
+        $this->load->view('admin/detailuser');
+        $this->load->view('template_admin/footer');
+
+        // if (($data['userdetail'] != NULL) ||  ($data['pejabatdetail'] != NULL)) {
+        //     $this->load->view('template_admin/header',$title);
+        //     $this->load->view('template_admin/sidebar',$data);
+        //     $this->load->view('template_admin/navbar');
+        //     $this->load->view('admin/detailuser');
+        //     $this->load->view('template_admin/footer');
+        // } else {
+        //     redirect(base_url('admin'));
+        // }
         
     }
 
@@ -248,11 +254,12 @@ class Admin extends CI_Controller
         $data['menuform']       = getMenuForm();
         $data['listpejabat']    = getPejabatDetail();
 
-        $data['listkecamatan']  = $this->modeladmin->readData('kecamatan',0);
         $this->db->select('u.id_user,k.nama_kecamatan,u.nama_user');
         $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
-        $data['userkec'] = $this->db->get_where('user as u',["u.nama_user !=" => NULL])->result_array();
+        $data['userkec']        = $this->db->get_where('user as u',["u.nama_user !=" => NULL])->result_array();
         $data['listkegiatan']   = $this->modeladmin->readData('kegiatan',0);
+        $data['listkecamatan']  = $this->modeladmin->readData('kecamatan',0);
+        $data['listmitra']      = $this->modeladmin->readData('mitra',0);
 
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
@@ -270,7 +277,7 @@ class Admin extends CI_Controller
     public function addadmin() // DONE
     {
         if ($this->session->userdata('id_role') == 2) {
-            redirect(base_url('admin'));
+            redirect(base_url('home'));
         }
         $title['judul']         = "Tambah Admin | BPS";
         $data['listmenu']       = getMenuLink(); 
@@ -290,10 +297,10 @@ class Admin extends CI_Controller
             $data = $this->modeladmin->createData('admin',7);
             if ($data == true) {
                 $this->session->set_flashdata('usernamesama','<div class="alert alert-danger" role="alert" dismiss="close">Username <strong>tidak boleh sama</strong></div>');
-                redirect(base_url('addadmin'));
+                redirect(base_url('admin'));
             }else{
                 $this->session->set_flashdata('pesan','Ditambah');
-                redirect(base_url('addadmin'));
+                redirect(base_url('admin'));
             }
         }
         
@@ -428,11 +435,29 @@ class Admin extends CI_Controller
     
     public function updatedetailuser($id) // DONE 6 AS KEGIATAN DETAIL WITH MODAL BOOTSTRAP
     {
-        $id_user    =   $this->input->post('iduser');
-        $query      =   $this->modeladmin->updateData('kegiatan_detail',6,$id);
+        $id_user        =   $this->input->post('iduser');
+        $query          =   $this->modeladmin->updateData('kegiatan_detail',6,$id);
         if ($query) {
             $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('detailkegiatan/'.$id_user));
+            redirect(base_url('detailkegiatan/'.$id_user.'/user'));
+        }
+    }
+    public function updatedetailpejabat($id) // DONE 6 AS KEGIATAN DETAIL WITH MODAL BOOTSTRAP
+    {
+        $id_pejabat     =   $this->input->post('idpejabat');
+        $query          =   $this->modeladmin->updateData('kegiatan_detail',6,$id);
+        if ($query) {
+            $this->session->set_flashdata('pesan','Diubah');
+            redirect(base_url('detailkegiatan/'.$id_pejabat.'/pejabat'));
+        }
+    }
+    public function updatedetailmitra($id) // DONE 6 AS KEGIATAN DETAIL WITH MODAL BOOTSTRAP
+    {
+        $id_mitra       =   $this->input->post('idmitra');
+        $query          =   $this->modeladmin->updateData('kegiatan_detail',6,$id);
+        if ($query) {
+            $this->session->set_flashdata('pesan','Diubah');
+            redirect(base_url('detailkegiatan/'.$id_mitra.'/mitra'));
         }
     }
 
@@ -468,7 +493,7 @@ class Admin extends CI_Controller
     public function editadmin($id) // PENDING
     {
         if (is_numeric($id) == FALSE || !$id) {
-            redirect(base_url('addadmin'));
+            redirect(base_url('admin'));
         }
         $title['judul']     = "Edit Admin  | BPS";
         $data['listmenu']   = getMenuLink(); 
@@ -488,14 +513,14 @@ class Admin extends CI_Controller
         }else{
             $this->modeladmin->updateData('admin',X,$id);
             $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('addadmin')); 
+            redirect(base_url('admin')); 
         }
     }
 
 
 
     /*  Fungsi delete
-    1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat   */
+    1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat , 8 = Kegiatan detail   */
     public function deleteSeksi($id = null) // DONE
     {
         if ($id == null) {
@@ -544,7 +569,7 @@ class Admin extends CI_Controller
     public function deleteAdmin($id = null) // DONE
     {
         if ($id == null) {
-            redirect(base_url('addadmin'));
+            redirect(base_url('admin'));
         }
         $this->modeladmin->deleteData('admin',6,$id);
         $this->session->set_flashdata('pesan','Dihapus');
@@ -559,5 +584,13 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('pesan','Dihapus');
     }
 
+    public function deleteKegiatanDetail($id = null) // DONE
+    {
+        if ($id == null) {
+            redirect(base_url('Admin/tes'));
+        }
+        $this->modeladmin->deleteData('kegiatan_detail',8,$id);
+        $this->session->set_flashdata('pesan','Dihapus');
+    }
     
 }

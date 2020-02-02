@@ -1,8 +1,8 @@
 // $(document).ready(function() {
 	const sites			= "http://localhost/monitoring";
-	const hapusadmin 	= sites+"/hapusadmin";	// DONE
-	const hapusmitra 	= sites+"/hapusmitra"; 	// DONE
-	const hapusseksi 	= sites+"/hapusseksi";	// DONE
+	const hapusadmin 	= sites+"/hapusadmin";		// DONE
+	const hapusmitra 	= sites+"/hapusmitra"; 		// DONE
+	const hapusseksi 	= sites+"/hapusseksi";		// DONE
 	const hapususer 	= sites+"/hapususer";		// DONE
 	const hapusjabatan 	= sites+"/hapusjabatan"; 	// DONE
 	const hapuspejabat 	= sites+"/hapuspejabat"; 	// DONE
@@ -16,7 +16,6 @@
 	
 	// ALERT TAMBAH & UPDATE DATA
 	const flashData = $('.flash-data').data('flashdata');
-	// console.log(flashData);
 	if (flashData) {
 		swal.fire({
 			title: 'Data ',
@@ -25,7 +24,7 @@
 		});
 	}
 
-// ALERT HAPUS DATA
+	// ALERT HAPUS DATA
 	// Hapus Mitra
 	$('.tombol-hapus-mitra').on('click', function(e){
 		e.preventDefault();
@@ -171,7 +170,7 @@
 		})
 	});
 
-// HAPUS KEGIATAN
+	// HAPUS KEGIATAN
 	// Hapus Kegiatan
 	$('.tombol-hapus-kegiatan').on('click', function (e) {
 		e.preventDefault();
@@ -197,7 +196,7 @@
 		})
 	});
 	// Hapus Kegiatan detail
-	$('.tombol-hapus-kegiatandetail').on('click', function (e) {
+	$('.tombol-hapus-kegiatan-detail').on('click', function (e) {
 		e.preventDefault();
 		const idkegdetail = $(this).attr('id');
 
@@ -221,73 +220,89 @@
 		})
 	});
 
-// });
-$('').on('click', function () {
+	// Modal update
+	$('.btn-detail-user').on('click', function (){
+		$('#modalku').modal('show');
+		let id_kegiatan_detail 	= $(this).data('id');
+		let usersid 			= $(this).data('usersid');
+		let target 				= $(this).data('targetuser');
+		let realisasi 			= $(this).data('realisasi');
+		let uraian_kegiatan		= $(this).data('uraian');
+		$('[name="idkegdet"]').val(id_kegiatan_detail);
+		$('[name="uraian_kegiatan"]').val(uraian_kegiatan)
+		$('[name="iduser"]').val(usersid);
+		$('[name="target"]').val(target);
+		$('[name="realisasi"]').val(realisasi);
+		$('#formupdate').attr('action', sites + '/updatedetailuser/' + id_kegiatan_detail);
+	});
+	$('.btn-detail-mitra').on('click', function () {
+		$('#modalku').modal('show');
+		let id_kegiatan_detail 	= $(this).data('id');
+		let idmitra 			= $(this).data('usersid');
+		let target 				= $(this).data('targetuser');
+		let realisasi 			= $(this).data('realisasi');
+		let uraian_kegiatan 	= $(this).data('uraian');
+		$('[name="idkegdet"]').val(id_kegiatan_detail);
+		$('[name="uraian_kegiatan"]').val(uraian_kegiatan);
+		$('[name="idmitra"]').val(idmitra);
+		$('[name="target"]').val(target);
+		$('[name="realisasi"]').val(realisasi);
+		$('#formupdate').attr('action', sites + '/updatedetailmitra/' + id_kegiatan_detail);
+	});
+	$('.btn-detail-pejabat').on('click', function () {
+		$('#modalku').modal('show');
+		let id_kegiatan_detail 	= $(this).data('id');
+		let idpejabat 			= $(this).data('usersid');
+		let target 				= $(this).data('targetuser');
+		let realisasi 			= $(this).data('realisasi');
+		let uraian_kegiatan 	= $(this).data('uraian');
+		$('[name="idkegdet"]').val(id_kegiatan_detail);
+		$('[name="uraian_kegiatan"]').val(uraian_kegiatan);
+		$('[name="idpejabat"]').val(idpejabat);
+		$('[name="target"]').val(target);
+		$('[name="realisasi"]').val(realisasi);
+		$('#formupdate').attr('action', sites + '/updatedetailpejabat/' + id_kegiatan_detail);
+	});
 
-});
-$('.btn-detail-user').on('click', function (){
-	$('#modalku').modal('show');
-	let id_kegiatan_detail 	= $(this).data('id');
-	let usersid 			= $(this).data('usersid');
-	let target 				= $(this).data('targetuser');
-	let realisasi 			= $(this).data('realisasi');
-	let uraian_kegiatan		= $(this).data('uraian');
-	$('[name="idkegdet"]').val(id_kegiatan_detail);
-	$('[name="target"]').val(target);
-	$('[name="iduser"]').val(usersid);
-	$('[name="realisasi"]').val(realisasi);
-	$('[name="uraian_kegiatan"]').val(uraian_kegiatan)
-	$('#formupdateuser').attr('action', sites + '/updatedetailuser/' + id_kegiatan_detail);
-});
-$('.btn-detail-mitra').on('click', function () {
-	$('#modalku').modal('show');
-	let id_mitra 	= $(this).data('id');
-	let nama_mitra 	= $(this).data('nama');
-	let target 		= $(this).data('targetmitra');
-	let realisasi 	= $(this).data('realisasi');
-	$('[name="id_mitra"]').val(id_mitra);
-	$('[name="modal_namamitra"]').val(nama_mitra);
-	$('[name="modal_targetitra"]').val(target);
-	$('[name="modal_realisasimitra"]').val(realisasi);
-	$('#formupdatemitra').attr('action', sites + '/Admin/updatemitra/' + id_mitra);
-});
-$('.btn-detail-seksi').on('click',function(){
-	$('#modalku').modal('show');
-	let id_seksi = $(this).data('id');
-	let nama_seksi = $(this).data('nama');
-	$('[name="id_seksi"]').val(id_seksi);
-	$('[name="modal_namaseksi"]').val(nama_seksi);
-	$('#formupdateseksi').attr('action', sites + '/Admin/updateseksi/' + id_seksi);
-});
-$('.btn-detail-jabatan').on('click', function () {
-	$('#modalku').modal('show');
-	let id_jabatan = $(this).data('id');
-	let nama_jabatan = $(this).data('nama');
-	$('[name="id_jabatan"]').val(id_jabatan);
-	$('[name="modal_namajabatan"]').val(nama_jabatan);
-	$('#formupdatejabatan').attr('action', sites + '/Admin/updatejabatan/' + id_jabatan);
-});
-$('.btn-detail-pejabat').on('click', function () {
-	$('#modalku').modal('show');
-	let id_pejabat = $(this).data('id');
-	let nama_pejabat = $(this).data('nama');
-	$('[name="id_pejabat"]').val(id_pejabat);
-	$('[name="modal_namapejabat"]').val(nama_pejabat);
-	$('#formupdatepejabat').attr('action', sites + '/Admin/updatepejabat/' + id_pejabat);
-});
+	$('.btn-detail-seksi').on('click',function(){
+		$('#modalku').modal('show');
+		let id_seksi = $(this).data('id');
+		let nama_seksi = $(this).data('nama');
+		$('[name="id_seksi"]').val(id_seksi);
+		$('[name="modal_namaseksi"]').val(nama_seksi);
+		$('#formupdateseksi').attr('action', sites + '/Admin/updateseksi/' + id_seksi);
+	});
+	$('.btn-detail-jabatan').on('click', function () {
+		$('#modalku').modal('show');
+		let id_jabatan = $(this).data('id');
+		let nama_jabatan = $(this).data('nama');
+		$('[name="id_jabatan"]').val(id_jabatan);
+		$('[name="modal_namajabatan"]').val(nama_jabatan);
+		$('#formupdatejabatan').attr('action', sites + '/Admin/updatejabatan/' + id_jabatan);
+	});
+	$('.btn-detail-pejabat').on('click', function () {
+		$('#modalku').modal('show');
+		let id_pejabat = $(this).data('id');
+		let nama_pejabat = $(this).data('nama');
+		$('[name="id_pejabat"]').val(id_pejabat);
+		$('[name="modal_namapejabat"]').val(nama_pejabat);
+		$('#formupdatepejabat').attr('action', sites + '/Admin/updatepejabat/' + id_pejabat);
+	});
 
-$('.nav-item').on('click', function () {
-	$('.nav-item').removeClass('active');
-	$(this).addClass('active');
-});
+	// remove class active on sidebar
+	$('.nav-item').on('click', function () {
+		$('.nav-item').removeClass('active');
+		$(this).addClass('active');
+	});
 
-$('.lihat-pass').on('click',function (){
-	// e.preventDefault();
-	// console.log('tombol see');
-	const con = $('.passkonfir').attr('input');
-	
-	
-});
+	// change attr password to text
+	$('.lihat-pass').on('click',function (){
+		// e.preventDefault();
+		// console.log('tombol see');
+		const con = $('.passkonfir').attr('input');
+		
+		
+	});
 
 
 
