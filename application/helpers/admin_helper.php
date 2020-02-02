@@ -1,26 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-if ( ! function_exists('random'))
-{
-
-    function getuser(){
-        $CI =& get_instance();
-        $query = $CI->db->get('user')->result_array();
-        return $query;
-        
-    }
-
-}
 if ( ! function_exists('target_user'))
 {
-    function target_user($id_kegiatan,$id_user,$id_pejabat)
+    function target_user($id_kegiatan,$id_user,$id_pejabat,$id_mitra)
     {
         $CI =& get_instance();
         $CI->db->select('target');
         if ($id_user != NULL && $id_pejabat == 0) {
+            // user ada,pejabat 0,mitra 0
             $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_user" => $id_user])->row_array();
         }elseif($id_pejabat != NULL && $id_user == 0){
+            // user 0,pejabat ada,mitra 0
             $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_pejabat" => $id_pejabat])->row_array();
+        }elseif($id_mitra != NULL && $id_user == 0 && $id_pejabat == 0){
+            // user 0,pejabat 0,mitra ada
+           $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_mitra" => $id_mitra])->row_array();
         }
         if ($query == NULL) {
             return FALSE;
@@ -31,15 +25,19 @@ if ( ! function_exists('target_user'))
 }
 if ( ! function_exists('realisasi_user'))
 {
-    function realisasi_user($id_kegiatan,$id_user,$id_pejabat)
+    function realisasi_user($id_kegiatan,$id_user,$id_pejabat,$id_mitra)
     {
-        // SELECT id_kegiatan,id_user,realisasi FROM `kegiatan_detail` where id_kegiatan = 1 and id_user =3
         $CI =& get_instance();
         $CI->db->select('realisasi');
-        if ($id_user != NULL && $id_pejabat == 0) {
+        if ($id_user != NULL && $id_pejabat == 0 && $id_mitra == 0) { 
+            // user ada,pejabat 0,mitra 0
             $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_user" => $id_user])->row_array();
-        } elseif($id_pejabat != NULL && $id_user == 0) {
+        } elseif($id_pejabat != NULL && $id_user == 0 && $id_mitra == 0) {
+            // user 0,pejabat ada,mitra 0
             $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_pejabat" => $id_pejabat])->row_array();
+        } elseif($id_mitra != NULL && $id_user == 0 && $id_pejabat == 0){
+            // mitra ada,user 0,pejabat 0
+            $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_mitra" => $id_mitra])->row_array();
         }
         // echo $CI->db->last_query();
         if ($query == NULL) {
@@ -49,17 +47,8 @@ if ( ! function_exists('realisasi_user'))
         }
     }
 }
-if ( ! function_exists('total_target'))
-{
-    function total_target($id_kegiatan)
-    {
-        $CI =& get_instance();
-        $CI->db->select('SUM(target)');
-        $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan])->row_array();
-        // echo $CI->db->last_query();
-        return $query;
-    }
-}
+
+// Total semua realisasi & target tabel
 if ( ! function_exists('total_realisasi'))
 {
     function total_realisasi($id_kegiatan)
@@ -70,6 +59,27 @@ if ( ! function_exists('total_realisasi'))
         return $query;
     }
 }
+if ( ! function_exists('total_target'))
+{
+    function total_target($id_kegiatan)
+    {
+        $CI =& get_instance();
+        $CI->db->select('SUM(target)');
+        $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan])->row_array();
+        return $query;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 if ( ! function_exists('getMenuLink'))
 {
     function getMenuLink()
@@ -80,7 +90,7 @@ if ( ! function_exists('getMenuLink'))
                 "Kelola Kegiatan"       => 'kegiatan',
                 "Kelola Pejabat"        => 'pejabat',
                 "Kelola Jabatan"        => 'jabatan',
-                "Kelola Target User"    => 'targetuser',
+                "Kelola Target"         => 'targetuser',
                 "Kelola Anggota"        => 'user',
                 "Kelola Mitra"          => 'mitra'
         ];
@@ -106,12 +116,13 @@ if ( ! function_exists('getMenuForm'))
 }  
 if ( ! function_exists('getUserKecamatan'))
 {
-    function getUserKecamatan()
+    function getUserKecamatan($id = null)
     {
         $CI =& get_instance();
         $CI->db->select('u.id_user,k.nomor_kecamatan,k.nama_kecamatan,u.nama_user');
         $CI->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
         return $CI->db->get('user as u')->result_array();
+
     }
 }
 if ( ! function_exists('getSeksiKegiatan'))
