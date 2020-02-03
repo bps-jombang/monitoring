@@ -64,8 +64,8 @@
                             <span class="badge badge-primary float-right mt-1">Superadmin</span>
                             <?php endif;?></td>
                             <td class="text-center">
-                            <a href="<?= base_url('editadmin/'.$admin['id_admin']) ?>"   
-                            class="btn btn-warning btn-sm btn-detail-admin" data-toggle="modal" data-target="#modalku">
+                            <a href="#"   
+                            class="btn btn-warning btn-sm btn-detail-admin" data-toggle="modal" data-target="#modalku" data-idadmin="<?= $admin['id_admin']; ?>" data-user="<?= ucwords(strtolower($admin['username'])) ?>">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $admin['id_admin']; ?>" class="btn btn-danger btn-sm tombol-hapus-admin"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
@@ -79,31 +79,27 @@
 
         </div>
         <!-- /.container-fluid -->
-        <div class="modal fade" style="margin-top:20px;" id="modalku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" style="margin-top:50px;" id="modalku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Reset Data</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
               <div class="modal-body">
-                  <form id="formupdateuser" action="" method="post">
-                      <input type="text" class="form-control" name="idkegdet" id="idkegdet" hidden>
-                      <input type="text" class="form-control" name="iduser" id="iduser" hidden>
+                  <form id="formupdate" action="" method="post">
+                      <input type="text" class="form-control" name="idadmin" id="idadmin" hidden>
                       <div class="form-group">
-                        <label for="uraian_kegiatan">Uraian Kegiatan</label>
-                        <input type="text" class="form-control" name="uraian_kegiatan" id="uraian_kegiatan" disabled>
+                        <label for="modal_username">Username</label>
+                        <input type="text" class="form-control" name="modal_username" id="modal_username">
                       </div>
                       <div class="form-group">
-                        <label for="target">Target</label>
-                        <input type="text" class="form-control" name="target" id="target">
+                        <label for="modal_password">Ubah Password</label>
+                        <input type="password" class="form-control" name="modal_password" id="modal_password">
                       </div>
-                      <div class="form-group">
-                        <label for="realisasi">Realisasi</label>
-                        <input type="text" class="form-control" name="realisasi" id="realisasi">
-                      </div>
+                      <p class="text-danger pt-2" style="opacity: 0.8">* Fitur khusus admin lupa password</p>
                       <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
                       <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
                   </form>
