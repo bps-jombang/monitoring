@@ -1,9 +1,9 @@
 <?php
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-
+// phpinfo();die;
 class Admin extends CI_Controller
 {
-
+    
     public function __construct() 
     { 
         parent::__construct(); 
@@ -41,17 +41,18 @@ class Admin extends CI_Controller
     }
     public function debug()
     {
-        // ini_set('memory_limit', '2048M');
         $extension = $this->input->post('export_type');
+        mkdir('excels');
         if(!empty($extension)){
             $extension = $extension;
         } else {
             $extension = 'xlsx';
         }
-
+        // $url = base_url('excel/');
+        // print_r($url);die;
         $listkegiatan   = $this->modeladmin->printkegiatan();
         $listuser       = $this->modeladmin->printuser();
-        $fileName       = 'RekapListkegiatan_'. date("d_M_Y");
+        $fileName       = 'RekapListkegiatan_'. date("d_M_Y_His");
         // var_dump($listuser);die;
         $spreadsheet    = new Spreadsheet();
         $sheet          = $spreadsheet->getActiveSheet();
@@ -59,27 +60,27 @@ class Admin extends CI_Controller
         $sheet->setCellValue('A1', 'No')->getColumnDimension('A')->setWidth(5);
         $sheet->setCellValue('B1', 'Nama Seksi')->getColumnDimension('B')->setWidth(10);
         $sheet->setCellValue('C1', 'Uraian Kegiatan')->getColumnDimension('C')->setWidth(65);
-        $sheet->setCellValue('D1', 'Volume')->getColumnDimension('D')->setWidth(10);
-        $sheet->setCellValue('E1', 'Satuan')->getColumnDimension('E')->setWidth(10);
-        $sheet->setCellValue('F1', 'Target Penyelesaian')->getColumnDimension('F')->setWidth(20);
+        // $sheet->setCellValue('D1', 'Volume')->getColumnDimension('D')->setWidth(10);
+        // $sheet->setCellValue('E1', 'Satuan')->getColumnDimension('E')->setWidth(10);
+        // $sheet->setCellValue('F1', 'Target Penyelesaian')->getColumnDimension('F')->setWidth(20);
 
-        // $sheet->fromArray(
-        //         $listuser,   // The data to set
-        //         NULL,        // Array values with this value will not be set
-        //         'G1'         // Top left coordinate of the worksheet range where
-        //                     //    we want to set these values (default is A1)
-        //     );
+        $sheet->fromArray(
+                $listuser,   // The data to set
+                NULL,        // Array values with this value will not be set
+                'D1'         // Top left coordinate of the worksheet range where
+                            //    we want to set these values (default is A1)
+            );
 
-        $styleArray = [
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                    'color' => ['argb' => '000000'],
-                ],
-            ],
-        ];
+        // $styleArray = [
+        //     'borders' => [
+        //         'allBorders' => [
+        //             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        //             'color' => ['argb' => '000000'],
+        //         ],
+        //     ],
+        // ];
 
-        $sheet->getStyle('A:C')->applyFromArray($styleArray);
+        // $sheet->getStyle('A:C')->applyFromArray($styleArray);
 
         $rowCount = 2;
         $no=1;
@@ -87,9 +88,9 @@ class Admin extends CI_Controller
             $sheet->setCellValue('A' . $rowCount, $no++);
             $sheet->setCellValue('B' . $rowCount, $kegiatan['nama_seksi']);
             $sheet->setCellValue('C' . $rowCount, $kegiatan['uraian_kegiatan']);
-            $sheet->setCellValue('D' . $rowCount, $kegiatan['vol']);
-            $sheet->setCellValue('E' . $rowCount, $kegiatan['satuan']);
-            $sheet->setCellValue('F' . $rowCount, $kegiatan['target_penyelesaian']);
+            // $sheet->setCellValue('D' . $rowCount, $kegiatan['vol']);
+            // $sheet->setCellValue('E' . $rowCount, $kegiatan['satuan']);
+            // $sheet->setCellValue('F' . $rowCount, $kegiatan['target_penyelesaian']);
             $rowCount++;
         }
  
@@ -103,14 +104,18 @@ class Admin extends CI_Controller
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
             $fileName = $fileName.'.xls';
         }
+        // var_dump($fileName);die;
 
         $this->output->set_header('Content-Type: application/vnd.ms-excel');
         $this->output->set_header("Content-type: application/csv");
         $this->output->set_header('Cache-Control: max-age=0');
-        $writer->save(base_url('excel').$fileName); 
-        //redirect(HTTP_UPLOAD_PATH.$fileName); 
-        $filepath = file_get_contents(base_url('excel').$fileName);
+        // $writer->save(base_url('excel/').$fileName); 
+        $writer->save('excels/'.$fileName); 
+        // //redirect(HTTP_UPLOAD_PATH.$fileName); 
+        $filepath = file_get_contents(base_url('excels/').$fileName);
+        // force_download(base_url('excel/').$fileName);
         force_download($fileName, $filepath);
+        rmdir(base_url('excels'));
     }
 
     public function dataKegiatan()
@@ -571,34 +576,15 @@ class Admin extends CI_Controller
         }
     }
 
-    public function editadmin($id) // PENDING
+    public function resetadmin() // UPDATE ADMIN DONE Modal
     {
-        if (is_numeric($id) == FALSE || !$id) {
+        $id         =   $this->input->post('idadmin');
+        $query      =   $this->modeladmin->updateData('admin',8,$id);
+        if ($query) {
+            $this->session->set_flashdata('pesan','Diubah');
             redirect(base_url('admin'));
         }
-        $title['judul']     = "Edit Admin  | BPS";
-        $data['listmenu']   = getMenuLink(); 
-        $data['menuform']   = getMenuForm();
-
-        $data['listadmin']  = $this->modeladmin->readData('admin',$id);
-        $data['alladmin']   = $this->modeladmin->readData('admin',0);
-
-        $this->form_validation->set_rules('nama_seksi','Nama seksi','required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('template_admin/header',$title);
-            $this->load->view('template_admin/sidebar',$data);
-            $this->load->view('template_admin/navbar');
-            $this->load->view('admin/editdata/editadmin', $data);
-            $this->load->view('template_admin/footer');
-        }else{
-            $this->modeladmin->updateData('admin',X,$id);
-            $this->session->set_flashdata('pesan','Diubah');
-            redirect(base_url('admin')); 
-        }
     }
-
-
 
     /*  Fungsi delete
     1 = seksi, 2 = mitra, 3 = user, 4 = kegiatan, 5 = jabatan, 6 = admin, 7 = pejabat , 8 = Kegiatan detail   */
