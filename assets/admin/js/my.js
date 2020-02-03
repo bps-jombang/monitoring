@@ -219,7 +219,7 @@
 			}
 		})
 	});
-
+ 
 	// Modal update
 	$('.btn-detail-user').on('click', function (){
 		$('#modalku').modal('show');
@@ -262,6 +262,17 @@
 		$('[name="target"]').val(target);
 		$('[name="realisasi"]').val(realisasi);
 		$('#formupdate').attr('action', sites + '/updatedetailpejabat/' + id_kegiatan_detail);
+	});
+	$('.btn-detail-admin').on('click', function () {
+		// $('#modalku').modal('show');
+		let idadmin = $(this).data('idadmin');
+		let username = $(this).data('user');
+		
+		$('[name="idadmin"]').val(idadmin);
+		$('[name="modal_username"]').val(username);
+		$('[name="modal_password"]').val();
+
+		$('#formupdate').attr('action', sites + '/Admin/resetadmin/' + idadmin);
 	});
 
 	$('.btn-detail-seksi').on('click',function(){
