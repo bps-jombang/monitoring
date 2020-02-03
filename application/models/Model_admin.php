@@ -137,6 +137,10 @@ class Model_admin extends CI_Model {
             'id_jabatan'            => $this->input->post('input_jabatan'),
             'nama_user'             => htmlspecialchars($this->input->post('nama_pejabat',TRUE))
         );
+        $dataAdmin  = array (
+            'username'              => $this->input->post('modal_username'),
+            'password'              => password_hash($this->input->post('modal_password'),PASSWORD_DEFAULT)
+        );
         if ($no == 1 ) {
             return $this->db->update($tabel,$dataSeksi,['id_seksi' => $id]); // DONE
         }elseif($no == 2){
@@ -151,6 +155,8 @@ class Model_admin extends CI_Model {
             return $this->db->update($tabel,$dataKegiatanDetail,['id_kegiatan_detail' => $id]);// DONE
         }elseif($no == 7){
             return $this->db->update($tabel,$dataPejabat,['id_pejabat' => $id]);// DONE
+        }elseif($no == 8){
+            return $this->db->update($tabel,$dataAdmin,['id_admin' => $id]);// DONE
         }
     }
     
