@@ -1,4 +1,5 @@
 <?php
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class Admin extends CI_Controller
 {
@@ -6,9 +7,11 @@ class Admin extends CI_Controller
     public function __construct() 
     { 
         parent::__construct(); 
+        // ini_set('memory_limit', '2048M');
+        
         $this->load->library('form_validation');
         $this->load->model(['Model_admin' => 'modeladmin','Model_login' => 'modellogin']);
-        $this->load->helper('admin_helper');
+        $this->load->helper(['admin_helper','download','date']);
 
         if (!$this->session->userdata('username')) {
             redirect(base_url('loginadmin'));
@@ -30,6 +33,84 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/navbar');
         $this->load->view('admin/index');
         $this->load->view('template_admin/footer');
+    }
+    public function debugindex()
+    {
+        $this->load->view('admin/debug');
+        
+    }
+    public function debug()
+    {
+        // ini_set('memory_limit', '2048M');
+        $extension = $this->input->post('export_type');
+        if(!empty($extension)){
+            $extension = $extension;
+        } else {
+            $extension = 'xlsx';
+        }
+
+        $listkegiatan   = $this->modeladmin->printkegiatan();
+        $listuser       = $this->modeladmin->printuser();
+        $fileName       = 'RekapListkegiatan_'. date("d_M_Y");
+        // var_dump($listuser);die;
+        $spreadsheet    = new Spreadsheet();
+        $sheet          = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'No')->getColumnDimension('A')->setWidth(5);
+        $sheet->setCellValue('B1', 'Nama Seksi')->getColumnDimension('B')->setWidth(10);
+        $sheet->setCellValue('C1', 'Uraian Kegiatan')->getColumnDimension('C')->setWidth(65);
+        $sheet->setCellValue('D1', 'Volume')->getColumnDimension('D')->setWidth(10);
+        $sheet->setCellValue('E1', 'Satuan')->getColumnDimension('E')->setWidth(10);
+        $sheet->setCellValue('F1', 'Target Penyelesaian')->getColumnDimension('F')->setWidth(20);
+
+        // $sheet->fromArray(
+        //         $listuser,   // The data to set
+        //         NULL,        // Array values with this value will not be set
+        //         'G1'         // Top left coordinate of the worksheet range where
+        //                     //    we want to set these values (default is A1)
+        //     );
+
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A:C')->applyFromArray($styleArray);
+
+        $rowCount = 2;
+        $no=1;
+        foreach ($listkegiatan as $kegiatan) {
+            $sheet->setCellValue('A' . $rowCount, $no++);
+            $sheet->setCellValue('B' . $rowCount, $kegiatan['nama_seksi']);
+            $sheet->setCellValue('C' . $rowCount, $kegiatan['uraian_kegiatan']);
+            $sheet->setCellValue('D' . $rowCount, $kegiatan['vol']);
+            $sheet->setCellValue('E' . $rowCount, $kegiatan['satuan']);
+            $sheet->setCellValue('F' . $rowCount, $kegiatan['target_penyelesaian']);
+            $rowCount++;
+        }
+ 
+        if($extension == 'csv'){          
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+            $fileName = $fileName.'.csv';
+        } elseif($extension == 'xlsx') {
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+            $fileName = $fileName.'.xlsx';
+        } else {
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
+            $fileName = $fileName.'.xls';
+        }
+
+        $this->output->set_header('Content-Type: application/vnd.ms-excel');
+        $this->output->set_header("Content-type: application/csv");
+        $this->output->set_header('Cache-Control: max-age=0');
+        $writer->save(base_url('excel').$fileName); 
+        //redirect(HTTP_UPLOAD_PATH.$fileName); 
+        $filepath = file_get_contents(base_url('excel').$fileName);
+        force_download($fileName, $filepath);
     }
 
     public function dataKegiatan()

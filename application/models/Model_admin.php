@@ -256,5 +256,20 @@ class Model_admin extends CI_Model {
         }
     }
 
+    public function printkegiatan()
+    {
+        // join kegiatan
+        $this->db->select('s.nama_seksi,k.id_kegiatan,k.uraian_kegiatan,k.vol,k.satuan,k.target_penyelesaian,k.keterangan');
+        $this->db->join('seksi as s','s.id_seksi = k.id_seksi');
+        $this->db->group_by('k.id_kegiatan','ASC');
+        return $this->db->get('kegiatan as k')->result_array();
+    }
+    public function printuser(){
+        $this->db->select('nama_user');
+        // $this->db->join('seksi as s','s.id_seksi = k.id_seksi');
+        // $this->db->group_by('k.id_kegiatan','ASC');
+        return $this->db->get('user')->result_array();
+    }
+
 }
 ?>
