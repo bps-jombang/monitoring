@@ -77,11 +77,10 @@
                           <td><?= $kegiatan['vol'] ?></td>
                           <td><?= $kegiatan['satuan'] ?></td>
                           <td><?= $kegiatan['target_penyelesaian'] ?></td>
-
+ 
                           <?php // panjang target & realisasi = mengikuti banyaknya user
                           foreach(json_decode($listuser,true) as $user) :?>
                             
-                           
                            <?php 
                             $data = target_user($kegiatan['id_kegiatan'],$user['id_user'],0,0);
                             if($data == FALSE ) :?><td class="kuning"></td>
