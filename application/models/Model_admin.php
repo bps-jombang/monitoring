@@ -271,7 +271,7 @@ class Model_admin extends CI_Model {
         return $this->db->get('kegiatan as k')->result_array();
     }
     public function printuserkecamatan(){
-        $this->db->select('u.nama_user,k.nama_kecamatan');
+        $this->db->select('u.id_user,u.nama_user,k.id_kecamatan,k.nama_kecamatan');
         $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
         return $this->db->get('user as u')->result_array();
     }

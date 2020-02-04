@@ -48,20 +48,28 @@ class Admin extends CI_Controller
         } else {
             $extension = 'xlsx';
         }
+        $cars=array("Volvo","BMW","Toyota","Honda","Mercedes","Opel");
+var_dump(array_chunk($cars,2));die;
         // $url = base_url('excel/');
         // print_r($url);die;
-        $listkegiatan   = $this->modeladmin->printkegiatan();
+        $semuakegiatan  = $this->modeladmin->printkegiatan();
         $listuser       = $this->modeladmin->printuserkecamatan();
+        $semuauser      = $this->modeladmin->readData('user',0);
+        $listmitra      = $this->modeladmin->readData('mitra',0);
+        // $arr = ['T R','T R'];
+        // $hasil = [$arr]*5;
+        // print_r($hasil);die;
+        // echo count($semuauser);
+        // die;
         $fileName       = 'RekapListkegiatan_'. date("d_M_Y_His");
         $getColUser     = array_column($listuser,'nama_user');
+        $getColMitra    = array_column($listmitra,'nama_mitra');
+        // print_r($getColMitra);die;
         $getColKec      = array_column($listuser,'nama_kecamatan');
-        // print_r($getColKec);die;
-        // print_r($listuser);
+
         $spreadsheet    = new Spreadsheet();
         $sheet          = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1','Matrik Rincian Kegiatan Seksi Teknis BPS Kabupaten Jombang Tahun 2020')->mergeCells('A1:C1');
-
-        // $sheet;
         $sheet->setCellValue('A3', 'No')->mergeCells('A3:A4')->getColumnDimension('A')->setWidth(5);
         
         $sheet->setCellValue('B3', 'Uraian Kegiatan')->mergeCells('B3:B4')->getColumnDimension('B')->setWidth(68);
@@ -69,43 +77,50 @@ class Admin extends CI_Controller
         // $sheet->getColumnDimension('D4')->setAutoSize(true);
         $sheet->setCellValue('D3', 'Vol')->mergeCells('D3:D4')->getColumnDimension('D')->setWidth(6);
         $sheet->setCellValue('E3', 'Satuan')->mergeCells('E3:E4')->getColumnDimension('E')->setWidth(11);
-        $sheet->setCellValue('F3', 'Target Penyelesaian')->mergeCells('F3:F4')->getColumnDimension('F')->setWidth(14);
+        $sheet->setCellValue('F3', 'Target')->mergeCells('F3:F4')->getColumnDimension('F')->setWidth(14);
+
+        // Freeze panel untuk scroll right
+        $sheet->freezePane('F5'); // Freeze scroll horizontal & vertical DONE
 
         // get user_name
-        $sheet->fromArray(
-            $getColUser,   // The data to set
-            NULL,        // Array values with this value will not be set
-            'G4'         // Top left coordinate of the worksheet range where
-                        //    we want to set these values (default is A1)
-        );
-        // // get user kecamatan
-        $sheet->fromArray(
-            $getColKec,   // The data to set
-            NULL,        // Array values with this value will not be set
-            'G3'         // Top left coordinate of the worksheet range where
-                        //    we want to set these values (default is A1)
-        );
+        $sheet->fromArray($getColUser,NULL,'G4');
+        // panjang kecamatan mengikuti panjang user & get kecamatan sesuai user
+        $sheet->fromArray($getColKec,NULL,'G3');
 
-        // $styleArray = [
-        //     'borders' => [
-        //         'allBorders' => [
-        //             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        //             'color' => ['argb' => '000000'],
-        //         ],
-        //     ],
-        // ];
-        // $sheet->getStyle('A:F')->applyFromArray($styleArray);
+        $styleSet = [
+                // FONT
+                    'font' => [
+                        'bold' => true,
+                        'color' => ['argb' => '000000']
+                    ],
+
+                    // ALIGNMENT
+                    'alignment' => [
+                        // 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
+                        // \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                        'vertical' => //\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_BOTTOM
+                        // \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP
+                        \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+                    ],
+                ];
+                // $style = $sheet->getStyle('B3');
+        $style = $sheet->getStyle('A3:F3'); 
+        $style->applyFromArray($styleSet);
 
         $rowCount = 5;
         $no=1;
-        foreach ($listkegiatan as $kegiatan) {
+        foreach ($semuakegiatan as $kegiatan) {
+            // isi cell A-F
             $sheet->setCellValue('A' . $rowCount, $no++);
             $sheet->setCellValue('B' . $rowCount, $kegiatan['uraian_kegiatan']);
             $sheet->setCellValue('C' . $rowCount, '0'.$kegiatan['id_seksi'].' '.$kegiatan['nama_seksi']);
             $sheet->setCellValue('D' . $rowCount, $kegiatan['vol']);
             $sheet->setCellValue('E' . $rowCount, $kegiatan['satuan']);
             $sheet->setCellValue('F' . $rowCount, $kegiatan['target_penyelesaian']);
-            $rowCount++;
+
+            $sheet->fromArray(['T R','T R'],NULL,'G5');
+            $rowCount++; // tambah kolom A5,A6,A7 B5,B6,B7 ETC
         }
  
         if($extension == 'csv'){          
@@ -118,24 +133,13 @@ class Admin extends CI_Controller
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
             $fileName = $fileName.'.xls';
         }
-        // // var_dump($fileName);die;
 
-        // $this->output->set_header('Content-Type: application/vnd.ms-excel');
-        // $this->output->set_header("Content-type: application/csv");
-        // $this->output->set_header('Cache-Control: max-age=0');
-        // $writer->save(base_url('excel/').$fileName); 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$fileName.'"');
         header('Cache-Control: max-age=0');
         header('Cache-Control: cache, must-revalidate');
         header('Pragma: public');
-        $writer->save('php://output'); 
-        // $writer->save('excels/'.$fileName); 
-        // //redirect(HTTP_UPLOAD_PATH.$fileName); 
-        // $filepath = file_get_contents(base_url('excels/').$fileName);
-        // force_download(base_url('excel/').$fileName);
-        // force_download($fileName, $filepath);
-        // rmdir(base_url('excels'));
+        $writer->save('php://output');
     }
 
     public function dataKegiatan()
