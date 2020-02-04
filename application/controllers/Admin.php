@@ -42,7 +42,7 @@ class Admin extends CI_Controller
     public function debug()
     {
         $extension = $this->input->post('export_type');
-        mkdir('excels');
+        // mkdir('excels');
         if(!empty($extension)){
             $extension = $extension;
         } else {
@@ -51,25 +51,40 @@ class Admin extends CI_Controller
         // $url = base_url('excel/');
         // print_r($url);die;
         $listkegiatan   = $this->modeladmin->printkegiatan();
-        $listuser       = $this->modeladmin->printuser();
+        $listuser       = $this->modeladmin->printuserkecamatan();
         $fileName       = 'RekapListkegiatan_'. date("d_M_Y_His");
-        // var_dump($listuser);die;
+        $getColUser     = array_column($listuser,'nama_user');
+        $getColKec      = array_column($listuser,'nama_kecamatan');
+        // print_r($getColKec);die;
+        // print_r($listuser);
         $spreadsheet    = new Spreadsheet();
         $sheet          = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1','Matrik Rincian Kegiatan Seksi Teknis BPS Kabupaten Jombang Tahun 2020')->mergeCells('A1:C1');
 
-        $sheet->setCellValue('A1', 'No')->getColumnDimension('A')->setWidth(5);
-        $sheet->setCellValue('B1', 'Nama Seksi')->getColumnDimension('B')->setWidth(10);
-        $sheet->setCellValue('C1', 'Uraian Kegiatan')->getColumnDimension('C')->setWidth(65);
-        // $sheet->setCellValue('D1', 'Volume')->getColumnDimension('D')->setWidth(10);
-        // $sheet->setCellValue('E1', 'Satuan')->getColumnDimension('E')->setWidth(10);
-        // $sheet->setCellValue('F1', 'Target Penyelesaian')->getColumnDimension('F')->setWidth(20);
+        // $sheet;
+        $sheet->setCellValue('A3', 'No')->mergeCells('A3:A4')->getColumnDimension('A')->setWidth(5);
+        
+        $sheet->setCellValue('B3', 'Uraian Kegiatan')->mergeCells('B3:B4')->getColumnDimension('B')->setWidth(68);
+        $sheet->setCellValue('C3', 'Seksi')->mergeCells('C3:C4')->getColumnDimension('C')->setWidth(13);
+        // $sheet->getColumnDimension('D4')->setAutoSize(true);
+        $sheet->setCellValue('D3', 'Vol')->mergeCells('D3:D4')->getColumnDimension('D')->setWidth(6);
+        $sheet->setCellValue('E3', 'Satuan')->mergeCells('E3:E4')->getColumnDimension('E')->setWidth(11);
+        $sheet->setCellValue('F3', 'Target Penyelesaian')->mergeCells('F3:F4')->getColumnDimension('F')->setWidth(14);
 
+        // get user_name
         $sheet->fromArray(
-                $listuser,   // The data to set
-                NULL,        // Array values with this value will not be set
-                'D1'         // Top left coordinate of the worksheet range where
-                            //    we want to set these values (default is A1)
-            );
+            $getColUser,   // The data to set
+            NULL,        // Array values with this value will not be set
+            'G4'         // Top left coordinate of the worksheet range where
+                        //    we want to set these values (default is A1)
+        );
+        // // get user kecamatan
+        $sheet->fromArray(
+            $getColKec,   // The data to set
+            NULL,        // Array values with this value will not be set
+            'G3'         // Top left coordinate of the worksheet range where
+                        //    we want to set these values (default is A1)
+        );
 
         // $styleArray = [
         //     'borders' => [
@@ -79,18 +94,17 @@ class Admin extends CI_Controller
         //         ],
         //     ],
         // ];
+        // $sheet->getStyle('A:F')->applyFromArray($styleArray);
 
-        // $sheet->getStyle('A:C')->applyFromArray($styleArray);
-
-        $rowCount = 2;
+        $rowCount = 5;
         $no=1;
         foreach ($listkegiatan as $kegiatan) {
             $sheet->setCellValue('A' . $rowCount, $no++);
-            $sheet->setCellValue('B' . $rowCount, $kegiatan['nama_seksi']);
-            $sheet->setCellValue('C' . $rowCount, $kegiatan['uraian_kegiatan']);
-            // $sheet->setCellValue('D' . $rowCount, $kegiatan['vol']);
-            // $sheet->setCellValue('E' . $rowCount, $kegiatan['satuan']);
-            // $sheet->setCellValue('F' . $rowCount, $kegiatan['target_penyelesaian']);
+            $sheet->setCellValue('B' . $rowCount, $kegiatan['uraian_kegiatan']);
+            $sheet->setCellValue('C' . $rowCount, '0'.$kegiatan['id_seksi'].' '.$kegiatan['nama_seksi']);
+            $sheet->setCellValue('D' . $rowCount, $kegiatan['vol']);
+            $sheet->setCellValue('E' . $rowCount, $kegiatan['satuan']);
+            $sheet->setCellValue('F' . $rowCount, $kegiatan['target_penyelesaian']);
             $rowCount++;
         }
  
@@ -104,18 +118,24 @@ class Admin extends CI_Controller
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
             $fileName = $fileName.'.xls';
         }
-        // var_dump($fileName);die;
+        // // var_dump($fileName);die;
 
-        $this->output->set_header('Content-Type: application/vnd.ms-excel');
-        $this->output->set_header("Content-type: application/csv");
-        $this->output->set_header('Cache-Control: max-age=0');
+        // $this->output->set_header('Content-Type: application/vnd.ms-excel');
+        // $this->output->set_header("Content-type: application/csv");
+        // $this->output->set_header('Cache-Control: max-age=0');
         // $writer->save(base_url('excel/').$fileName); 
-        $writer->save('excels/'.$fileName); 
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$fileName.'"');
+        header('Cache-Control: max-age=0');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+        $writer->save('php://output'); 
+        // $writer->save('excels/'.$fileName); 
         // //redirect(HTTP_UPLOAD_PATH.$fileName); 
-        $filepath = file_get_contents(base_url('excels/').$fileName);
+        // $filepath = file_get_contents(base_url('excels/').$fileName);
         // force_download(base_url('excel/').$fileName);
-        force_download($fileName, $filepath);
-        rmdir(base_url('excels'));
+        // force_download($fileName, $filepath);
+        // rmdir(base_url('excels'));
     }
 
     public function dataKegiatan()
