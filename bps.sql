@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 02, 2020 at 01:22 PM
+-- Generation Time: Feb 06, 2020 at 08:05 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -45,7 +45,7 @@ INSERT INTO `admin` (`id_admin`, `id_role`, `username`, `password`) VALUES
 (3, 2, 'alfaza', '$2y$10$/TotjWlJGd4DbH9n1bViuOlWI8JtzfxmiF7XrxkaZuAdX4Bs.f.aa'),
 (4, 2, 'dzikri', '$2y$10$EuvSDutwBCoRc5QuHefFEuDa4dBGMnLcUKZWGsXeyi9wy8DzUmaiG'),
 (12, 1, 'superbps', '$2y$10$mZwq.i0pn/8CLwJVoJBYguJnkjvd1KB7Ui.h34i4sx2anWNpME33G'),
-(14, 2, 'admin', '$2y$10$eVPO34sO9FXf8Buw/VofPOAFkFJQ.wpRvZkYfwDEUfB4MLoeTpevK');
+(14, 2, 'Admin', '$2y$10$dHsOliTGkBChHTvfiaMJz.Lmyq3p6UCg6P1C7gNb8jd08LGPZ7.xa');
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,7 @@ CREATE TABLE `kecamatan` (
 --
 
 INSERT INTO `kecamatan` (`id_kecamatan`, `nomor_kecamatan`, `nama_kecamatan`) VALUES
-(1, '010', 'Bandar Kedung M'),
+(1, '010', 'Bandar'),
 (2, '020', 'Perak'),
 (3, '030', 'Gudo'),
 (4, '040', 'Diwek'),
@@ -131,11 +131,11 @@ CREATE TABLE `kegiatan` (
 --
 
 INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `satuan`, `target_penyelesaian`, `keterangan`) VALUES
-(1, 3, 'pengawasan update SAK sm I', 21, 'BS', 'Januari', 'anjay'),
-(2, 3, 'pengawasan pencacahan SAK sm I', 210, 'Dokumen', 'Februari', 'gurinjay'),
+(1, 3, 'pengawasan update SAK sm I', 21, 'BS', 'Januari', ''),
+(2, 3, 'pengawasan pencacahan SAK sm I', 210, 'Dokumen', 'Februari', ''),
 (3, 3, 'pelatihan sakernas Sm 1', 3, 'Hari', 'Januari', ''),
-(4, 5, 'Sampel Ubinan', 0, '0', 'Januari', ''),
-(10, 3, 'Sampel Ubinan (PMS)', 0, '0', '', ''),
+(4, 5, 'Sampel Ubinan', NULL, NULL, 'Januari', ''),
+(10, 3, 'Sampel Ubinan (PMS)', NULL, NULL, NULL, ''),
 (11, 3, 'Surve KSA (Pengawas)', NULL, NULL, NULL, ''),
 (12, 3, 'Surve KSA (Pencacahan)', NULL, NULL, NULL, ''),
 (13, 3, 'Srv. Perkebunan Triwulanan (PCL)', NULL, NULL, NULL, ''),
@@ -197,8 +197,7 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `id_seksi`, `uraian_kegiatan`, `vol`, `sa
 (69, 2, 'Pengawasan Updating Podes', NULL, NULL, NULL, ''),
 (70, 2, 'Pelatihan Sakernas Agustus', NULL, NULL, NULL, ''),
 (71, 2, 'Pengawasan Updating Sakernas', NULL, NULL, NULL, ''),
-(72, 2, 'Pengawasan dan Pemeriksaan SAKERNAS Agustus', NULL, NULL, NULL, ''),
-(74, 4, 'anjay gurinjay', 1945, 'merdeka', 'Agustus', 'makan gorengan mantap');
+(72, 2, 'Pengawasan dan Pemeriksaan SAKERNAS Agustus', NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -224,8 +223,8 @@ INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `
 (1, 1, 4, NULL, NULL, 30, 10),
 (2, 2, 4, NULL, NULL, 20, 10),
 (3, 3, 4, NULL, NULL, 40, 15),
-(4, 4, 9, NULL, NULL, 30, 0),
-(6, 1, 9, NULL, NULL, 30, 0),
+(4, 4, 9, NULL, NULL, 19, 7),
+(6, 1, 9, NULL, NULL, 45, 19),
 (7, 1, 1, NULL, NULL, 9, 2),
 (8, 1, 2, NULL, NULL, 20, 5),
 (9, 1, 3, NULL, NULL, 5, 0),
@@ -235,11 +234,7 @@ INSERT INTO `kegiatan_detail` (`id_kegiatan_detail`, `id_kegiatan`, `id_user`, `
 (29, 15, NULL, 9, NULL, 10, NULL),
 (30, 16, 6, NULL, NULL, 500, 100),
 (32, 16, NULL, 7, NULL, 15, NULL),
-(34, 74, NULL, 9, NULL, 10, NULL),
-(36, 13, NULL, 12, NULL, 20, NULL),
-(38, 1, NULL, NULL, 54, 20, 3),
-(39, 1, NULL, NULL, 57, 5, 1),
-(40, 3, NULL, NULL, 54, 80, 20);
+(36, 13, NULL, 12, NULL, 20, NULL);
 
 -- --------------------------------------------------------
 
@@ -251,14 +246,6 @@ CREATE TABLE `mitra` (
   `id_mitra` int(11) NOT NULL,
   `nama_mitra` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `mitra`
---
-
-INSERT INTO `mitra` (`id_mitra`, `nama_mitra`) VALUES
-(54, 'Harapan Bunda'),
-(57, 'Harapan Kita');
 
 -- --------------------------------------------------------
 
@@ -478,13 +465,13 @@ ALTER TABLE `kegiatan`
 -- AUTO_INCREMENT for table `kegiatan_detail`
 --
 ALTER TABLE `kegiatan_detail`
-  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_kegiatan_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `mitra`
 --
 ALTER TABLE `mitra`
-  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id_mitra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `pejabat`
@@ -508,7 +495,7 @@ ALTER TABLE `seksi`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
