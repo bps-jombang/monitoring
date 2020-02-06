@@ -1,6 +1,6 @@
 <?php
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-// phpinfo();die;
+
 class Admin extends CI_Controller
 {
     
@@ -34,121 +34,46 @@ class Admin extends CI_Controller
         $this->load->view('admin/index');
         $this->load->view('template_admin/footer');
     }
-    public function debugindex()
+
+    public function exportexcel()// DONE
     {
-        $this->load->view('admin/debug');
+        $title['judul'] = "List Kegiatan | BPS";
+
+        $data['listmenu']       = getMenuLink();    
+        $data['menuform']       = getMenuForm();
+        $this->db->select('s.id_seksi,s.nama_seksi,k.id_kegiatan,k.uraian_kegiatan,k.vol,k.satuan,k.target_penyelesaian,k.keterangan');
+        $this->db->join('seksi as s','s.id_seksi = k.id_seksi');
+        $this->db->group_by('k.id_kegiatan','ASC');
+        $semuakegiatan = $this->db->get('kegiatan as k')->result_array();
+        // echo json_encode($semuakegiatan);die;
+        // $semuakegiatan          = $this->modeladmin->readData('kegiatan',0);
+        $data['semuakegiatan']  = json_encode($semuakegiatan);
+
+        $listuser               = getUserKecamatan(); // join 3 tabel
+        $data['listuser']       = json_encode($listuser);
         
-    }
-    public function debug()
-    {
-        $extension = $this->input->post('export_type');
-        // mkdir('excels');
-        if(!empty($extension)){
-            $extension = $extension;
-        } else {
-            $extension = 'xlsx';
-        }
-        $cars=array("Volvo","BMW","Toyota","Honda","Mercedes","Opel");
-var_dump(array_chunk($cars,2));die;
-        // $url = base_url('excel/');
-        // print_r($url);die;
-        $semuakegiatan  = $this->modeladmin->printkegiatan();
-        $listuser       = $this->modeladmin->printuserkecamatan();
-        $semuauser      = $this->modeladmin->readData('user',0);
-        $listmitra      = $this->modeladmin->readData('mitra',0);
-        // $arr = ['T R','T R'];
-        // $hasil = [$arr]*5;
-        // print_r($hasil);die;
-        // echo count($semuauser);
-        // die;
-        $fileName       = 'RekapListkegiatan_'. date("d_M_Y_His");
-        $getColUser     = array_column($listuser,'nama_user');
-        $getColMitra    = array_column($listmitra,'nama_mitra');
-        // print_r($getColMitra);die;
-        $getColKec      = array_column($listuser,'nama_kecamatan');
+        $listpejabat            = getPejabatDetail();// join 3 tabel
+        $data['listpejabat']    = json_encode($listpejabat);
 
-        $spreadsheet    = new Spreadsheet();
-        $sheet          = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1','Matrik Rincian Kegiatan Seksi Teknis BPS Kabupaten Jombang Tahun 2020')->mergeCells('A1:C1');
-        $sheet->setCellValue('A3', 'No')->mergeCells('A3:A4')->getColumnDimension('A')->setWidth(5);
+        $listmitra              = $this->modeladmin->readData('mitra',0);
+        $data['listmitra']      = json_encode($this->modeladmin->readData('mitra',0));
         
-        $sheet->setCellValue('B3', 'Uraian Kegiatan')->mergeCells('B3:B4')->getColumnDimension('B')->setWidth(68);
-        $sheet->setCellValue('C3', 'Seksi')->mergeCells('C3:C4')->getColumnDimension('C')->setWidth(13);
-        // $sheet->getColumnDimension('D4')->setAutoSize(true);
-        $sheet->setCellValue('D3', 'Vol')->mergeCells('D3:D4')->getColumnDimension('D')->setWidth(6);
-        $sheet->setCellValue('E3', 'Satuan')->mergeCells('E3:E4')->getColumnDimension('E')->setWidth(11);
-        $sheet->setCellValue('F3', 'Target')->mergeCells('F3:F4')->getColumnDimension('F')->setWidth(14);
 
-        // Freeze panel untuk scroll right
-        $sheet->freezePane('F5'); // Freeze scroll horizontal & vertical DONE
-
-        // get user_name
-        $sheet->fromArray($getColUser,NULL,'G4');
-        // panjang kecamatan mengikuti panjang user & get kecamatan sesuai user
-        $sheet->fromArray($getColKec,NULL,'G3');
-
-        $styleSet = [
-                // FONT
-                    'font' => [
-                        'bold' => true,
-                        'color' => ['argb' => '000000']
-                    ],
-
-                    // ALIGNMENT
-                    'alignment' => [
-                        // 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT,
-                        // \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                        'vertical' => //\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_BOTTOM
-                        // \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP
-                        \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
-                    ],
-                ];
-                // $style = $sheet->getStyle('B3');
-        $style = $sheet->getStyle('A3:F3'); 
-        $style->applyFromArray($styleSet);
-
-        $rowCount = 5;
-        $no=1;
-        foreach ($semuakegiatan as $kegiatan) {
-            // isi cell A-F
-            $sheet->setCellValue('A' . $rowCount, $no++);
-            $sheet->setCellValue('B' . $rowCount, $kegiatan['uraian_kegiatan']);
-            $sheet->setCellValue('C' . $rowCount, '0'.$kegiatan['id_seksi'].' '.$kegiatan['nama_seksi']);
-            $sheet->setCellValue('D' . $rowCount, $kegiatan['vol']);
-            $sheet->setCellValue('E' . $rowCount, $kegiatan['satuan']);
-            $sheet->setCellValue('F' . $rowCount, $kegiatan['target_penyelesaian']);
-
-            $sheet->fromArray(['T R','T R'],NULL,'G5');
-            $rowCount++; // tambah kolom A5,A6,A7 B5,B6,B7 ETC
-        }
- 
-        if($extension == 'csv'){          
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-            $fileName = $fileName.'.csv';
-        } elseif($extension == 'xlsx') {
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-            $fileName = $fileName.'.xlsx';
-        } else {
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
-            $fileName = $fileName.'.xls';
-        }
-
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="'.$fileName.'"');
-        header('Cache-Control: max-age=0');
-        header('Cache-Control: cache, must-revalidate');
-        header('Pragma: public');
-        $writer->save('php://output');
+        $this->load->view('template_admin/header',$title);
+        $this->load->view('template_admin/sidebar',$data);
+        $this->load->view('template_admin/navbar');
+        $this->load->view('admin/export');
+        $this->load->view('template_admin/footer');
     }
 
-    public function dataKegiatan()
+    public function dataKegiatan()// DONE
     {
         $title['judul'] = "List Kegiatan | BPS";
 
         $data['listmenu']       = getMenuLink();    
         $data['menuform']       = getMenuForm();
 
+        
         $semuakegiatan          = $this->modeladmin->readData('kegiatan',0);
         $data['semuakegiatan']  = json_encode($semuakegiatan);
 
@@ -165,11 +90,11 @@ var_dump(array_chunk($cars,2));die;
         $this->load->view('template_admin/header',$title);
         $this->load->view('template_admin/sidebar',$data);
         $this->load->view('template_admin/navbar');
-        $this->load->view('admin/tes');
+        $this->load->view('admin/datakegiatan');
         $this->load->view('template_admin/footer');
     }
 
-    public function detailKegiatanUser($id,$str = null)
+    public function detailKegiatanUser($id,$str = null)// DONE
     {
         if (!$id) {
             redirect(base_url('listkegiatan'));
@@ -682,6 +607,16 @@ var_dump(array_chunk($cars,2));die;
         }
         $this->modeladmin->deleteData('kegiatan_detail',8,$id);
         $this->session->set_flashdata('pesan','Dihapus');
+    }
+
+    public function deleteallkegiatan()// DONE
+    {
+        $this->db->empty_table('kegiatan'); 
+        $check      = $this->modeladmin->readData('kegiatan',0);
+        if($check < 0){
+            $this->db->delete('kegiatan_detail');
+            $this->session->set_flashdata('pesan','Dihapus');
+        }
     }
     
 }

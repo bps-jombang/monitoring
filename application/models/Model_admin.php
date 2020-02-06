@@ -123,7 +123,8 @@ class Model_admin extends CI_Model {
             'uraian_kegiatan'       => $this->input->post('nama_kegiatan'),
             'vol'	                => htmlspecialchars($this->input->post('input_vol',TRUE)),
             'satuan'	            => htmlspecialchars($this->input->post('input_satuan',TRUE)),
-            'target_penyelesaian'	=> htmlspecialchars($this->input->post('target_penyelesaian',TRUE))
+            'target_penyelesaian'	=> htmlspecialchars($this->input->post('target_penyelesaian',TRUE)),
+            'keterangan'            => $this->input->post('keterangan'),
         );
         $dataJabatan = array ( // DONE MODAL
             'nama_jabatan'          => htmlspecialchars($this->input->post('modal_namajabatan',TRUE))
@@ -260,20 +261,6 @@ class Model_admin extends CI_Model {
         }else if($no == 8){
             return $this->db->delete($tabel,["id_kegiatan_detail"   => $id]); // DONE
         }
-    }
-
-    public function printkegiatan()
-    {
-        // join kegiatan
-        $this->db->select('s.id_seksi,s.nama_seksi,k.id_kegiatan,k.uraian_kegiatan,k.vol,k.satuan,k.target_penyelesaian,k.keterangan');
-        $this->db->join('seksi as s','s.id_seksi = k.id_seksi');
-        $this->db->group_by('k.id_kegiatan','ASC');
-        return $this->db->get('kegiatan as k')->result_array();
-    }
-    public function printuserkecamatan(){
-        $this->db->select('u.id_user,u.nama_user,k.id_kecamatan,k.nama_kecamatan');
-        $this->db->join('kecamatan as k','k.id_kecamatan = u.id_kecamatan');
-        return $this->db->get('user as u')->result_array();
     }
 
 }

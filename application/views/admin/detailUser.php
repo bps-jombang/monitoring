@@ -116,11 +116,11 @@
                       </div>
                       <div class="form-group">
                         <label for="target">Target</label>
-                        <input type="text" class="form-control" name="target" id="target">
+                        <input type="number" class="form-control" name="target" id="target">
                       </div>
                       <div class="form-group">
                         <label for="realisasi">Realisasi</label>
-                        <input type="text" class="form-control" name="realisasi" id="realisasi">
+                        <input type="number" class="form-control" name="realisasi" id="realisasi">
                       </div>
                       <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
                       <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>

@@ -49,38 +49,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+/* Default access login */
 $route['default_controller'] = 'auth';
 
-// $route['admin/tes/(:any)'] = 'admin/tes/$1';
-
-// ROUTES AUTHENTIFICATION LOGIN
+/* ROUTES AUTH LOGIN  */
 $route['process']         = 'auth/prosesloginadmin';
 $route['loginadmin']      = 'auth/admin';
 $route['logout']          = 'auth/logout';
 $route['logout']          = 'auth/logout';
 
-// ROUTES DETAIL DATA
-$route['detailkegiatan/(:any)/(:any)']              = 'admin/detailKegiatanUser/$1/$2';
-// $route['detailkegiatan/(:any)']              = 'admin/detailKegiatanUser/$1/';
-// ROUTES CREATE DATA
-$route['home']           = 'admin/index'; 
-$route['admin']        = 'admin/addadmin'; // DONE
-$route['mitra']           = 'admin/addmitra'; // DONE
-$route['user']            = 'admin/adduser'; // DONE
-$route['jabatan']         = 'admin/addjabatan';
-$route['pejabat']         = 'admin/addpejabat';
-$route['seksi']           = 'admin/addseksi';  // DONE
-$route['kegiatan']        = 'admin/addkegiatan';
-$route['targetuser']      = 'admin/addtargetuser';
-$route['listkegiatan']      = 'admin/dataKegiatan';
-$route['profile/(:any)']       = 'Page/profile';
+/* EXPORT EXCEL */
+$route['exportexcel']     = 'admin/exportexcel';
 
-// ROUTES UPDATE DATA
-$route['update'] = 'Page/updatepass';
+/* ROUTES DETAIL DATA */
+$route['detailkegiatan/(:any)/(:any)']  = 'admin/detailKegiatanUser/$1/$2';
 
+/* ROUTES CREATE DATA */
+$route['home']                          = 'admin/index'; 
+$route['admin']                         = 'admin/addadmin'; // DONE
+$route['mitra']                         = 'admin/addmitra'; // DONE
+$route['user']                          = 'admin/adduser'; // DONE
+$route['jabatan']                       = 'admin/addjabatan';
+$route['pejabat']                       = 'admin/addpejabat';
+$route['seksi']                         = 'admin/addseksi';  // DONE
+$route['kegiatan']                      = 'admin/addkegiatan';
+$route['targetuser']                    = 'admin/addtargetuser';
+$route['listkegiatan']                  = 'admin/dataKegiatan';
+$route['profile/(:any)']                = 'Page/profile';
 
-$route['editadmin/(:any)']     = 'admin/editadmin/$1';
-
+/* ROUTES UPDATE DATA */
+$route['update']                        = 'Page/updatepass';
+$route['editadmin/(:any)']              = 'admin/editadmin/$1';
 $route['editmitra/(:any)']              = 'admin/editmitra/$1'; // DONE
 $route['editseksi/(:any)']              = 'admin/editseksi/$1';// DONE
 $route['edituser/(:any)']               = 'admin/edituser/$1'; 
@@ -88,7 +87,7 @@ $route['editkegiatan/(:any)']           = 'admin/editkegiatan/$1'; // DONE
 $route['editpejabat/(:any)']            = 'admin/editpejabat/$1';
 $route['editjabatan/(:any)']            = 'admin/editjabatan/$1';
 
-// Modal
+/* Modal */
 $route['updatedetailuser/(:any)']       = 'admin/updatedetailuser/$1';
 $route['updatedetailpejabat/(:any)']    = 'admin/updatedetailpejabat/$1';
 $route['updatedetailmitra/(:any)']      = 'admin/updatedetailmitra/$1';
@@ -102,7 +101,7 @@ $route['mitraupdate']                   = 'admin/updatemitra';
 $route['kegiatanupdate']                = 'admin/updatekegiatan';
 $route['targetuserupdate']              = 'admin/updatetargetuser';
 
-// Routes delete data
+/* Routes delete data */
 $route['hapusmitra/(:any)']             = 'admin/deleteMitra/$1'; // CLEAR
 $route['hapususer/(:any)']              = 'admin/deleteUser/$1'; // CLEAR
 $route['hapuspejabat/(:any)']           = 'admin/deletePejabat/$1'; // CLEAR
@@ -111,6 +110,7 @@ $route['hapuskegiatan/(:any)']          = 'admin/deleteKegiatan/$1';
 $route['hapusseksi/(:any)']             = 'admin/deleteSeksi/$1'; // CLEAR
 $route['hapusadmin/(:any)']             = 'admin/deleteAdmin/$1'; // CLEAR
 $route['hapuskegiatandetail/(:any)']    = 'admin/deleteKegiatanDetail/$1'; 
+$route['deleteallkegiatan']             = 'admin/deleteallkegiatan/'; 
 
 
 $route['404_override'] = '';

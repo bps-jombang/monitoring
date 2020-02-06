@@ -1,18 +1,16 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          
+          <div class="flash-data" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <form action="" method="post">
-                <button type="submit" class="btn btn-sm btn-primary float-right"><i class="fas fa-file-csv"></i> Export CSV</button>
-              </form>
+                <a href="#" class="btn btn-md btn-primary float-right text-decoration-none tombol-hapus-semua"><i class="fas fa-trash"></i> Delete All Data Tabel</a>
               <h6 class="m-0 font-weight-bold text-primary float-left">DataTables Laporan</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                  <table class="table table-bordered display nowrap tabelku" id="dataTableku" width="100%" cellspacing="0">
+                  <table class="table table-bordered display nowrap tabelku" id="dataTableKegiatan" width="100%" cellspacing="0">
                       <thead class="mytable">
                         <tr>
                         <th rowspan="2" class="text-center">nomor</th>
@@ -146,3 +144,4 @@
 
         </div>
         <!-- /.container-fluid -->
+

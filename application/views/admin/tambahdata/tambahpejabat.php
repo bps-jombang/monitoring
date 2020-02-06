@@ -81,8 +81,8 @@
                               <?php endforeach;?>
                             <?php endforeach;?></td>
                             <td class="text-center">
-                            <a href="<?= base_url('editpejabat/'.$pejabat['id_pejabat']) ?>"  data-id="<?= $pejabat['id_pejabat']; ?>" data- data-nama="<?= ucwords(strtolower($pejabat['nama_user'])) ?>" 
-                            class="btn btn-warning btn-sm btn-detail-pejabat" data-target="#modalku" data-toggle="modal">
+                            <a href="<?= base_url('editpejabat/'.$pejabat['id_pejabat']) ?>"  
+                            class="btn btn-warning btn-sm btn-detail-pejabat">
                             <i class="fas fa-edit"></i> Edit</a>
                             <a href="#" id="<?= $pejabat['id_pejabat']; ?>" class="btn btn-danger btn-sm tombol-hapus-pejabat"><i class="fas fa-trash"></i> Hapus</a></td>
                         </tr>
@@ -96,44 +96,4 @@
 
         </div>
         <!-- /.container-fluid -->
-        <div class="modal fade" style="margin-top:100px;" id="modalku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                  <form id="formupdatepejabat" action="" method="post">
-                      <input type="text" class="form-control" name="id_pejabat" id="id_pejabat" hidden>
-                      <div class="form-group">
-                        <label for="modal_namapejabat">Nama Pejabat</label>
-                        <input type="text" class="form-control" name="modal_namapejabat" id="modal_namapejabat">
-                      </div>
-                      <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="input_seksi">Seksi</label>
-                            <select name="input_seksi" id="input_seksi" class="form-control">
-                              <option value="0">Pilih Seksi</option>
-                              <?php foreach($listseksi as $seksis):?>
-                              <option value="<?= $seksis['id_seksi']; ?>"><?= $seksis['nama_seksi']; ?></option>
-                              <?php endforeach; ?>
-                            </select>
-                          </div>
-                            <div class="form-group col-md-6">
-                                <label for="input_jabatan">Jabatan</label>
-                              <select name="input_jabatan" id="input_jabatan" class="form-control">
-                                <option value="0">Pilih Jabatan</option>
-                              </select>
-                          </div>
-                      </div>
-                      <button type="submit" class="btn btn-md btn-primary" id="btn-update"><i class="fas fa-sync-alt"></i> Update Data</button>
-                      <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-                  </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        

@@ -66,7 +66,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Simpan Data</button>
+                          <label for="keteranga">keterangan</label>
+                          <textarea class="form-control" name="keterangan" id="keterangan" rows="3"><?= $listkegiatan['keterangan']; ?></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button class="btn btn-md btn-primary" type="submit" name="submit"><i class="fas fa-paper-plane"></i> Update Data</button>
                           </div>
                     </form>
                 </div>

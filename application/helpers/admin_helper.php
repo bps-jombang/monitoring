@@ -16,11 +16,11 @@ if ( ! function_exists('target_user'))
             // user 0,pejabat 0,mitra ada
            $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_mitra" => $id_mitra])->row_array();
         }
-        if ($query == NULL) {
-            return FALSE;
-        }else{
+        // if ($query == NULL) {
+        //     return FALSE;
+        // }else{
             return $query;
-        }
+        // }
     }
 }
 if ( ! function_exists('realisasi_user'))
@@ -40,11 +40,11 @@ if ( ! function_exists('realisasi_user'))
             $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_mitra" => $id_mitra])->row_array();
         }
         // echo $CI->db->last_query();
-        if ($query == NULL) {
-            return FALSE;
-        }else{
+        // if ($query == NULL) {
+        //     return FALSE;
+        // }else{
             return $query;
-        }
+        // }
     }
 }
 
@@ -71,7 +71,20 @@ if ( ! function_exists('total_target'))
 }
 
 
-
+if ( ! function_exists('target_usaja'))
+{
+    function target_usaja($id_kegiatan,$id_user)
+    {
+        $CI =& get_instance();
+        $CI->db->select('target');
+        $query = $CI->db->get_where('kegiatan_detail',["id_kegiatan" => $id_kegiatan,"id_user" => $id_user])->row_array();
+        if ($query == NULL) {
+            return "0";
+        }else{
+            return $query;
+        }
+    }
+}
 
 
 

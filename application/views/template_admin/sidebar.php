@@ -39,7 +39,7 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-          <?php if($this->uri->segment(1) != "home" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat" && $this->uri->segment(1) != "editadmin" && $this->uri->segment(1) != "editseksi" && $this->uri->segment(1) != "editkegiatan" && $this->uri->segment(1) != "editjabatan" && $this->uri->segment(1) != "editmitra" && $this->uri->segment(1) != "edituser") : ?>
+          <?php if($this->uri->segment(1) != "home" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "exportexcel" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat" && $this->uri->segment(1) != "editadmin" && $this->uri->segment(1) != "editseksi" && $this->uri->segment(1) != "editkegiatan" && $this->uri->segment(1) != "editjabatan" && $this->uri->segment(1) != "editmitra" && $this->uri->segment(1) != "edituser") : ?>
           <li class="nav-item active">
           <?php else :?> 
           <li class="nav-item"> 
@@ -48,7 +48,7 @@
           <i class="fas fa-fw fa-user-plus"></i>
           <span>Kelola Data</span>
         </a>
-        <?php if($this->uri->segment(1) != "home" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat" && $this->uri->segment(1) != "editadmin" && $this->uri->segment(1) != "editseksi" && $this->uri->segment(1) != "editkegiatan" && $this->uri->segment(1) != "editjabatan" && $this->uri->segment(1) != "editmitra" && $this->uri->segment(1) != "edituser") :?>
+        <?php if($this->uri->segment(1) != "home" && $this->uri->segment(1) != "exportexcel" &&  $this->uri->segment(1) != "listkegiatan" &&  $this->uri->segment(1) != "profile" && $this->uri->segment(1) != "update" && $this->uri->segment(1) != "detailkegiatan" && $this->uri->segment(1) != "editpejabat" && $this->uri->segment(1) != "editadmin" && $this->uri->segment(1) != "editseksi" && $this->uri->segment(1) != "editkegiatan" && $this->uri->segment(1) != "editjabatan" && $this->uri->segment(1) != "editmitra" && $this->uri->segment(1) != "edituser") :?>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
         <?php else : ?>
@@ -98,6 +98,22 @@
           <span>Tabel Kegiatan</span></a>
       </li>
 
+      <div class="sidebar-heading">
+        Export
+      </div>
+      <?php if($this->uri->segment(1) == "exportexcel") : ?>
+      <li class="nav-item active">
+      <?php else :?>
+      <li class="nav-item">
+      <?php endif;?>
+        <a class="nav-link" href="<?= base_url('exportexcel'); ?>">
+          <i class="fas fa-file-excel"></i>
+          <span>Export excel</span></a>
+      </li>
+
+      <div class="sidebar-heading">
+        Logout
+      </div>
       <!-- Logout -->
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('logout'); ?>" data-toggle="modal" data-target="#logoutModal">
