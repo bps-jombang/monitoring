@@ -1,4 +1,4 @@
-// $(document).ready(function() {
+$(document).ready(function() {
 	const sites			= "http://localhost/monitoring";
 	const hapusadmin 	= sites+"/hapusadmin";		// DONE
 	const hapusmitra 	= sites+"/hapusmitra"; 		// DONE
@@ -10,9 +10,10 @@
 	// hapus kegiatan 
 	const hapuskegiatan 		= sites+"/hapuskegiatan";
 	const hapuskegiatandetail 	= sites+"/hapuskegiatandetail";
+	const hapussemuakegiatan 	= sites+"/deleteallkegiatan";
 
     const tabel = $(".mytable tr th");
-    tabel.addClass("align-middle");
+	tabel.addClass("align-middle");
 	
 	// ALERT TAMBAH & UPDATE DATA
 	const flashData = $('.flash-data').data('flashdata');
@@ -170,8 +171,31 @@
 		})
 	});
 
-	// HAPUS KEGIATAN
-	// Hapus Kegiatan
+	// Hapus semua kegiatan
+	$('.tombol-hapus-semua').on('click', function (e) {
+		e.preventDefault();
+
+		swal.fire({
+			title: 'Apakah anda yakin',
+			text: 'Data semua kegiatan akan dihapus, pastikan sudah export excel dahulu',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Hapus semua'
+		}).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: hapussemuakegiatan,
+					success: function (data) {
+						document.location.reload();
+					}
+				});
+			}
+		})
+	});
+
+	// Hapus Kegiatan by Id
 	$('.tombol-hapus-kegiatan').on('click', function (e) {
 		e.preventDefault();
 		const idkegiatan = $(this).attr('id');
@@ -314,24 +338,4 @@
 		
 		
 	});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+})
