@@ -35,8 +35,7 @@
                                             <?= form_error('passkonfir', '<p class="text-danger pt-2" style="opacity: 0.8">*', '</p>') ?>
                                         </div>
                                         <button type="submit" class="btn btn-primary mr-3"><i class="fas fa-paper-plane"></i> Update Password</button>
-                                        <a href="#" class="btn-default text-decoration-none lihat-pass"><i class="fas fa-eye"></i> Lihat Password</a>
-                                    </form>
+                                        </form>
                                 </div>
                             </div>
                         </div>
